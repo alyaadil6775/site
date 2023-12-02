@@ -187,7 +187,6 @@
             label {
                 width: 100%;
                 display: inline-block;
-                float: left;
                 clear: both;
             }
 
@@ -242,8 +241,8 @@
 
                     <li>
                         <p>
-                            <label for="Email">Email <span class="req">*</span></label>
-                            <input type="email" name="Email" id="Email" required>
+                            <label for="Email">Email</label>
+                            <input type="email" name="Email" id="Email">
                         </p>
                     </li>
 
@@ -277,8 +276,8 @@
 
                     <li>
                         <p>
-                            <label for="Phone">Phone</label>
-                            <input name="Phone" id="Phone" placeholder="Format: 123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12">
+                            <label for="Phone">Phone <span class="req">*</span></label>
+                            <input name="Phone" id="Phone" placeholder="Format: 123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12" required>
                         </p>
                     </li>
 

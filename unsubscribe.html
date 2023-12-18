@@ -2,283 +2,255 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <!-- Style -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Unsubscribe Form</title>
+    <link rel="icon" href="https://www.polisheddiamonds.co.nz/wp-content/uploads/2023/02/lab-grown-diamond.png"
+        type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <style>
+        @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
         body {
-            font-family: "Roboto", sans-serif;
+            background-color: #e6e6e6;
+            font-size: 100%;
+            font-family: "Lato", sans-serif;
+            font-weight: 400;
+        }
+
+        div,
+        textarea,
+        input {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 510px;
+            min-width: 324px;
+            margin: 50px auto 0px;
             background-color: #fff;
-            line-height: 1.9;
-            color: #8c8c8c;
-            position: relative;
+            border: 1px solid #cfcfcf;
+            border-bottom: 3px solid #ccc;
         }
 
-        body:before {
-            z-index: -1;
-            position: absolute;
-            height: 50vh;
-            content: "";
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #cfecdd;
+        .row {
+            width: fit-content;
+            /* margin: 0 0 1em 0; */
+            padding: 0 2.5em;
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        .h1,
-        .h2,
-        .h3,
-        .h4,
-        .h5,
-        .h6 {
-            font-family: "Roboto", sans-serif;
-            color: #000;
-        }
-
-        a {
-            -webkit-transition: .3s all ease;
-            -o-transition: .3s all ease;
-            transition: .3s all ease;
-        }
-
-        a,
-        a:hover {
-            text-decoration: none !important;
-        }
-
-        .text-black {
-            color: #000;
-        }
-
-        .content {
-            padding: 7rem 0;
-        }
-
-        .heading {
-            font-size: 2.5rem;
-            font-weight: 900;
-        }
-
-        .form-control,
-        .form-select {
-            border: none;
+        .row.header {
+            padding: 1.5em 2.5em;
             border-bottom: 1px solid #ccc;
-            padding-left: 0;
-            padding-right: 0;
-            border-radius: 0;
-            background: none;
+            background: url(https://images2.imgbox.com/a5/2e/m3lRbCCA_o.jpg) left -80px;
+            color: #fff;
         }
 
-        .form-control,
-        .form-select:active,
-        .form-control,
-        .form-select:focus {
-            outline: none;
-            -webkit-box-shadow: none;
-            box-shadow: none;
-            border-color: #000;
+        .row.body {
+            padding: 0.5em 2.5em 1em;
         }
 
-        .col-form-label {
-            color: #000;
-            font-size: 13px;
+        .pull-right {
+            float: right;
         }
 
-        .btn,
-        .form-control,
-        .form-select,
-        .custom-select {
-            height: 45px;
+        h1 {
+            font-family: "Lato", sans-serif;
+            font-weight: 300;
+            display: inline-block;
+            font-weight: 100;
+            font-size: 2.8125em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            margin: 0 0 0.1em 0;
+            padding: 0 0 0.4em 0;
         }
 
-        .custom-select:active,
-        .custom-select:focus {
-            outline: none;
-            -webkit-box-shadow: none;
-            box-shadow: none;
-            border-color: #000;
+        h3 {
+            font-family: "Lato", sans-serif;
+            font-weight: 400;
+            font-size: 1.25em;
+            margin: 1em 0 0.4em 0;
         }
 
         .btn {
-            border: none;
-            border-radius: 0;
-            font-size: 12px;
-            letter-spacing: .2rem;
-            text-transform: uppercase;
-        }
-
-        .btn.btn-primary {
-            background: #35477d;
+            font-size: 1.0625em;
+            display: inline-block;
+            padding: 0.74em 1.5em;
+            margin: 1.5em 0 0;
             color: #fff;
-            padding: 15px 20px;
+            border-width: 0 0 0 0;
+            border-bottom: 5px solid;
+            text-transform: uppercase;
+            background-color: #b3b3b3;
+            border-bottom-color: #8c8c8c;
+            font-family: "Lato", sans-serif;
+            font-weight: 300;
         }
 
         .btn:hover {
-            color: #fff;
+            background-color: #bfbfbf;
         }
 
-        .btn:active,
-        .btn:focus {
-            outline: none;
-            -webkit-box-shadow: none;
-            box-shadow: none;
+        .btn.btn-submit {
+            background-color: #4f6fad;
+            border-bottom-color: #374d78;
         }
 
-        .contact-wrap {
-            -webkit-box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.2);
-            box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.2);
+        .btn.btn-submit:hover {
+            background-color: #5f7db6;
         }
 
-        .contact-wrap .col-form-label {
-            font-size: 14px;
-            color: #b3b3b3;
-            margin: 0 0 10px 0;
-            display: inline-block;
+        form {
+            max-width: 100%;
+            display: block;
+        }
+
+        form ul {
+            margin: 0;
             padding: 0;
+            list-style: none;
         }
 
-        .contact-wrap .form,
-        .contact-wrap .contact-info {
-            padding: 40px;
-        }
-
-        .contact-wrap .contact-info {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .contact-wrap .contact-info ul li {
-            margin-bottom: 15px;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .contact-wrap .contact-info ul li .wrap-icon {
-            font-size: 20px;
-            color: #fff;
-            margin-top: 5px;
-        }
-
-        .contact-wrap .form {
-            background: #fff;
-        }
-
-        .contact-wrap .form h3 {
-            color: #35477d;
-            font-size: 20px;
-            margin-bottom: 30px;
-        }
-
-        .contact-wrap .contact-info {
-            background: #35477d;
-        }
-
-        .contact-wrap .contact-info h3 {
-            color: #fff;
-            font-size: 20px;
-            margin-bottom: 30px;
-        }
-
-        label.error {
-            font-size: 12px;
-            color: red;
-        }
-
-        #message {
-            resize: vertical;
-        }
-
-        #form-message-warning,
-        #form-message-success {
-            display: none;
-        }
-
-        #form-message-warning {
-            color: #B90B0B;
-        }
-
-        #form-message-success {
-            color: #55A44E;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .submitting {
-            float: left;
+        form ul li {
+            margin: 0 0 0.25em 0;
+            clear: both;
+            display: inline-block;
             width: 100%;
-            padding: 10px 0;
-            display: none;
-            font-weight: bold;
-            font-size: 12px;
-            color: #000;
+        }
+
+        form ul li:last-child {
+            margin: 0;
+        }
+
+        form ul li p {
+            margin: 0;
+            padding: 0;
+            /* float: left; */
+        }
+
+        form ul li p.right {
+            float: right;
+        }
+
+        form ul li .divider {
+            margin: 0.5em 0 0.5em 0;
+            border: 0;
+            height: 1px;
+            width: 100%;
+            display: block;
+            background-color: #4f6fad;
+            background-image: linear-gradient(to right, #ee9cb4, #4f6fad);
+        }
+
+        .req {
+            color: #ee9cb4;
+        }
+
+        form label {
+            display: block;
+            margin: 0 0 0.5em 0;
+            color: #4f6fad;
+            font-size: 1em;
+        }
+
+        form input {
+            margin: 0 0 0.5em 0;
+            border: 1px solid #ccc;
+            padding: 6px 10px;
+            color: #555;
+            font-size: 1em;
+        }
+
+        form textarea {
+            border: 1px solid #ccc;
+            padding: 6px 10px;
+            width: 100%;
+            color: #555;
+        }
+
+        form small {
+            color: #4f6fad;
+            margin: 0 0 0 0.5em;
+        }
+
+        @media only screen and (max-width: 480px) {
+            .pull-right {
+                float: none;
+            }
+
+            input {
+                width: 100%;
+            }
+
+            label {
+                width: 100%;
+                display: inline-block;
+                clear: both;
+            }
+
+            li,
+            p {
+                width: 100%;
+            }
+
+            input.btn {
+                margin: 1.5em 0 0.5em;
+            }
+
+            h1 {
+                font-size: 2.25em;
+            }
+
+            h3 {
+                font-size: 1.125em;
+            }
+
+            li small {
+                display: none;
+            }
         }
     </style>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
-    <title>Unsubscribe</title>
 </head>
 
 <body>
-
-
-    <div class="content">
-
-        <div class="container">
-            <div class="row align-items-stretch no-gutters contact-wrap">
-                <div class="col-md-8">
-                    <div class="form h-100">
-                        <h3>Unsubscribe to Emails</h3>
-                        <form method="POST" class="mb-5" id="Unsubscribe"
-                            action="https://script.google.com/macros/s/AKfycbypU-57krDBjbuTjWf5x4ti2ntIgXWd5JgdDNq1B074qlze11WsdH3_C7ZPa6myZd5o/exec">
-
-                            <div class="row">
-                                <div class="col-md-8 form-group mb-5">
-                                    <label class="col-form-label">Email</label>
-                                    <br>
-                                    <input name="email" class="form-control" id="email" placeholder="Enter Email"
-                                        required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12 form-group">
-                                    <input id="redirectButton" type="submit" value="Submit"
-                                        class="btn btn-primary rounded-0 py-2 px-4">
-                                    <span class="submitting"></span>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-
-                </div>
-                <div class="col-md-4">
-                    <div class="contact-info h-100">
-                        <h3>Instructions</h3>
-                        <p class="mb-5">Please confirm your email to unsubscribe from our emailing list.</p>
-                        <ul class="list-unstyled">
-                            <li class="d-flex">
-                                <span class="text">Thank you!</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+    <div class="container">
+        <div class="row header">
+            <h1>Unsubscribe to Newslettter &nbsp;</h1>
+            <h3>Please confirm your email to unsubscribe from our emailing list.</h3>
         </div>
+        <div class="row body">
+            <form method="POST" class="mb-5" id="UnsubscribeCustomer" name="UnsubscribeCustomer"
+                action="https://script.google.com/macros/s/AKfycbypU-57krDBjbuTjWf5x4ti2ntIgXWd5JgdDNq1B074qlze11WsdH3_C7ZPa6myZd5o/exec">
+                <ul>
 
+                    <li>
+                        <p>
+                            <label for="Email">Email <span class="req">*</span></label>
+                            <input type="email" name="email" id="email" required>
+                        </p>
+                    </li>
+
+                    <li>
+                        <input class="btn btn-submit" type="submit" value="Submit" />
+                        <small>or press <strong>enter</strong></small>
+                    </li>
+
+                </ul>
+            </form>
+        </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

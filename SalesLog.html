@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sales Log</title>
+    <link rel="icon" href="https://www.polisheddiamonds.co.nz/wp-content/uploads/2023/02/lab-grown-diamond.png"
+        type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+        body {
+            background-color: #e6e6e6;
+            font-size: 100%;
+            font-family: "Lato", sans-serif;
+            font-weight: 400;
+        }
+
+        div,
+        textarea,
+        input {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 510px;
+            min-width: 324px;
+            margin: 50px auto 0px;
+            background-color: #fff;
+            border: 1px solid #cfcfcf;
+            border-bottom: 3px solid #ccc;
+        }
+
+        .row {
+            width: fit-content;
+            /* margin: 0 0 1em 0; */
+            padding: 0 2.5em;
+        }
+
+        .row.header {
+            padding: 1.5em 2.5em;
+            border-bottom: 1px solid #ccc;
+            background: url(https://images2.imgbox.com/a5/2e/m3lRbCCA_o.jpg) left -80px;
+            color: #fff;
+        }
+
+        .row.body {
+            padding: 0.5em 2.5em 1em;
+        }
+
+        .pull-right {
+            float: right;
+        }
+
+        h1 {
+            font-family: "Lato", sans-serif;
+            font-weight: 300;
+            display: inline-block;
+            font-weight: 100;
+            font-size: 2.8125em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            margin: 0 0 0.1em 0;
+            padding: 0 0 0.4em 0;
+        }
+
+        h3 {
+            font-family: "Lato", sans-serif;
+            font-weight: 400;
+            font-size: 1.25em;
+            margin: 1em 0 0.4em 0;
+        }
+
+        .btn {
+            font-size: 1.0625em;
+            display: inline-block;
+            padding: 0.74em 1.5em;
+            margin: 1.5em 0 0;
+            color: #fff;
+            border-width: 0 0 0 0;
+            border-bottom: 5px solid;
+            text-transform: uppercase;
+            background-color: #b3b3b3;
+            border-bottom-color: #8c8c8c;
+            font-family: "Lato", sans-serif;
+            font-weight: 300;
+        }
+
+        .btn:hover {
+            background-color: #bfbfbf;
+        }
+
+        .btn.btn-submit {
+            background-color: #4f6fad;
+            border-bottom-color: #374d78;
+        }
+
+        .btn.btn-submit:hover {
+            background-color: #5f7db6;
+        }
+
+        form {
+            max-width: 100%;
+            display: block;
+        }
+
+        form ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        form ul li {
+            margin: 0 0 0.25em 0;
+            clear: both;
+            display: inline-block;
+            width: 100%;
+        }
+
+        form ul li:last-child {
+            margin: 0;
+        }
+
+        form ul li p {
+            margin: 0;
+            padding: 0;
+            /* float: left; */
+        }
+
+        form ul li p.right {
+            float: right;
+        }
+
+        form ul li .divider {
+            margin: 0.5em 0 0.5em 0;
+            border: 0;
+            height: 1px;
+            width: 100%;
+            display: block;
+            background-color: #4f6fad;
+            background-image: linear-gradient(to right, #ee9cb4, #4f6fad);
+        }
+
+        .req {
+            color: #ee9cb4;
+        }
+
+        form label {
+            display: block;
+            margin: 0 0 0.5em 0;
+            color: #4f6fad;
+            font-size: 1em;
+        }
+
+        form input {
+            margin: 0 0 0.5em 0;
+            border: 1px solid #ccc;
+            padding: 6px 10px;
+            color: #555;
+            font-size: 1em;
+        }
+
+        form textarea {
+            border: 1px solid #ccc;
+            padding: 6px 10px;
+            width: 100%;
+            color: #555;
+        }
+
+        form small {
+            color: #4f6fad;
+            margin: 0 0 0 0.5em;
+        }
+
+        @media only screen and (max-width: 480px) {
+            .pull-right {
+                float: none;
+            }
+
+            input {
+                width: 100%;
+            }
+
+            label {
+                width: 100%;
+                display: inline-block;
+                clear: both;
+            }
+
+            li,
+            p {
+                width: 100%;
+            }
+
+            input.btn {
+                margin: 1.5em 0 0.5em;
+            }
+
+            h1 {
+                font-size: 2.25em;
+            }
+
+            h3 {
+                font-size: 1.125em;
+            }
+
+            li small {
+                display: none;
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row header">
+            <h1>Sales Log&nbsp;</h1>
+            <h3>Select the Respected Fields with a Dropdown Option and Fill in the Values for the Input Fields.</h3>
+        </div>
+        <div class="row body">
+            <form method="POST" class="mb-5" id="SalesLog" name="SalesLog"
+                action="https://script.google.com/macros/s/AKfycbzBnMQCp7mEEauSyM_YKehtZSpOaVxVAwXc6XZP_8yEwPMLgzkg3slrBb8S5zajtbq8qQ/exec">
+                <ul>
+                    <li>
+                        <p>
+                            <label for="Category" class="col-form-label">Category *</label> <br>
+                            <select class="form-select" aria-label="Category" name="Category" id="Category" required>
+                                <option selected></option>
+                                <option value="10K Gold">10K Gold</option>
+                                <option value="14K Gold">14K Gold</option>
+                                <option value="316 Stainless Steel">316 Stainless Steel</option>
+                                <option value="925 Sterling Silver">925 Sterling Silver</option>
+                                <option value="Battery">Battery</option>
+                                <option value="Brass/Alloy">Brass/Alloy</option>
+                                <option value="Ear Piercing">Ear Piercing</option>
+                                <option value="Jewelry Repair & Misc">Jewelry Repair & Misc</option>
+                                <option value="Layway">Layway</option>
+                                <option value="Titanium">Titanium</option>
+                                <option value="Tungsten Carbide">Tungsten Carbide</option>
+                                <option value="Watch">Watch</option>
+                            </select>
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            <label for="Item Name" class="col-form-label" id="ItemNameLabel" style="display: none;">Item
+                                Name
+                                *</label> <br>
+                            <select class="form-select" aria-label="Item Name" name="Item Name" id="ItemName-10KGold"
+                                style="display: none;">
+                                <option selected></option>
+                                <option value="10K Gold Anklet">10K Gold Anklet</option>
+                                <option value="10K Gold Bracelet">10K Gold Bracelet</option>
+                                <option value="10K Gold Chain">10K Gold Chain</option>
+                                <option value="10K Gold Charm">10K Gold Charm</option>
+                                <option value="10K Gold Earrings">10K Gold Earrings</option>
+                                <option value="10K Gold Nose Ring">10K Gold Nose Ring</option>
+                                <option value="10K Gold Ring">10K Gold Ring</option>
+                            </select>
+
+                            <select class="form-select" aria-label="Item Name" name="Item Name" id="ItemName-14KGold"
+                                style="display: none;">
+                                <option selected></option>
+                                <option value="14K Gold Anklet">14K Gold Anklet</option>
+                                <option value="14K Gold Bracelet">14K Gold Bracelet</option>
+                                <option value="14K Gold Chain">14K Gold Chain</option>
+                                <option value="14K Gold Charm">14K Gold Charm</option>
+                                <option value="14K Gold Earrings">14K Gold Earrings</option>
+                                <option value="14K Gold Nose Ring">14K Gold Nose Ring</option>
+                                <option value="14K Gold Ring">14K Gold Ring</option>
+                            </select>
+
+                            <select class="form-select" aria-label="Item Name" name="Item Name"
+                                id="ItemName-925SterlingSilver" style="display: none;">
+                                <option selected></option>
+                                <option value="925 Sterling Silver Anklet">925 Sterling Silver Anklet</option>
+                                <option value="925 Sterling Silver Bracelet">925 Sterling Silver Bracelet</option>
+                                <option value="925 Sterling Silver Chain">925 Sterling Silver Chain</option>
+                                <option value="925 Sterling Silver Charm">925 Sterling Silver Charm</option>
+                                <option value="925 Sterling Silver Earrings">925 Sterling Silver Earrings</option>
+                                <option value="925 Sterling Silver Nose Ring">925 Sterling Silver Nose Ring</option>
+                                <option value="925 Sterling Silver Ring">925 Sterling Silver Ring</option>
+                            </select>
+
+                            <select class="form-select" aria-label="Item Name" name="Item Name"
+                                id="ItemName-316StainlessSteel" style="display: none;">
+                                <option selected></option>
+                                <option value="316 Stainless Steel Anklet">316 Stainless Steel Anklet</option>
+                                <option value="316 Stainless Steel Bracelet">316 Stainless Steel Bracelet</option>
+                                <option value="316 Stainless Steel Chain">316 Stainless Steel Chain</option>
+                                <option value="316 Stainless Steel Charm">316 Stainless Steel Charm</option>
+                                <option value="316 Stainless Steel Earrings">316 Stainless Steel Earrings</option>
+                                <option value="316 Stainless Steel Ring">316 Stainless Steel Ring</option>
+                            </select>
+
+                            <select class="form-select" aria-label="Item Name" name="Item Name" id="ItemName-Brass"
+                                style="display: none;">
+                                <option selected></option>
+                                <option value="Brass Ring">Brass Ring</option>
+                                <option value="Brass Bracelet">Brass Bracelet</option>
+                                <option value="Brass Chain">Brass Chain</option>
+                            </select>
+
+                            <select class="form-select" aria-label="Item Name" name="Item Name"
+                                id="ItemName-EarPiercing" style="display: none;">
+                                <option selected></option>
+                                <option value="Ear Peiercing Lotion">Ear Peiercing Lotion</option>
+                                <option value="10K Gold Earrings">10K Gold Earrings</option>
+                                <option value="14K Gold Earrings">14K Gold Earrings</option>
+                                <option value="Stainless Steel">Stainless Steel</option>
+                            </select>
+
+                            <select class="form-select" aria-label="Item Name" name="Item Name"
+                                id="ItemName-Repair-Misc" style="display: none;">
+                                <option selected></option>
+                                <option value="Engraving">Engraving</option>
+                                <option value="Jewelry Box">Jewelry Box</option>
+                                <option value="Jewelry Cleaning/Cleaner">Jewelry Cleaning/Cleaner</option>
+                                <option value="Jewelry Solder/Sizing">Jewelry Solder/Sizing</option>
+                                <option value="Jump Ring">Jump Ring</option>
+                                <option value="Link Sizing">Link Sizing</option>
+                                <option value="Lobster Lock">Lobster Lock</option>
+                                <option value="Pin/Spring Bar">Pin/Spring Bar</option>
+                                <option value="Polishing Cloth">Polishing Cloth</option>
+                                <option value="Ring Guard">Ring Guard</option>
+                                <option value="Screw/Push Back">Screw/Push Back</option>
+                                <option value="Service Charge">Service Charge</option>
+                                <option value="Watch Band">Watch Band</option>
+                                <option value="Other">Other</option>
+                            </select>
+
+                            <select class="form-select" aria-label="Item Name" name="Item Name" id="ItemName-Titanium"
+                                style="display: none;">
+                                <option selected></option>
+                                <option value="Titanium Ring">Titanium Ring</option>
+                            </select>
+
+                            <select class="form-select" aria-label="Item Name" name="Item Name" id="ItemName-Tungsten"
+                                style="display: none;">
+                                <option selected></option>
+                                <option value="Tungsten Carbide Ring">Tungsten Carbide Ring</option>
+                            </select>
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            <label for="Variation" class="col-form-label" id="VariationLabel"
+                                style="display: none;">Variation
+                                *</label> <br>
+                            <select class="form-select" aria-label="Variation" name="Variation" id="VariationChains"
+                                style="display: none;">
+                                <option selected></option>
+                                <option value='16"'>16"</option>
+                                <option value='18"'>18"</option>
+                                <option value='20"'>20"</option>
+                                <option value='22"'>22"</option>
+                                <option value='24"'>24"</option>
+                                <option value='26"'>26"</option>
+                                <option value='>26"'>>26"</option>
+                            </select>
+
+                            <select class="form-select" aria-label="Variation" name="Variation"
+                                id="VariationGoldEarrings" style="display: none;">
+                                <option selected></option>
+                                <option value='Plain'>Plain</option>
+                                <option value='Cubic Set'>Cubic Set</option>
+                                <option value='Diamond Set'>Diamond Set</option>
+                            </select>
+
+                            <select class="form-select" aria-label="Variation" name="Variation"
+                                id="VariationSilverEarrings" style="display: none;">
+                                <option selected></option>
+                                <option value='Plain'>Plain</option>
+                                <option value='Cubic Set'>Cubic Set</option>
+                                <option value='Diamond Set'>Diamond Set</option>
+                                <option value='Moissanite'>Moissanite</option>
+                            </select>
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            <label for="Barcode" class="col-form-label">Barcode</label>
+                            <input name="Barcode" class="form-control" id="Barcode">
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            <label for="10K Grams" class="col-form-label">10K Grams</label>
+                            <input type="number" name="10K Grams" class="form-control" id="10K Grams" step=".01">
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            <label for="14K Grams" class="col-form-label">14K Grams</label>
+                            <input type="number" name="14K Grams" class="form-control" id="14K Grams" step=".01">
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            <label for="Orig Diamond CT" class="col-form-label">Orig Diamond CT</label>
+                            <input type="number" name="Orig Diamond CT" class="form-control" id="Orig Diamond CT"
+                                step=".01">
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            <label for="Lab Diamond CT" class="col-form-label">Lab Diamond CT</label>
+                            <input type="number" name="Lab Diamond CT" class="form-control" id="Lab Diamond CT"
+                                step=".01">
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            <label for="Cost" class="col-form-label">Cost *</label>
+                            <input type="number" name="Cost" class="form-control" id="Cost" step=".01" required>
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            <label for="Payment Type" class="col-form-label">Payment Type *</label> <br>
+                            <select class="form-select" aria-label="Payment Type" name="Payment Type" id="Payment Type"
+                                required>
+                                <option selected></option>
+                                <option value="Cash">Cash</option>
+                                <option value="Card">Card</option>
+                            </select>
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            <label for="Employee Name" class="col-form-label">Employee Name *</label> <br>
+                            <select class="form-select" aria-label="Employee Name" name="Employee Name"
+                                id="Employee Name" required>
+                                <option selected></option>
+                                <option value="Alex">Alex</option>
+                                <option value="Ambreen">Ambreen</option>
+                                <option value="Ivy">Ivy</option>
+                                <option value="Nash">Nash</option>
+                                <option value="Shawn">Shawn</option>
+                                <option value="Sunny">Sunny</option>
+                            </select>
+                        </p>
+                    </li>
+
+                    <li>
+                        <div class="divider"></div>
+                    </li>
+                    <li>
+                        <label for="Additional Comments">Additional Comments</label>
+                        <textarea cols="46" rows="3" name="Additional Comments"></textarea>
+                    </li>
+
+                    <li>
+                        <input class="btn btn-submit" type="submit" value="Submit" />
+                        <small>or press <strong>enter</strong></small>
+                    </li>
+
+                </ul>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+            const chains = ["10K Gold Chain", "14K Gold Chain", "925 Sterling Silver Chain", "316 Stainless Steel Chain", "Brass Chain"];
+            var currCategory = "";
+            var currItemName = "";
+
+            $("#Category").change(function () {
+                $("#ItemNameLabel").hide();
+                $("#ItemName-10KGold").hide();
+                $("#ItemName-14KGold").hide();
+                $("#ItemName-925SterlingSilver").hide();
+                $("#ItemName-316StainlessSteel").hide();
+                $("#ItemName-Brass").hide();
+                $("#ItemName-EarPiercing").hide();
+                $("#ItemName-Repair-Misc").hide();
+                $("#ItemName-Titanium").hide();
+                $("#ItemName-Tungsten").hide();
+                $("#VariationLabel").hide();
+                $("#VariationChains").hide();
+                $("#VariationGoldEarrings").hide();
+                $("#VariationSilverEarrings").hide();
+
+                $("#ItemName-10KGold").val("");
+                $("#ItemName-14KGold").val("");
+                $("#ItemName-925SterlingSilver").val("");
+                $("#ItemName-316StainlessSteel").val("");
+                $("#ItemName-Brass").val("");
+                $("#ItemName-EarPiercing").val("");
+                $("#ItemName-Repair-Misc").val("");
+                $("#ItemName-Titanium").val("");
+                $("#ItemName-Tungsten").val("");
+                $("#VariationLabel").val("");
+                $("#VariationChains").val("");
+                $("#VariationGoldEarrings").val("");
+                $("#VariationSilverEarrings").val("");
+
+                currCategory = "";
+                currItemName = "";
+
+                if ($(this).val() == "10K Gold") {
+                    $("#ItemNameLabel").show();
+                    $("#ItemName-10KGold").show();
+                    currCategory = "10K Gold";
+                } else if ($(this).val() == "14K Gold") {
+                    $("#ItemNameLabel").show();
+                    $("#ItemName-14KGold").show();
+                    currCategory = "14K Gold";
+                } else if ($(this).val() == "316 Stainless Steel") {
+                    $("#ItemNameLabel").show();
+                    $("#ItemName-316StainlessSteel").show();
+                    currCategory = "316 Stainless Steel";
+                } else if ($(this).val() == "925 Sterling Silver") {
+                    $("#ItemNameLabel").show();
+                    $("#ItemName-925SterlingSilver").show();
+                    currCategory = "925 Sterling Silver";
+                } else if ($(this).val() == "Brass/Alloy") {
+                    $("#ItemNameLabel").show();
+                    $("#ItemName-Brass").show();
+                    currCategory = "Brass/Alloy";
+                } else if ($(this).val() == "Ear Piercing") {
+                    $("#ItemNameLabel").show();
+                    $("#ItemName-EarPiercing").show();
+                    currCategory = "Ear Piercing";
+                } else if ($(this).val() == "Jewelry Repair & Misc") {
+                    $("#ItemNameLabel").show();
+                    $("#ItemName-Repair-Misc").show();
+                    currCategory = "Jewelry Repair & Misc";
+                } else if ($(this).val() == "Titanium") {
+                    $("#ItemNameLabel").show();
+                    $("#ItemName-Titanium").show();
+                    currCategory = "Titanium";
+                } else if ($(this).val() == "Tungsten") {
+                    $("#ItemNameLabel").show();
+                    $("#ItemName-Tungsten").show();
+                    currCategory = "Tungsten";
+                }
+            });
+
+            $("#ItemName-10KGold").change(function () {
+                $("#VariationLabel").hide();
+                $("#VariationChains").hide();
+                $("#VariationGoldEarrings").hide();
+                $("#VariationSilverEarrings").hide();
+
+                currItemName = "";
+
+                if (chains.includes($(this).val())) {
+                    $("#VariationLabel").show();
+                    $("#VariationChains").show();
+                    currItemName = "Chain";
+                } else if ($(this).val() == "10K Gold Earrings" || $(this).val() == "14K Gold Earrings") {
+                    $("#VariationLabel").show();
+                    $("#VariationGoldEarrings").show();
+                    currItemName = "Gold Earring";
+                }
+            });
+
+            $("#ItemName-14KGold").change(function () {
+                $("#VariationLabel").hide();
+                $("#VariationChains").hide();
+                $("#VariationGoldEarrings").hide();
+                $("#VariationSilverEarrings").hide();
+
+                currItemName = "";
+
+                if (chains.includes($(this).val())) {
+                    $("#VariationLabel").show();
+                    $("#VariationChains").show();
+                    currItemName = "Chain";
+                } else if ($(this).val() == "10K Gold Earrings" || $(this).val() == "14K Gold Earrings") {
+                    $("#VariationLabel").show();
+                    $("#VariationGoldEarrings").show();
+                    currItemName = "Gold Earring";
+                }
+            });
+
+            $("#ItemName-316StainlessSteel").change(function () {
+                $("#VariationLabel").hide();
+                $("#VariationChains").hide();
+                $("#VariationGoldEarrings").hide();
+                $("#VariationSilverEarrings").hide();
+
+                currItemName = "";
+
+                if (chains.includes($(this).val())) {
+                    $("#VariationLabel").show();
+                    $("#VariationChains").show();
+                    currItemName = "Chain";
+                }
+            });
+
+            $("#ItemName-925SterlingSilver").change(function () {
+                $("#VariationLabel").hide();
+                $("#VariationChains").hide();
+                $("#VariationGoldEarrings").hide();
+                $("#VariationSilverEarrings").hide();
+
+                currItemName = "";
+
+                if (chains.includes($(this).val())) {
+                    $("#VariationLabel").show();
+                    $("#VariationChains").show();
+                    currItemName = "Chain";
+                } else if ($(this).val() == "925 Sterling Silver Earrings") {
+                    $("#VariationLabel").show();
+                    $("#VariationSilverEarrings").show();
+                    currItemName = "Silver Earring";
+                }
+            });
+
+            $("#ItemName-Brass").change(function () {
+                $("#VariationLabel").hide();
+                $("#VariationChains").hide();
+                $("#VariationGoldEarrings").hide();
+                $("#VariationSilverEarrings").hide();
+
+                currItemName = "";
+
+                if (chains.includes($(this).val())) {
+                    $("#VariationLabel").show();
+                    $("#VariationChains").show();
+                    currItemName = "Chain";
+                }
+            });
+
+            $("form").submit(function () {
+                if (currCategory == "10K Gold") {
+                    $("#ItemName-14KGold").remove();
+                    $("#ItemName-925SterlingSilver").remove();
+                    $("#ItemName-316StainlessSteel").remove();
+                    $("#ItemName-Brass").remove();
+                    $("#ItemName-EarPiercing").remove();
+                    $("#ItemName-Repair-Misc").remove();
+                    $("#ItemName-Titanium").remove();
+                    $("#ItemName-Tungsten").remove();
+                } else if (currCategory == "14K Gold") {
+                    $("#ItemName-10KGold").remove();
+                    $("#ItemName-925SterlingSilver").remove();
+                    $("#ItemName-316StainlessSteel").remove();
+                    $("#ItemName-Brass").remove();
+                    $("#ItemName-EarPiercing").remove();
+                    $("#ItemName-Repair-Misc").remove();
+                    $("#ItemName-Titanium").remove();
+                    $("#ItemName-Tungsten").remove();
+                } else if (currCategory == "316 Stainless Steel") {
+                    $("#ItemName-10KGold").remove();
+                    $("#ItemName-14KGold").remove();
+                    $("#ItemName-925SterlingSilver").remove();
+                    $("#ItemName-Brass").remove();
+                    $("#ItemName-EarPiercing").remove();
+                    $("#ItemName-Repair-Misc").remove();
+                    $("#ItemName-Titanium").remove();
+                    $("#ItemName-Tungsten").remove();
+                } else if (currCategory == "925 Sterling Silver") {
+                    $("#ItemName-10KGold").remove();
+                    $("#ItemName-14KGold").remove();
+                    $("#ItemName-316StainlessSteel").remove();
+                    $("#ItemName-Brass").remove();
+                    $("#ItemName-EarPiercing").remove();
+                    $("#ItemName-Repair-Misc").remove();
+                    $("#ItemName-Titanium").remove();
+                    $("#ItemName-Tungsten").remove();
+                } else if (currCategory == "Brass/Alloy") {
+                    $("#ItemName-10KGold").remove();
+                    $("#ItemName-14KGold").remove();
+                    $("#ItemName-925SterlingSilver").remove();
+                    $("#ItemName-316StainlessSteel").remove();
+                    $("#ItemName-EarPiercing").remove();
+                    $("#ItemName-Repair-Misc").remove();
+                    $("#ItemName-Titanium").remove();
+                    $("#ItemName-Tungsten").remove();
+                } else if (currCategory == "Ear Piercing") {
+                    $("#ItemName-10KGold").remove();
+                    $("#ItemName-14KGold").remove();
+                    $("#ItemName-925SterlingSilver").remove();
+                    $("#ItemName-316StainlessSteel").remove();
+                    $("#ItemName-Brass").remove();
+                    $("#ItemName-Repair-Misc").remove();
+                    $("#ItemName-Titanium").remove();
+                    $("#ItemName-Tungsten").remove();
+                } else if (currCategory == "Jewelry Repair & Misc") {
+                    $("#ItemName-10KGold").remove();
+                    $("#ItemName-14KGold").remove();
+                    $("#ItemName-925SterlingSilver").remove();
+                    $("#ItemName-316StainlessSteel").remove();
+                    $("#ItemName-Brass").remove();
+                    $("#ItemName-EarPiercing").remove();
+                    $("#ItemName-Titanium").remove();
+                    $("#ItemName-Tungsten").remove();
+                } else if (currCategory == "Titanium") {
+                    $("#ItemName-10KGold").remove();
+                    $("#ItemName-14KGold").remove();
+                    $("#ItemName-925SterlingSilver").remove();
+                    $("#ItemName-316StainlessSteel").remove();
+                    $("#ItemName-Brass").remove();
+                    $("#ItemName-EarPiercing").remove();
+                    $("#ItemName-Repair-Misc").remove();
+                    $("#ItemName-Tungsten").remove();
+                } else if (currCategory == "Tungsten") {
+                    $("#ItemName-10KGold").remove();
+                    $("#ItemName-14KGold").remove();
+                    $("#ItemName-925SterlingSilver").remove();
+                    $("#ItemName-316StainlessSteel").remove();
+                    $("#ItemName-Brass").remove();
+                    $("#ItemName-EarPiercing").remove();
+                    $("#ItemName-Repair-Misc").remove();
+                    $("#ItemName-Titanium").remove();
+                } else {
+                    $("#ItemName-10KGold").remove();
+                    $("#ItemName-14KGold").remove();
+                    $("#ItemName-925SterlingSilver").remove();
+                    $("#ItemName-316StainlessSteel").remove();
+                    $("#ItemName-Brass").remove();
+                    $("#ItemName-EarPiercing").remove();
+                    $("#ItemName-Repair-Misc").remove();
+                    $("#ItemName-Titanium").remove();
+                    $("#ItemName-Tungsten").remove();
+                }
+
+                if (currItemName == "Chain") {
+                    $("#VariationGoldEarrings").remove();
+                    $("#VariationSilverEarrings").remove();
+                } else if (currItemName == "Gold Earring") {
+                    $("#VariationChains").remove();
+                    $("#VariationSilverEarrings").remove();
+                } else if (currItemName == "Silver Earring") {
+                    $("#VariationChains").remove();
+                    $("#VariationGoldEarrings").remove();
+                } else {
+                    $("#VariationChains").remove();
+                    $("#VariationGoldEarrings").remove();
+                    $("#VariationSilverEarrings").remove();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

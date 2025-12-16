@@ -44,6 +44,16 @@
             color: #d4af37;
         }
 
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #d4af37;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
         nav ul {
             display: flex;
             list-style: none;
@@ -277,13 +287,50 @@
         }
 
         @media (max-width: 768px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 60px);
+                background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+                flex-direction: column;
+                gap: 0;
+                padding: 2rem 0;
+                transition: left 0.3s ease;
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            nav ul li {
+                width: 100%;
+                text-align: center;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            }
+
+            nav a {
+                font-size: 1.1rem;
+                display: block;
+                padding: 0.5rem;
+            }
+
             .hero-content h1 {
                 font-size: 2.5rem;
             }
 
-            nav ul {
-                gap: 1rem;
-                font-size: 0.9rem;
+            .hero-content p {
+                font-size: 1.2rem;
             }
 
             .section-title {
@@ -306,11 +353,12 @@
     <header>
         <nav>
             <div class="logo">SALEH JEWELERS</div>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#collections">Collections</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="contact_page.html">Contact</a></li>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
+                <li><a href="#home" onclick="closeMenu()">Home</a></li>
+                <li><a href="#collections" onclick="closeMenu()">Collections</a></li>
+                <li><a href="#about" onclick="closeMenu()">About</a></li>
+                <li><a href="contact_page.html" onclick="closeMenu()">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -555,6 +603,18 @@
     </footer>
 
     <script>
+        // Toggle mobile menu
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Close mobile menu
+        function closeMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.remove('active');
+        }
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {

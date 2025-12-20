@@ -3,8 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saleh Jewelers - Premium Fine Jewelry</title>
+    <title>Saleh Jewelers | Fine Jewelry & Master Services</title>
+    
+    <link rel="icon" type="image/png" href="Logo.png">
+
     <style>
+        :root {
+            --gold: #d4af37;
+            --gold-hover: #f0c14b;
+            --dark: #1a1a1a;
+            --light-gray: #f9f9f9;
+            --text: #333;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,20 +25,22 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text);
+            scroll-behavior: smooth;
+            background-color: var(--white);
         }
 
+        /* --- Navigation --- */
         header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #fff;
+            background: rgba(255, 255, 255, 0.98);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
 
         nav {
@@ -38,21 +53,15 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-family: 'Georgia', serif;
+            font-size: 1.6rem;
             font-weight: bold;
             letter-spacing: 2px;
-            color: #d4af37;
+            color: var(--dark);
+            text-decoration: none;
         }
 
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #d4af37;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
+        .logo span { color: var(--gold); }
 
         nav ul {
             display: flex;
@@ -61,22 +70,21 @@
         }
 
         nav a {
-            color: #fff;
+            color: var(--dark);
             text-decoration: none;
-            transition: color 0.3s;
-            font-size: 0.95rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
             letter-spacing: 1px;
+            transition: var(--transition);
         }
 
-        nav a:hover {
-            color: #d4af37;
-        }
+        nav a:hover { color: var(--gold); }
 
+        /* --- Hero Section --- */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%232d2d2d" width="1200" height="600"/><circle cx="300" cy="150" r="80" fill="%23d4af37" opacity="0.1"/><circle cx="900" cy="400" r="100" fill="%23d4af37" opacity="0.1"/><circle cx="600" cy="300" r="120" fill="%23d4af37" opacity="0.15"/></svg>');
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
+            height: 65vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1584302179602-e4c3d3fd629d?auto=format&fit=crop&q=80&w=1600') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -86,279 +94,296 @@
         }
 
         .hero-content h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
-            color: #d4af37;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            letter-spacing: 3px;
-        }
-
-        .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: #d4af37;
-            color: #1a1a1a;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: all 0.3s;
-            letter-spacing: 1px;
-        }
-
-        .cta-button:hover {
-            background: #f0c14b;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-        }
-
-        .collections {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .scroll-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .scroll-btn {
-            background: #d4af37;
-            color: #fff;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
-        }
-
-        .scroll-btn:hover {
-            background: #f0c14b;
-            transform: scale(1.1);
-        }
-
-        .scroll-btn:active {
-            transform: scale(0.95);
-        }
-
-        .section-title {
-            text-align: left;
-            font-size: 2.5rem;
-            color: #2d2d2d;
+            font-family: 'Georgia', serif;
             letter-spacing: 2px;
-            margin: 0;
         }
 
-        .collection-section {
+        /* --- Shared Section Styles --- */
+        .section-padding { padding: 6rem 2rem; }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-intro {
+            text-align: center;
             margin-bottom: 4rem;
         }
 
-        .collection-grid {
-            display: flex;
-            overflow-x: auto;
-            gap: 2rem;
-            padding: 1rem 0;
-            scroll-behavior: smooth;
-            scrollbar-width: thin;
-            scrollbar-color: #d4af37 #f5f5f5;
-        }
-
-        .collection-grid::-webkit-scrollbar {
-            height: 10px;
-        }
-
-        .collection-grid::-webkit-scrollbar-track {
-            background: #f5f5f5;
-            border-radius: 10px;
-        }
-
-        .collection-grid::-webkit-scrollbar-thumb {
-            background: #d4af37;
-            border-radius: 10px;
-        }
-
-        .collection-grid::-webkit-scrollbar-thumb:hover {
-            background: #f0c14b;
-        }
-
-        .collection-card {
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            min-width: 300px;
-            flex-shrink: 0;
-        }
-
-        .collection-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .collection-image {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: #d4af37;
-        }
-
-        .collection-content {
-            padding: 1.5rem;
-        }
-
-        .collection-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: #2d2d2d;
-        }
-
-        .collection-content p {
-            color: #666;
+        .section-intro h2 {
+            font-size: 2.2rem;
             margin-bottom: 1rem;
+            font-family: 'Georgia', serif;
+            position: relative;
+            padding-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .explore-link {
-            color: #d4af37;
+        .section-intro h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        /* --- Full Catalog Callout Section --- */
+        .catalog-section {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .catalog-content h2 {
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+        }
+
+        .catalog-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .catalog-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--gold);
+            color: var(--dark);
             text-decoration: none;
             font-weight: bold;
-            display: inline-flex;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .catalog-btn:hover {
+            background: var(--gold-hover);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        /* --- Materials Sections --- */
+        .service-row {
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: gap 0.3s;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            transition: var(--transition);
         }
 
-        .explore-link:hover {
-            gap: 1rem;
+        .service-row:nth-child(even) { flex-direction: row-reverse; }
+
+        .service-image {
+            flex: 1;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: var(--transition);
         }
 
-        footer {
-            background: #1a1a1a;
-            color: #fff;
-            text-align: center;
+        .service-image img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .service-text { 
+            flex: 1; 
             padding: 2rem;
-            margin-top: 4rem;
+            transition: var(--transition);
+            border-radius: 8px;
         }
 
-        footer p {
-            margin-bottom: 1rem;
+        .service-text:hover {
+            transform: translateY(-10px);
+            background: var(--white);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .service-text h3 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-family: 'Georgia', serif;
+        }
+
+        .expertise-bg { background-color: var(--light-gray); }
+
+        /* --- Expertise Grid Cards --- */
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .expertise-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 4px;
+            border: 1px solid #eee;
+            transition: var(--transition);
+        }
+
+        .expertise-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-color: var(--gold);
+        }
+
+        .expertise-card h4 {
+            color: var(--gold);
+            font-family: 'Georgia', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Newsletter Section --- */
+        .newsletter-section {
+            background-color: var(--light-gray);
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        .newsletter-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 1rem 2.5rem;
+            border: 2px solid var(--gold);
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .newsletter-btn:hover {
+            background-color: var(--gold);
+            color: var(--white);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        /* --- Map & Contact Section --- */
+        .map-container {
+            width: 100%;
+            height: 450px;
+            margin-top: 4rem;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: var(--white);
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #eee;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            border-color: var(--gold);
+        }
+
+        .info-card h4 {
+            margin-bottom: 0.8rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--dark);
+            color: #fff;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .social-links {
             display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
+            gap: 1rem;
+            align-items: center;
         }
 
         .social-links a {
-            color: #d4af37;
+            color: #fff;
             text-decoration: none;
-            font-size: 1.2rem;
-            transition: color 0.3s;
+            font-size: 0.75rem;
+            padding: 8px 18px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            transition: var(--transition);
         }
 
         .social-links a:hover {
-            color: #f0c14b;
+            background: var(--gold);
+            color: var(--dark);
+            transform: translateY(-3px);
         }
 
+        .copyright { text-align: center; font-size: 0.8rem; opacity: 0.5; padding-top: 2rem; }
+
         @media (max-width: 768px) {
-            .logo {
-                font-size: 1.3rem;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            nav ul {
-                position: fixed;
-                top: 60px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 60px);
-                background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-                flex-direction: column;
-                gap: 0;
-                padding: 2rem 0;
-                transition: left 0.3s ease;
-            }
-
-            nav ul.active {
-                left: 0;
-            }
-
-            nav ul li {
-                width: 100%;
-                text-align: center;
-                padding: 1rem 0;
-                border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            }
-
-            nav a {
-                font-size: 1.1rem;
-                display: block;
-                padding: 0.5rem;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-content p {
-                font-size: 1.2rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .scroll-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
-            }
-
-            .collection-card {
-                min-width: 260px;
-            }
+            .service-row, .service-row:nth-child(even) { flex-direction: column; text-align: center; }
+            .service-image img { height: 300px; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .contact-info-grid { grid-template-columns: 1fr; }
+            .footer-content { flex-direction: column; gap: 2rem; }
+            nav ul { display: none; }
         }
     </style>
 </head>
 <body>
+
     <header>
         <nav>
-            <div class="logo">SALEH JEWELERS</div>
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-            <ul id="nav-menu">
-                <li><a href="#home" onclick="closeMenu()">Home</a></li>
-                <li><a href="#collections" onclick="closeMenu()">Collections</a></li>
-                <li><a href="#about" onclick="closeMenu()">About</a></li>
-                <li><a href="contact_page.html" onclick="closeMenu()">Contact</a></li>
+            <a href="#home" class="logo">SALEH <span>JEWELERS</span></a>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#materials">Materials</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#catalog">Catalog</a></li>
+                <li><a href="#newsletter">Newsletter</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -366,280 +391,145 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>Timeless Elegance</h1>
-            <p>Discover our exquisite collection of fine jewelry</p>
-            <a href="#collections" class="cta-button">Explore Collections</a>
+            <p>The Standard of Excellence</p>
         </div>
     </section>
 
-    <section class="collections" id="collections">
-        <div class="collection-section" id="chains-section">
-            <div class="section-header">
-                <h2 class="section-title">Chains</h2>
-                <div class="scroll-buttons">
-                    <button class="scroll-btn" onclick="scrollCollection('chains', 'left')">‹</button>
-                    <button class="scroll-btn" onclick="scrollCollection('chains', 'right')">›</button>
-                </div>
+    <section class="section-padding container" id="materials">
+        <div class="section-intro">
+            <h2>The Materials</h2>
+            <p>We source the finest precious metals and gemstones to ensure every piece is a legacy.</p>
+        </div>
+
+        <div class="service-row">
+            <div class="service-image">
+                <img src="https://images.unsplash.com/photo-1610992015732-2449b0c26670?auto=format&fit=crop&q=80&w=800" alt="Gold Fine Jewelry">
             </div>
-            <div class="collection-grid" id="chains-grid">
-                <div class="collection-card">
-                    <div class="collection-image">⛓️</div>
-                    <div class="collection-content">
-                        <h3>Gold Cuban Link</h3>
-                        <p>18K gold Cuban link chain with classic design and superior craftsmanship.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">⛓️</div>
-                    <div class="collection-content">
-                        <h3>Silver Rope Chain</h3>
-                        <p>Sterling silver rope chain with intricate twisted pattern.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">⛓️</div>
-                    <div class="collection-content">
-                        <h3>Diamond Tennis</h3>
-                        <p>Luxurious diamond tennis chain featuring brilliant-cut stones.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">⛓️</div>
-                    <div class="collection-content">
-                        <h3>Box Chain</h3>
-                        <p>Elegant box chain perfect for pendants and everyday wear.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
+            <div class="service-text">
+                <h3>Pure & Solid Gold</h3>
+                <p>Specializing in 18K and 22K yellow, white, and rose gold. Our gold works are hand-finished to a mirror shine, providing a rich, warm glow that only high-purity metal can offer.</p>
             </div>
         </div>
 
-        <div class="collection-section" id="pendants-section">
-            <div class="section-header">
-                <h2 class="section-title">Pendants</h2>
-                <div class="scroll-buttons">
-                    <button class="scroll-btn" onclick="scrollCollection('pendants', 'left')">‹</button>
-                    <button class="scroll-btn" onclick="scrollCollection('pendants', 'right')">›</button>
-                </div>
+        <div class="service-row">
+            <div class="service-image">
+                <img src="https://images.unsplash.com/photo-1573408302355-4e0b77941447?auto=format&fit=crop&q=80&w=800" alt="Brilliant Cut Diamonds">
             </div>
-            <div class="collection-grid" id="pendants-grid">
-                <div class="collection-card">
-                    <div class="collection-image">💎</div>
-                    <div class="collection-content">
-                        <h3>Sapphire Drop</h3>
-                        <p>Stunning blue sapphire pendant with halo diamond setting.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">💎</div>
-                    <div class="collection-content">
-                        <h3>Heart Locket</h3>
-                        <p>Classic gold heart locket with space for cherished photos.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">💎</div>
-                    <div class="collection-content">
-                        <h3>Emerald Pendant</h3>
-                        <p>Natural emerald surrounded by brilliant white diamonds.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">💎</div>
-                    <div class="collection-content">
-                        <h3>Cross Pendant</h3>
-                        <p>Diamond-studded cross pendant with timeless spiritual design.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
+            <div class="service-text">
+                <h3>Brilliant Diamonds</h3>
+                <p>From GIA-certified solitaires to intricate pavé designs, our diamonds are selected for superior fire and brilliance. We focus on ethical sourcing and precision setting.</p>
             </div>
         </div>
 
-        <div class="collection-section" id="rings-section">
-            <div class="section-header">
-                <h2 class="section-title">Rings</h2>
-                <div class="scroll-buttons">
-                    <button class="scroll-btn" onclick="scrollCollection('rings', 'left')">‹</button>
-                    <button class="scroll-btn" onclick="scrollCollection('rings', 'right')">›</button>
-                </div>
+        <div class="service-row">
+            <div class="service-image">
+                <img src="https://images.unsplash.com/photo-1626784215021-2e39ccf971cd?auto=format&fit=crop&q=80&w=800" alt="Sterling Silver">
             </div>
-            <div class="collection-grid" id="rings-grid">
-                <div class="collection-card">
-                    <div class="collection-image">💍</div>
-                    <div class="collection-content">
-                        <h3>Solitaire Diamond</h3>
-                        <p>Classic solitaire engagement ring with round brilliant diamond.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">💍</div>
-                    <div class="collection-content">
-                        <h3>Wedding Band</h3>
-                        <p>Timeless platinum wedding band with comfort fit design.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">💍</div>
-                    <div class="collection-content">
-                        <h3>Ruby Statement</h3>
-                        <p>Bold ruby cocktail ring with intricate gold detailing.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">💍</div>
-                    <div class="collection-content">
-                        <h3>Eternity Band</h3>
-                        <p>Diamond eternity band symbolizing endless love and commitment.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
+            <div class="service-text">
+                <h3>Premium Silver</h3>
+                <p>Our sterling silver collection is designed for the modern lifestyle, featuring rhodium plating to prevent tarnishing and ensure a long-lasting, brilliant white finish.</p>
             </div>
         </div>
+    </section>
 
-        <div class="collection-section" id="earrings-section">
-            <div class="section-header">
-                <h2 class="section-title">Earrings</h2>
-                <div class="scroll-buttons">
-                    <button class="scroll-btn" onclick="scrollCollection('earrings', 'left')">‹</button>
-                    <button class="scroll-btn" onclick="scrollCollection('earrings', 'right')">›</button>
-                </div>
-            </div>
-            <div class="collection-grid" id="earrings-grid">
-                <div class="collection-card">
-                    <div class="collection-image">✨</div>
-                    <div class="collection-content">
-                        <h3>Diamond Studs</h3>
-                        <p>Timeless diamond stud earrings in 14K white gold settings.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">✨</div>
-                    <div class="collection-content">
-                        <h3>Pearl Drops</h3>
-                        <p>Elegant freshwater pearl drop earrings with gold accents.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">✨</div>
-                    <div class="collection-content">
-                        <h3>Hoop Earrings</h3>
-                        <p>Classic gold hoop earrings with diamond pavé detailing.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">✨</div>
-                    <div class="collection-content">
-                        <h3>Chandelier Style</h3>
-                        <p>Glamorous chandelier earrings perfect for special occasions.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
-                </div>
-            </div>
+    <section class="catalog-section" id="catalog">
+        <div class="container catalog-content">
+            <h2>View Our Full Catalog</h2>
+            <p>Browse our extensive collection of fine jewelry, bridal sets, and luxury timepieces through our official showcase portal.</p>
+            <a href="https://salehjewelery.jewelershowcase.com/" target="_blank" class="catalog-btn">Enter Online Showcase</a>
         </div>
+    </section>
 
-        <div class="collection-section" id="watches-section">
-            <div class="section-header">
-                <h2 class="section-title">Watches</h2>
-                <div class="scroll-buttons">
-                    <button class="scroll-btn" onclick="scrollCollection('watches', 'left')">‹</button>
-                    <button class="scroll-btn" onclick="scrollCollection('watches', 'right')">›</button>
-                </div>
+    <section class="section-padding expertise-bg" id="services">
+        <div class="container">
+            <div class="section-intro">
+                <h2>Our Expertise</h2>
+                <p>Professional care and bespoke craftsmanship for your most cherished items.</p>
             </div>
-            <div class="collection-grid" id="watches-grid">
-                <div class="collection-card">
-                    <div class="collection-image">⌚</div>
-                    <div class="collection-content">
-                        <h3>Automatic Classic</h3>
-                        <p>Swiss automatic movement with sapphire crystal and leather strap.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
+
+            <div class="expertise-grid">
+                <div class="expertise-card">
+                    <h4>Watch Repair</h4>
+                    <p>Expert servicing for luxury and mechanical timepieces. From movement overhauls to crystal replacement and water-resistance testing.</p>
                 </div>
-                <div class="collection-card">
-                    <div class="collection-image">⌚</div>
-                    <div class="collection-content">
-                        <h3>Diamond Bezel</h3>
-                        <p>Luxury timepiece featuring diamond-encrusted bezel and bracelet.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
+                <div class="expertise-card">
+                    <h4>Battery Replacement</h4>
+                    <p>On-site high-quality battery installation while you wait. We service all major brands ensuring proper seals are maintained.</p>
                 </div>
-                <div class="collection-card">
-                    <div class="collection-image">⌚</div>
-                    <div class="collection-content">
-                        <h3>Dress Watch</h3>
-                        <p>Elegant dress watch with slim profile and minimalist design.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
+                <div class="expertise-card">
+                    <h4>Jewelry Repair</h4>
+                    <p>Master goldsmithing services including chain soldering, prong rebuilding, and expert stone resetting to keep your jewelry secure.</p>
                 </div>
-                <div class="collection-card">
-                    <div class="collection-image">⌚</div>
-                    <div class="collection-content">
-                        <h3>Sport Chronograph</h3>
-                        <p>Precision chronograph with water resistance and durable build.</p>
-                        <!-- <a href="#" class="explore-link">View Details →</a> -->
-                    </div>
+                <div class="expertise-card">
+                    <h4>Jewelry Cleaning</h4>
+                    <p>Professional ultrasonic and steam cleaning treatments that restore the original fire and sparkle to your gemstones and metals.</p>
+                </div>
+                <div class="expertise-card">
+                    <h4>Custom Jewelry</h4>
+                    <p>From sketch to reality. We offer bespoke 3D modeling and hand-casting services to create a piece that is uniquely yours.</p>
+                </div>
+                <div class="expertise-card">
+                    <h4>Engraving</h4>
+                    <p>Personalize your treasures with precision laser engraving. Ideal for wedding bands, timepieces, and commemorative gifts.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer id="contact">
-        <p>&copy; 2025 Saleh Jewelers. All rights reserved.</p>
-        <div class="social-links">
-            <a href="#">Facebook</a>
-            <a href="https://instagram.com/salehjewelers" target="_blank" rel="noopener noreferrer">Instagram</a>
-            <!-- <a href="#">Pinterest</a> -->
+    <section class="section-padding newsletter-section" id="newsletter">
+        <div class="container">
+            <div class="section-intro" style="margin-bottom: 1rem;">
+                <h2>Stay Connected</h2>
+                <p>Be the first to hear about new collections, exclusive events, and jewelry care tips.</p>
+                <a href="#" class="newsletter-btn">Join Our Newsletter</a>
+            </div>
         </div>
+    </section>
+
+    <section class="section-padding container" id="contact">
+        <div class="section-intro">
+            <h2>Visit Our Showroom</h2>
+            <p>Located next to Piedmont UrgentCare. We look forward to seeing you.</p>
+        </div>
+
+        <div class="contact-info-grid">
+            <div class="info-card">
+                <h4>Location</h4>
+                <p>3330 Sugarloaf Parkway, Lawrenceville<br>Suite OL1B, NY 10001</p>
+            </div>
+            <div class="info-card">
+                <h4>Contact</h4>
+                <p>Phone: (678) 404-2048<br>Email: salehjewelersatl@gmail.com</p>
+            </div>
+            <div class="info-card">
+                <h4>Hours</h4>
+                <p>Mon - Sat: 10:00 AM - 6:00 PM<br>Sun: 11:00 AM - 6:00 PM</p>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.15830869428!2d-74.119763973046!3d40.69766374874431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1676912345678!5m2!1sen!2sus" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo" style="color: white;">SALEH <span>JEWELERS</span></div>
+            <div class="social-links">
+                <a href="#">FACEBOOK</a>
+                <a href="https://instagram.com/salehjewelers" target="_blank">INSTAGRAM</a>
+                <a href="#">TIKTOK</a>
+            </div>
+        </div>
+        <p class="copyright">© 2025 Saleh Jewelers. All rights reserved.</p>
     </footer>
 
-    <script>
-        // Toggle mobile menu
-        function toggleMenu() {
-            const menu = document.getElementById('nav-menu');
-            menu.classList.toggle('active');
-        }
-
-        // Close mobile menu
-        function closeMenu() {
-            const menu = document.getElementById('nav-menu');
-            menu.classList.remove('active');
-        }
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Horizontal scrolling for collections
-        function scrollCollection(section, direction) {
-            const grid = document.getElementById(section + '-grid');
-            const scrollAmount = 320; // card width + gap
-            
-            if (direction === 'left') {
-                grid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-            } else {
-                grid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-            }
-        }
-    </script>
 </body>
 </html>

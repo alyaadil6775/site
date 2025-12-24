@@ -290,6 +290,36 @@
                     </div>
                 </div>
                 
+                <!-- Referral Information Section -->
+                <div class="form-section">
+                    <h3 class="section-title">Referral Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="FindUs" class="form-label">How did you find us?</label>
+                            <select class="form-select" name="How did you find us?" id="FindUs">
+                                <option value="" selected>Select an option</option>
+                                <option value="Storefront / Passing By">Storefront / Passing By</option>
+                                <option value="Word-of-mouth">Word-of-mouth</option>
+                                <option value="Google / Google Maps">Google / Google Maps</option>
+                                <option value="Bing">Bing</option>
+                                <option value="Apple Maps">Apple Maps</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div class="field-info">Optional field</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other Details Field - Initially Hidden -->
+                    <div class="form-row" id="OtherDetailsContainer" style="display: none;">
+                        <div class="form-group">
+                            <label for="OtherDetails" class="form-label">Please specify</label>
+                            <input type="text" name="Other Details" class="form-control" id="OtherDetails" 
+                                   placeholder="Please specify how you found us">
+                            <div class="field-info">Please provide details about how you found us</div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="divider"></div>
                 
                 <div class="text-center">
@@ -312,6 +342,21 @@
         $(document).ready(function () {
             let isSubmitting = false;
             
+            // Handle "How did you find us?" dropdown change
+            $("#FindUs").change(function() {
+                const selectedValue = $(this).val();
+                
+                if (selectedValue === "Other") {
+                    // Show the Other Details input field
+                    $("#OtherDetailsContainer").show();
+                    $("#OtherDetails").prop("disabled", false);
+                } else {
+                    // Hide the Other Details input field
+                    $("#OtherDetailsContainer").hide();
+                    $("#OtherDetails").prop("disabled", true).val("");
+                }
+            });
+            
             // Form submission handler
             $("form").submit(function (e) {
                 // Prevent double submission
@@ -328,6 +373,37 @@
                     alert("Please enter a valid email address");
                     e.preventDefault();
                     return false;
+                }
+                
+                // Handle "Other" selection logic
+                const findUsDropdown = $("#FindUs");
+                const otherDetails = $("#OtherDetails");
+                
+                if (findUsDropdown.val() === "Other") {
+                    // If user selected "Other" and provided details
+                    if (otherDetails.val().trim() !== "") {
+                        // Create a new value that combines "Other: " with the user's input
+                        const customValue = "Other: " + otherDetails.val().trim();
+                        
+                        // Create a temporary option element with the custom value
+                        const tempOption = $("<option></option>")
+                            .val(customValue)
+                            .text(customValue)
+                            .prop("selected", true);
+                        
+                        // Replace the "Other" option with our custom option
+                        findUsDropdown.find('option[value="Other"]').replaceWith(tempOption);
+                        
+                        // Also update the select value
+                        findUsDropdown.val(customValue);
+                    } else {
+                        // If user selected "Other" but didn't provide details, keep it as just "Other"
+                        // Show warning but allow submission
+                        if (!confirm("You selected 'Other' but didn't provide details. Would you like to continue with just 'Other'?")) {
+                            e.preventDefault();
+                            return false;
+                        }
+                    }
                 }
                 
                 // If validation passes, show loading state but DON'T prevent default form submission
@@ -352,7 +428,4 @@
         });
     </script>
 </body>
-
 </html>
-
-

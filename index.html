@@ -256,20 +256,64 @@
             letter-spacing: 1px;
         }
 
-        /* --- Newsletter Section --- */
-        .newsletter-section {
-            background-color: var(--light-gray);
+        /* --- Full Services List Styling --- */
+        .full-services-list {
+            text-align: center;
+            margin-top: 5rem;
+            padding-top: 3rem;
             border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
+        }
+
+        .full-services-list h3 {
+            font-family: 'Georgia', serif;
+            font-size: 1.5rem;
+            color: var(--dark);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2.5rem;
+        }
+
+        .services-columns {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .service-item {
+            font-size: 0.95rem;
+            color: var(--text);
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .service-item::before {
+            content: "•";
+            color: var(--gold);
+            font-weight: bold;
+            display: inline-block; 
+            width: 1em;
+            margin-right: 0.5rem;
+        }
+
+        /* --- Newsletter Section with Background Image --- */
+        .newsletter-section {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1573408302382-90cd270b217e?auto=format&fit=crop&q=80&w=1600') center/cover fixed;
+            color: white;
             text-align: center;
         }
+
+        .newsletter-section h2 { color: var(--gold); }
 
         .newsletter-btn {
             display: inline-block;
             margin-top: 1rem;
             padding: 1rem 2.5rem;
             border: 2px solid var(--gold);
-            color: var(--dark);
+            color: white;
             text-decoration: none;
             font-weight: bold;
             text-transform: uppercase;
@@ -279,9 +323,9 @@
 
         .newsletter-btn:hover {
             background-color: var(--gold);
-            color: var(--white);
+            color: var(--dark);
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
         }
 
         /* --- Map & Contact Section --- */
@@ -369,6 +413,7 @@
             .hero-content h1 { font-size: 2.2rem; }
             .contact-info-grid { grid-template-columns: 1fr; }
             .footer-content { flex-direction: column; gap: 2rem; }
+            .services-columns { grid-template-columns: 1fr; padding-left: 2rem; }
             nav ul { display: none; }
         }
     </style>
@@ -404,7 +449,7 @@
 
         <div class="service-row">
             <div class="service-image">
-                <img src="https://unsplash.com/photos/gold-diamond-studded-ring-on-white-textile-Pxexdj3Q09g?auto=format&fit=crop&q=80&w=800" alt="Gold Fine Jewelry">
+                <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&q=80&w=800" alt="Gold Fine Jewelry">
             </div>
             <div class="service-text">
                 <h3>Pure & Solid Gold</h3>
@@ -414,7 +459,7 @@
 
         <div class="service-row">
             <div class="service-image">
-                <img src="https://unsplash.com/photos/a-close-up-of-a-ring-in-a-case-TLHbJJ7mE7U?auto=format&fit=crop&q=80&w=800" alt="Brilliant Cut Diamonds">
+                <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&q=80&w=800" alt="Brilliant Cut Diamonds">
             </div>
             <div class="service-text">
                 <h3>Brilliant Diamonds</h3>
@@ -474,6 +519,31 @@
                     <p>Personalize your treasures with precision engraving. Ideal for wedding bands, timepieces, and commemorative gifts.</p>
                 </div>
             </div>
+
+            <div class="full-services-list">
+                <h3>Our Full Range of Master Services</h3>
+                <div class="services-columns">
+                    <div class="service-item">Bracelet Repair</div>
+                    <div class="service-item">Earring Repair</div>
+                    <div class="service-item">Jewelry Chain Repair</div>
+                    <div class="service-item">Jewelry Clasp Replacement</div>
+                    <div class="service-item">Jewelry Cleaning & Polish</div>
+                    <div class="service-item">Jewelry Redesign</div>
+                    <div class="service-item">Jewelry Restoration</div>
+                    <div class="service-item">Jewelry Stone Mounting/Setting</div>
+                    <div class="service-item">Jewelry Stone Replacement</div>
+                    <div class="service-item">Laser Welding</div>
+                    <div class="service-item">Necklace Repair</div>
+                    <div class="service-item">Pearl Restringing</div>
+                    <div class="service-item">Prong Repair</div>
+                    <div class="service-item">Rhodium Plating</div>
+                    <div class="service-item">Ring Repair</div>
+                    <div class="service-item">Ring Reshaping</div>
+                    <div class="service-item">Ring Resizing</div>
+                    <div class="service-item">Same Day Service</div>
+                    <div class="service-item">Watch crystal replacement</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -525,9 +595,9 @@
         <div class="footer-content">
             <div class="logo" style="color: white;">SALEH <span>JEWELERS</span></div>
             <div class="social-links">
-                <a href="#">FACEBOOK</a>
+                <a href="https://facebook.com/saleh.ritejewelers">FACEBOOK</a>
                 <a href="https://instagram.com/salehjewelers" target="_blank">INSTAGRAM</a>
-                <a href="#">TIKTOK</a>
+                <!-- <a href="#">TIKTOK</a> -->
             </div>
         </div>
         <p class="copyright">© 2025 Saleh Jewelers. All rights reserved.</p>

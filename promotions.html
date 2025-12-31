@@ -31,7 +31,7 @@
             background-color: var(--white);
         }
 
-        /* --- Shared Navigation --- */
+        /* --- Header & Navigation --- */
         header {
             background: rgba(255, 255, 255, 0.98);
             padding: 1rem 0;
@@ -65,7 +65,7 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1.5rem; /* Adjusted gap to fit the extra link */
         }
 
         nav a {
@@ -105,7 +105,6 @@
             margin: 4rem auto;
             padding: 0 2rem;
             display: flex;
-            /* Mobile-first: Repair on top, Jewelry on bottom */
             flex-direction: column; 
             gap: 3rem;
         }
@@ -128,14 +127,8 @@
 
         /* --- Pop Card Effects --- */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .offer-card {
@@ -180,7 +173,7 @@
         /* --- Desktop View: Side by Side --- */
         @media (min-width: 768px) {
             .promo-container {
-                flex-direction: row; /* Repair (Left), Jewelry (Right) */
+                flex-direction: row; 
                 align-items: flex-start;
             }
         }
@@ -242,7 +235,7 @@
                 <li><a href="index.html#materials">Materials</a></li>
                 <li><a href="index.html#services">Services</a></li>
                 <li><a href="index.html#catalog">Catalog</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="index.html#newsletter">Newsletter</a></li> <li><a href="index.html#contact">Contact</a></li>
             </ul>
         </nav>
     </header>

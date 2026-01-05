@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saleh Jewelers | Fine Jewelry & Master Services</title>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QDE0ECDJ2E"></script>
     <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-QDE0ECDJ2E'); </script>
-    <link rel="icon" href="https://www.polisheddiamonds.co.nz/wp-content/uploads/2023/02/lab-grown-diamond.png"
-        type="image/x-icon">
+    <link rel="icon" href="https://www.polisheddiamonds.co.nz/wp-content/uploads/2023/02/lab-grown-diamond.png" type="image/x-icon">
 
     <style>
         :root {
@@ -33,6 +31,7 @@
             color: var(--text);
             scroll-behavior: smooth;
             background-color: var(--white);
+            overflow-x: hidden; /* Prevents side-scrolling when menu is hidden */
         }
 
         /* --- Navigation --- */
@@ -62,6 +61,7 @@
             letter-spacing: 2px;
             color: var(--dark);
             text-decoration: none;
+            z-index: 1001; /* Keep logo above sidebar */
         }
 
         .logo span { color: var(--gold); }
@@ -69,7 +69,7 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 1.5rem; /* Slightly reduced gap to accommodate extra link */
+            gap: 1.5rem;
         }
 
         nav a {
@@ -83,6 +83,23 @@
         }
 
         nav a:hover { color: var(--gold); }
+
+        /* --- Mobile Menu Toggle --- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            z-index: 1001;
+        }
+
+        .menu-toggle .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
 
         /* --- Hero Section --- */
         .hero {
@@ -369,6 +386,43 @@
             font-size: 0.9rem;
         }
 
+        /* --- Mobile Responsive Navigation --- */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex; /* Show hamburger only on mobile */
+            }
+
+            nav ul {
+                position: fixed;
+                right: -100%; /* Hidden off-screen */
+                top: 0;
+                flex-direction: column;
+                background-color: var(--white);
+                width: 75%;
+                height: 100vh;
+                padding: 100px 2rem;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+                transition: var(--transition);
+                gap: 2rem;
+            }
+
+            nav ul.active {
+                right: 0; /* Slide into view */
+            }
+
+            /* Hamburger to X Animation */
+            .menu-toggle.is-active .bar:nth-child(2) { opacity: 0; }
+            .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+            .service-row, .service-row:nth-child(even) { flex-direction: column; text-align: center; }
+            .service-image img { height: 300px; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .contact-info-grid { grid-template-columns: 1fr; }
+            .footer-content { flex-direction: column; gap: 2rem; }
+            .services-columns { grid-template-columns: 1fr; padding-left: 2rem; }
+        }
+
         /* --- Footer --- */
         footer {
             background: var(--dark);
@@ -408,16 +462,6 @@
         }
 
         .copyright { text-align: center; font-size: 0.8rem; opacity: 0.5; padding-top: 2rem; }
-
-        @media (max-width: 768px) {
-            .service-row, .service-row:nth-child(even) { flex-direction: column; text-align: center; }
-            .service-image img { height: 300px; }
-            .hero-content h1 { font-size: 2.2rem; }
-            .contact-info-grid { grid-template-columns: 1fr; }
-            .footer-content { flex-direction: column; gap: 2rem; }
-            .services-columns { grid-template-columns: 1fr; padding-left: 2rem; }
-            nav ul { display: none; }
-        }
     </style>
 </head>
 <body>
@@ -425,7 +469,14 @@
     <header>
         <nav>
             <a href="#home" class="logo">SALEH <span>JEWELERS</span></a>
-            <ul>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <ul id="nav-list">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#materials">Materials</a></li>
                 <li><a href="#services">Services</a></li>
@@ -604,6 +655,24 @@
         </div>
         <p class="copyright">© 2026 Saleh Jewelers. All rights reserved.</p>
     </footer>
+
+    <script>
+        const menu = document.querySelector('#mobile-menu');
+        const navLinks = document.querySelector('#nav-list');
+
+        menu.addEventListener('click', function() {
+            menu.classList.toggle('is-active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close the sidebar when a link is clicked
+        document.querySelectorAll('#nav-list a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('is-active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
 
 </body>
 </html>

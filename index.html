@@ -748,6 +748,13 @@
                 closeModal();
             }
         };
+
+        // Listen for the "closeMe" signal from the Customer.html iframe
+        window.addEventListener("message", (event) => {
+            if (event.data === "closeMe") {
+                closeModal();
+            }
+        }, false);
     </script>
 
 </body>

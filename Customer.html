@@ -328,6 +328,16 @@
             font-size: 0.9rem;
         }
 
+        // Update your existing setTimeout function inside Customer.html:
+                setTimeout(function() {
+                    $("#successMessage").show();
+                    $("#loadingContainer").hide();
+                    $("form").hide();
+
+                    // ADD THIS LINE: It tells index.html to close the popup
+                    window.parent.postMessage("closeMe", "*");
+                }, 2000);
+
         .divider::before, .divider::after {
             content: "";
             flex: 1;
@@ -837,3 +847,4 @@
     </script>
 </body>
 </html>
+

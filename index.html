@@ -275,6 +275,52 @@
             letter-spacing: 1px;
         }
 
+        /* --- Popup Modal Styles --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-container {
+            position: relative;
+            background: #fff;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 850px;
+            height: 85vh;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            animation: modalFadeIn 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 25px;
+            top: 20px;
+            font-size: 35px;
+            cursor: pointer;
+            color: var(--dark);
+            z-index: 2001;
+            line-height: 1;
+        }
+
+        iframe#customer-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         /* --- Full Services List Styling --- */
         .full-services-list {
             text-align: center;
@@ -465,7 +511,12 @@
     </style>
 </head>
 <body>
-
+    <div id="newsletterModal" class="modal-overlay">
+        <div class="modal-container">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <iframe src="Customer.html" id="customer-frame"></iframe>
+        </div>
+    </div>
     <header>
         <nav>
             <a href="#home" class="logo">SALEH <span>JEWELERS</span></a>
@@ -672,6 +723,31 @@
                 navLinks.classList.remove('active');
             });
         });
+
+        // --- Popup Modal Logic ---
+        const modal = document.getElementById('newsletterModal');
+
+        function openModal() {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; 
+        }
+
+        // Open 1 second after page load
+        window.addEventListener('load', () => {
+            setTimeout(openModal, 1000); 
+        });
+
+        // Close if user clicks outside the modal box
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        };
     </script>
 
 </body>

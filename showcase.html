@@ -30,7 +30,7 @@
             line-height: 1.6;
             color: var(--text);
             background-color: var(--white);
-            overflow: hidden; /* Prevent double scrollbars (body + iframe) */
+            overflow: hidden; /* Important: prevents the main page from scrolling separately from the iframe */
         }
 
         /* --- Navigation --- */
@@ -102,10 +102,11 @@
 
         /* --- Iframe Container --- */
         .iframe-wrapper {
-            margin-top: 70px; /* Offset for the fixed header */
+            margin-top: 70px; /* Offset for header */
             width: 100%;
-            height: calc(100vh - 70px); /* Fill remaining viewport height */
+            height: calc(100vh - 70px); /* Fill remaining screen */
             background: #fff;
+            overflow: hidden;
         }
 
         iframe.main-content {
@@ -165,7 +166,15 @@
     </header>
 
     <main class="iframe-wrapper">                    
-             <iframe style="width: 1px; min-width: 100%;" scrolling="yes" width="100%" height="1500px" frameborder="0" sandbox="allow-scripts allow-forms allow-same-origin" src="https://salehjewelery-frame-categoryembed.jewelershowcase.com/"></iframe>
+        <iframe 
+            class="main-content"
+            style="width: 1px; min-width: 100%;" 
+            scrolling="yes" 
+            frameborder="0" 
+            /* Added allow-popups and allow-modals for the selection bar dropdowns */
+            sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-modals" 
+            src="https://salehjewelery-frame-categoryembed.jewelershowcase.com/">
+        </iframe>
     </main>
 
     <script>

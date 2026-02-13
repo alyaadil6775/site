@@ -1,258 +1,503 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Unsubscribe Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsubscribe | Saleh Jewelers</title>
     <link rel="icon" href="https://www.polisheddiamonds.co.nz/wp-content/uploads/2023/02/lab-grown-diamond.png"
         type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/main.css">
     <style>
-        @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
-
-        body {
-            background-color: #e6e6e6;
-            font-size: 100%;
-            font-family: "Lato", sans-serif;
-            font-weight: 400;
+        /* Unsubscribe page specific styles */
+        .unsubscribe-page {
+            min-height: calc(100vh - 200px);
+            padding: 6rem 0;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        div,
-        textarea,
-        input {
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-
-        .container {
-            max-width: 510px;
-            min-width: 324px;
-            margin: 50px auto 0px;
-            background-color: #fff;
-            border: 1px solid #cfcfcf;
-            border-bottom: 3px solid #ccc;
-        }
-
-        .row {
-            width: fit-content;
-            /* margin: 0 0 1em 0; */
-            padding: 0 2.5em;
-        }
-
-        .row.header {
-            padding: 1.5em 2.5em;
-            border-bottom: 1px solid #ccc;
-            background: url(https://images2.imgbox.com/a5/2e/m3lRbCCA_o.jpg) left -80px;
-            color: #fff;
-        }
-
-        .row.body {
-            padding: 0.5em 2.5em 1em;
-        }
-
-        .pull-right {
-            float: right;
-        }
-
-        h1 {
-            font-family: "Lato", sans-serif;
-            font-weight: 300;
-            display: inline-block;
-            font-weight: 100;
-            font-size: 2.8125em;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            margin: 0 0 0.1em 0;
-            padding: 0 0 0.4em 0;
-        }
-
-        h3 {
-            font-family: "Lato", sans-serif;
-            font-weight: 400;
-            font-size: 1.25em;
-            margin: 1em 0 0.4em 0;
-        }
-
-        .btn {
-            font-size: 1.0625em;
-            display: inline-block;
-            padding: 0.74em 1.5em;
-            margin: 1.5em 0 0;
-            color: #fff;
-            border-width: 0 0 0 0;
-            border-bottom: 5px solid;
-            text-transform: uppercase;
-            background-color: #b3b3b3;
-            border-bottom-color: #8c8c8c;
-            font-family: "Lato", sans-serif;
-            font-weight: 300;
-        }
-
-        .btn:hover {
-            background-color: #bfbfbf;
-        }
-
-        .btn.btn-submit {
-            background-color: #4f6fad;
-            border-bottom-color: #374d78;
-        }
-
-        .btn.btn-submit:hover {
-            background-color: #5f7db6;
-        }
-
-        form {
-            max-width: 100%;
-            display: block;
-        }
-
-        form ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        form ul li {
-            margin: 0 0 0.25em 0;
-            clear: both;
-            display: inline-block;
+        
+        .unsubscribe-container {
+            max-width: 600px;
             width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-
-        form ul li:last-child {
-            margin: 0;
+        
+        .unsubscribe-card {
+            background-color: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 4rem 3rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
         }
-
-        form ul li p {
-            margin: 0;
-            padding: 0;
-            /* float: left; */
-        }
-
-        form ul li p.right {
-            float: right;
-        }
-
-        form ul li .divider {
-            margin: 0.5em 0 0.5em 0;
-            border: 0;
-            height: 1px;
+        
+        .unsubscribe-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, var(--accent), var(--accent-dark));
+        }
+        
+        .unsubscribe-icon {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            height: 100px;
+            width: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(201, 168, 122, 0.1);
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            animation: gentleFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .unsubscribe-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .unsubscribe-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+        
+        .unsubscribe-form {
+            margin-top: 3rem;
+        }
+        
+        .unsubscribe-form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .unsubscribe-form-label {
             display: block;
-            background-color: #4f6fad;
-            background-image: linear-gradient(to right, #ee9cb4, #4f6fad);
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            text-align: left;
         }
-
-        .req {
-            color: #ee9cb4;
+        
+        .unsubscribe-input-with-icon {
+            position: relative;
         }
-
-        form label {
-            display: block;
-            margin: 0 0 0.5em 0;
-            color: #4f6fad;
-            font-size: 1em;
+        
+        .unsubscribe-input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+            font-size: 1.2rem;
+            z-index: 2;
         }
-
-        form input {
-            margin: 0 0 0.5em 0;
-            border: 1px solid #ccc;
-            padding: 6px 10px;
-            color: #555;
-            font-size: 1em;
-        }
-
-        form textarea {
-            border: 1px solid #ccc;
-            padding: 6px 10px;
+        
+        .unsubscribe-form-control {
+            border-radius: 12px;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 1.5px solid var(--border);
+            transition: all 0.3s;
+            font-size: 1rem;
             width: 100%;
-            color: #555;
+            background-color: var(--white);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
         }
-
-        form small {
-            color: #4f6fad;
-            margin: 0 0 0 0.5em;
+        
+        .unsubscribe-form-control::placeholder {
+            color: var(--text-light);
+            opacity: 0.7;
         }
-
-        @media only screen and (max-width: 480px) {
-            .pull-right {
-                float: none;
+        
+        .unsubscribe-form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(201, 168, 122, 0.15);
+            outline: none;
+        }
+        
+        .unsubscribe-btn {
+            background: linear-gradient(to right, var(--accent) 0%, var(--accent-dark) 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 1.2rem 2.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(201, 168, 122, 0.2);
+            width: 100%;
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .unsubscribe-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(166, 137, 94, 0.3);
+            background: linear-gradient(to right, var(--accent-dark) 0%, #9c7c5a 100%);
+        }
+        
+        .unsubscribe-btn:active {
+            transform: translateY(0);
+        }
+        
+        .unsubscribe-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .unsubscribe-loading-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 0;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .unsubscribe-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(201, 168, 122, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 1rem auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .unsubscribe-loading-text {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .unsubscribe-success-message {
+            display: none;
+            background: linear-gradient(135deg, rgba(201, 168, 122, 0.1) 0%, rgba(232, 220, 204, 0.1) 100%);
+            color: var(--text);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+            border: 1px solid var(--accent);
+        }
+        
+        .unsubscribe-success-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            color: var(--accent-dark);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .unsubscribe-error-message {
+            display: none;
+            background: linear-gradient(135deg, rgba(232, 77, 77, 0.1) 0%, rgba(232, 150, 150, 0.1) 100%);
+            color: var(--text);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(232, 77, 77, 0.3);
+        }
+        
+        .unsubscribe-privacy-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .unsubscribe-bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(201, 168, 122, 0.05);
+            z-index: 0;
+            animation: floatBubble 15s ease-in-out infinite;
+        }
+        
+        @keyframes floatBubble {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            33% { transform: translateY(-20px) translateX(15px); }
+            66% { transform: translateY(10px) translateX(-10px); }
+        }
+        
+        @media (max-width: 768px) {
+            .unsubscribe-page {
+                padding: 3rem 0;
             }
-
-            input {
-                width: 100%;
+            
+            .unsubscribe-card {
+                padding: 3rem 2rem;
             }
-
-            label {
-                width: 100%;
-                display: inline-block;
-                clear: both;
+            
+            .unsubscribe-title {
+                font-size: 2rem;
             }
-
-            li,
-            p {
-                width: 100%;
+            
+            .unsubscribe-icon {
+                font-size: 3rem;
+                height: 80px;
+                width: 80px;
             }
-
-            input.btn {
-                margin: 1.5em 0 0.5em;
+        }
+        
+        @media (max-width: 480px) {
+            .unsubscribe-card {
+                padding: 2.5rem 1.5rem;
             }
-
-            h1 {
-                font-size: 2.25em;
+            
+            .unsubscribe-title {
+                font-size: 1.8rem;
             }
-
-            h3 {
-                font-size: 1.125em;
-            }
-
-            li small {
-                display: none;
+            
+            .unsubscribe-subtitle {
+                font-size: 1rem;
             }
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="row header">
-            <h1>Unsubscribe to Newslettter &nbsp;</h1>
-            <h3>Please confirm your email to unsubscribe from our emailing list.</h3>
+    <!-- Header -->
+    <!-- {% include header.html %} -->
+
+    <!-- Unsubscribe Page Content -->
+    <section class="unsubscribe-page">
+        <div class="unsubscribe-container">
+            <!-- Animated bubbles in background -->
+            <div class="unsubscribe-bubble" style="width: 80px; height: 80px; top: -40px; left: 10%;"></div>
+            <div class="unsubscribe-bubble" style="width: 40px; height: 40px; top: 30%; right: 5%;"></div>
+            <div class="unsubscribe-bubble" style="width: 60px; height: 60px; bottom: 10%; left: 15%;"></div>
+            
+            <div class="unsubscribe-card">
+                <div class="unsubscribe-icon">
+                    <i class="fas fa-envelope-open-text"></i>
+                </div>
+                
+                <h1 class="unsubscribe-title">Unsubscribe from Newsletter</h1>
+                <p class="unsubscribe-subtitle">We're Sorry to See You Go</p>
+                <p class="unsubscribe-subtitle">Enter your email address below to unsubscribe from Saleh Jewelers newsletters and promotions.</p>
+                
+                <!-- Success Message (Hidden by default) -->
+                <div class="unsubscribe-success-message" id="successMessage">
+                    <i class="fas fa-check-circle unsubscribe-success-icon"></i>
+                    <h3>You've Been Unsubscribed</h3>
+                    <p>Your email has been removed from our mailing list. You will no longer receive newsletters from Saleh Jewelers.</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-light);">
+                        <i class="fas fa-info-circle"></i> This process may take up to 48 hours to complete.
+                    </p>
+                    <a href="/" style="display: inline-block; margin-top: 1.5rem; color: var(--accent); text-decoration: none; font-weight: 500;">
+                        <i class="fas fa-arrow-left"></i> Return to Homepage
+                    </a>
+                </div>
+                
+                <!-- Error Message (Hidden by default) -->
+                <div class="unsubscribe-error-message" id="errorMessage">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h3>Something Went Wrong</h3>
+                    <p>We couldn't process your unsubscribe request. Please try again or contact us directly at <a href="mailto:ritejewelers@gmail.com" style="color: var(--accent);">ritejewelers@gmail.com</a>.</p>
+                </div>
+                
+                <!-- Unsubscribe Form -->
+                <form method="POST" id="unsubscribeForm" class="unsubscribe-form">
+                    <div class="unsubscribe-form-group">
+                        <label for="unsubscribeEmail" class="unsubscribe-form-label">Email Address</label>
+                        <div class="unsubscribe-input-with-icon">
+                            <i class="fas fa-envelope unsubscribe-input-icon"></i>
+                            <input type="email" name="Email" class="unsubscribe-form-control" id="unsubscribeEmail" 
+                                   placeholder="Enter the email you want to unsubscribe" required>
+                        </div>
+                        <div style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem; text-align: left;">
+                            <i class="fas fa-info-circle"></i> Enter the email address you used to subscribe
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="unsubscribe-btn" id="unsubscribeButton">
+                        <i class="fas fa-user-minus"></i>
+                        Unsubscribe
+                    </button>
+                    
+                    <div class="unsubscribe-loading-container" id="loadingContainer">
+                        <div class="unsubscribe-spinner"></div>
+                        <div class="unsubscribe-loading-text">Processing your request...</div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-light);">
+                        <a href="/" style="color: var(--accent); text-decoration: none;">
+                            <i class="fas fa-arrow-left"></i> Return to Saleh Jewelers Homepage
+                        </a>
+                    </div>
+                </form>
+                
+                <!-- Privacy Note -->
+                <div class="unsubscribe-privacy-note">
+                    <i class="fas fa-shield-alt"></i>
+                    We respect your privacy. Your email will be removed from our mailing list and will not be shared with third parties.
+                </div>
+            </div>
         </div>
-        <div class="row body">
-            <form method="POST" class="mb-5" id="UnsubscribeCustomer" name="UnsubscribeCustomer"
-                action="https://script.google.com/macros/s/AKfycbwEf3z3GnNZnZdV9oXXqTUZIvdlvE_Aa-6zqzW1R4FqeUdCAr8gvuZei8JGZEC9ZomA/exec">
-                <ul>
+    </section>
 
-                    <li>
-                        <p>
-                            <label for="Email">Email <span class="req">*</span></label>
-                            <input type="email" name="email" id="email" required>
-                        </p>
-                    </li>
+    <!-- Footer -->
+    <!-- {% include footer.html %} -->
 
-                    <li>
-                        <input class="btn btn-submit" type="submit" value="Submit" />
-                        <small>or press <strong>enter</strong></small>
-                    </li>
-
-                </ul>
-            </form>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-        crossorigin="anonymous"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let isProcessing = false;
+            
+            // Form submission handler
+            $("#unsubscribeForm").submit(function (e) {
+                e.preventDefault();
+                
+                // Prevent double submission
+                if (isProcessing) {
+                    return false;
+                }
+                
+                // Get email value
+                const email = $("#unsubscribeEmail").val().trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                // Validate email
+                if (!email) {
+                    alert("Please enter your email address");
+                    return false;
+                }
+                
+                if (!emailRegex.test(email)) {
+                    alert("Please enter a valid email address");
+                    return false;
+                }
+                
+                // Show loading state
+                isProcessing = true;
+                $("#unsubscribeButton").hide();
+                $("#loadingContainer").show();
+                
+                // Prepare form data
+                const formData = new FormData();
+                formData.append('Email', email);
+                formData.append('Action', 'Unsubscribe');
+                formData.append('Timestamp', new Date().toISOString());
+                
+                // Submit to Google Apps Script
+                $.ajax({
+                    url: "https://script.google.com/macros/s/AKfycbwEf3z3GnNZnZdV9oXXqTUZIvdlvE_Aa-6zqzW1R4FqeUdCAr8gvuZei8JGZEC9ZomA/exec",
+                    method: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(response) {
+                        // Hide loading state
+                        $("#loadingContainer").hide();
+                        
+                        if (response && response.result === "success") {
+                            // Show success message
+                            $("#successMessage").show();
+                            $("#unsubscribeForm").hide();
+                            $("#errorMessage").hide();
+                        } else {
+                            // Show error message
+                            $("#errorMessage").show();
+                            $("#unsubscribeButton").show();
+                            isProcessing = false;
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Hide loading state
+                        $("#loadingContainer").hide();
+                        
+                        // Show error message
+                        $("#errorMessage").show();
+                        $("#unsubscribeButton").show();
+                        isProcessing = false;
+                        
+                        console.error("Unsubscribe error:", error);
+                    }
+                });
+                
+                return false;
+            });
+            
+            // Create animated bubbles
+            function createBubble() {
+                const bubble = document.createElement('div');
+                bubble.className = 'unsubscribe-bubble';
+                const size = Math.random() * 60 + 20;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.top = `${Math.random() * 100}%`;
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.opacity = Math.random() * 0.1 + 0.05;
+                bubble.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                document.querySelector('.unsubscribe-card').appendChild(bubble);
+                
+                // Remove bubble after animation to prevent DOM overload
+                setTimeout(() => {
+                    if (bubble.parentNode) {
+                        bubble.parentNode.removeChild(bubble);
+                    }
+                }, 30000);
+            }
+            
+            // Create initial bubbles
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createBubble(), i * 800);
+            }
+            
+            // Keep creating bubbles periodically
+            setInterval(createBubble, 5000);
+            
+            // Update active nav link for unsubscribe page
+            $('.nav-links a[href="#unsubscribe"]').addClass('active');
+            $('.mobile-nav-links a[href="#unsubscribe"]').addClass('active');
+        });
+    </script>
 </body>
 
-
 </html>
-

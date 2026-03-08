@@ -1,0 +1,26 @@
+<!--
+  footer.html
+  ============================================================
+  Reusable site footer component.
+
+  HOW TO INCLUDE:
+    Same fetch pattern as header.html — see main.js or the
+    comment block inside header.html for details.
+
+    Pure-JS approach (already wired up in main.js):
+      fetch('footer.html').then(r => r.text())
+        .then(html => document.getElementById('site-footer').innerHTML = html);
+
+  ============================================================
+-->
+
+<footer>
+    <div class="footer-content">
+        <div class="logo" style="color: white;">SALEH <span>JEWELERS</span></div>
+        <div class="social-links">
+            <a href="https://facebook.com/saleh.ritejewelers" target="_blank">FACEBOOK</a>
+            <a href="https://instagram.com/salehjewelers" target="_blank">INSTAGRAM</a>
+        </div>
+    </div>
+    <p class="copyright">© 2026 Saleh Jewelers. All rights reserved.</p>
+</footer>

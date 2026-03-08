@@ -1,0 +1,37 @@
+<!--
+  header.html
+  ============================================================
+  Reusable site header / navigation component.
+
+  HOW TO INCLUDE:
+    Native HTML (no build tool) — use a <script> fetch approach
+    or a server-side include (SSI / PHP / template engine).
+
+    Pure-JS approach (already wired up in main.js):
+      fetch('header.html').then(r => r.text())
+        .then(html => document.getElementById('site-header').innerHTML = html);
+
+  ============================================================
+-->
+
+<header>
+    <nav>
+        <a href="#home" class="logo">SALEH <span>JEWELERS</span></a>
+
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <ul id="nav-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#materials">Materials</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#catalog">Catalog</a></li>
+            <li><a href="#newsletter">Newsletter</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+        </ul>
+    </nav>
+</header>

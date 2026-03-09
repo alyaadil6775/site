@@ -1,594 +1,443 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Join Our Newsletter</title>
-    <link rel="icon" href="https://www.polisheddiamonds.co.nz/wp-content/uploads/2023/02/lab-grown-diamond.png"
-        type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saleh Jewelers | Join Our Newsletter</title>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QDE0ECDJ2E"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-QDE0ECDJ2E');
+    </script>
+
+    <link rel="icon" href="https://www.polisheddiamonds.co.nz/wp-content/uploads/2023/02/lab-grown-diamond.png" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
-
-        :root {
-            --primary: #7FC7C2;
-            --primary-light: #A1DCD8;
-            --primary-dark: #5CB0AA;
-            --secondary: #9AC8E9;
-            --accent: #B5E6D9;
-            --light: #F8FCFC;
-            --dark: #2C4A52;
-            --gray: #6B8A94;
-            --light-gray: #E0EEEC;
-            --card-shadow: 0 20px 40px rgba(127, 199, 194, 0.08), 0 8px 24px rgba(127, 199, 194, 0.05);
-            --input-shadow: 0 2px 8px rgba(127, 199, 194, 0.08);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, #F0F9F8 0%, #E6F4F7 100%);
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
+        /* Page wrapper — deep charcoal background so the card stands out clearly */
+        .customer-page-wrapper {
+            padding-top: 80px;
             min-height: 100vh;
-            padding: 20px;
+            background: linear-gradient(160deg, #0f0f0f 0%, #1e1e1e 60%, #111 100%);
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            padding-bottom: 4rem;
         }
 
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background-color: #fff;
-            border-radius: 24px;
-            box-shadow: var(--card-shadow);
-            overflow: hidden;
-            margin: 0 auto;
+        /* Card */
+        .newsletter-card {
             display: flex;
-            min-height: 600px;
-            border: 1px solid var(--light-gray);
+            max-width: 920px;
+            width: 95%;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.2);
+            border-top: 4px solid #d4af37;
+            margin: 2rem auto;
         }
 
-        .hero-section {
+        /* ── LEFT: dark brand panel ── */
+        .nl-brand-panel {
             flex: 1;
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 100%);
-            color: var(--dark);
-            padding: 3rem;
+            background: #1a1a1a;
+            padding: 3.5rem 2.5rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
             position: relative;
             overflow: hidden;
-            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            border-right: 1px solid #2c2c2c;
         }
 
-        .hero-section::before {
-            content: "";
+        /* Gold glow orbs */
+        .nl-brand-panel::before {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-            z-index: 0;
+            width: 350px; height: 350px;
+            top: -120px; left: -120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,175,55,0.10) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .nl-brand-panel::after {
+            content: '';
+            position: absolute;
+            width: 250px; height: 250px;
+            bottom: -80px; right: -60px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,175,55,0.07) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        .hero-content {
+        .brand-logo {
+            font-family: 'Georgia', serif;
+            font-size: 1.35rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #ffffff;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .brand-logo span { color: #d4af37; }
+
+        .nl-brand-panel h2 {
+            font-family: 'Georgia', serif;
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+            position: relative;
+            z-index: 1;
+        }
+        .nl-brand-panel h2 span { color: #d4af37; }
+
+        .nl-brand-panel > p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.8;
+            margin-bottom: 2rem;
             position: relative;
             z-index: 1;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--dark);
-        }
-
-        .logo i {
-            color: white;
-            font-size: 2rem;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 12px;
-            border-radius: 50%;
-        }
-
-        h1 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 2.5rem;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .hero-subtitle {
-            font-size: 1.1rem;
-            color: rgba(44, 74, 82, 0.85);
-            margin-bottom: 2.5rem;
-            line-height: 1.6;
-        }
-
-        .benefits-list {
+        .nl-benefits {
             list-style: none;
-            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+            margin: 0; padding: 0;
         }
-
-        .benefits-list li {
-            margin-bottom: 1.2rem;
+        .nl-benefits li {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 1rem;
-            color: var(--dark);
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 1rem;
         }
-
-        .benefits-list i {
-            color: white;
-            font-size: 1.2rem;
-            background: rgba(255, 255, 255, 0.2);
-            width: 32px;
-            height: 32px;
+        .nl-benefits li i {
+            color: #d4af37;
+            font-size: 0.78rem;
+            width: 30px; height: 30px;
+            border: 1px solid rgba(212,175,55,0.35);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            background: rgba(212,175,55,0.07);
         }
 
-        .form-section {
-            flex: 1.2;
-            padding: 3rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-color: var(--light);
+        /* ── RIGHT: bright white form panel ── */
+        .nl-form-panel {
+            flex: 1.3;
+            padding: 3.5rem 2.8rem;
+            background: #ffffff;
         }
 
-        .form-container {
-            width: 100%;
+        .nl-form-panel h3 {
+            font-family: 'Georgia', serif;
+            font-size: 1.75rem;
+            color: #1a1a1a;
+            margin-bottom: 0.3rem;
         }
 
-        .form-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
+        .form-subheading {
+            font-size: 0.87rem;
+            color: #999;
+            margin-bottom: 1.8rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f0f0f0;
         }
 
-        .form-subtitle {
-            color: var(--gray);
-            margin-bottom: 2rem;
-            font-size: 1rem;
-        }
-
-        .form-group {
+        /* Success */
+        .success-message {
+            display: none;
+            background: #1a1a1a;
+            border: 1px solid #d4af37;
+            color: #fff;
+            padding: 2.5rem 2rem;
+            border-radius: 4px;
+            text-align: center;
             margin-bottom: 1.5rem;
-            position: relative;
+            animation: fadeInUp 0.5s ease;
+        }
+        .success-message i    { font-size: 2.8rem; color: #d4af37; display: block; margin-bottom: 1rem; }
+        .success-message h4   { font-family: 'Georgia', serif; color: #d4af37; font-size: 1.4rem; margin-bottom: 0.5rem; }
+        .success-message p    { color: rgba(255,255,255,0.6); font-size: 0.88rem; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        .form-label {
-            display: block;
-            font-weight: 500;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .input-with-icon {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-            font-size: 1.1rem;
-            z-index: 2;
-        }
-
-        .form-control, .form-select {
-            border-radius: 12px;
-            padding: 0.85rem 1rem 0.85rem 3rem;
-            border: 1.5px solid var(--light-gray);
-            transition: all 0.3s;
-            font-size: 1rem;
-            width: 100%;
-            background-color: #fff;
-            color: var(--dark);
-        }
-
-        .form-control::placeholder {
-            color: var(--gray);
-            opacity: 0.7;
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(127, 199, 194, 0.15);
-            outline: none;
-        }
-
+        /* Form layout */
         .form-row {
             display: flex;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .form-row .form-group { flex: 1; margin-bottom: 0; }
+        .form-group { margin-bottom: 1.2rem; }
+
+        .form-label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #222;
+            margin-bottom: 0.45rem;
+        }
+        .required::after { content: " *"; color: #d4af37; }
+
+        /* Inputs */
+        .input-with-icon { position: relative; }
+        .input-icon {
+            position: absolute;
+            left: 13px; top: 50%;
+            transform: translateY(-50%);
+            color: #d4af37;
+            font-size: 0.82rem;
+            z-index: 2;
+            pointer-events: none;
         }
 
-        .form-row .form-group {
-            flex: 1;
-            margin-bottom: 0;
+        .form-control,
+        .form-select {
+            width: 100%;
+            padding: 0.78rem 1rem 0.78rem 2.7rem;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 2px;
+            font-size: 0.9rem;
+            color: #1a1a1a;
+            background: #fafafa;
+            transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
         }
-
-        .required::after {
-            content: " *";
-            color: #E8A5A5;
+        .form-control::placeholder { color: #c0c0c0; }
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #d4af37;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
         }
 
         .field-info {
-            font-size: 0.85rem;
-            color: var(--gray);
-            margin-top: 0.4rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            font-size: 0.73rem;
+            color: #c0c0c0;
+            margin-top: 0.3rem;
+            display: flex; align-items: center; gap: 4px;
         }
+        .field-info i { color: #d4af37; }
 
-        .field-info i {
-            font-size: 0.8rem;
-            color: var(--primary);
+        /* Divider */
+        .form-divider {
+            display: flex; align-items: center; gap: 1rem;
+            margin: 1.4rem 0;
+            color: #ccc;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
+        .form-divider::before,
+        .form-divider::after { content: ''; flex: 1; height: 1px; background: #ebebeb; }
 
+        /* Checkbox */
+        .checkbox-group {
+            display: flex; align-items: flex-start; gap: 10px;
+            margin: 1.2rem 0;
+        }
+        .checkbox-group input {
+            margin-top: 3px;
+            accent-color: #d4af37;
+            flex-shrink: 0;
+            width: 16px; height: 16px;
+        }
+        .checkbox-group label { font-size: 0.82rem; color: #888; line-height: 1.6; }
+        .checkbox-group a     { color: #d4af37; text-decoration: none; font-weight: 600; }
+        .checkbox-group a:hover { text-decoration: underline; }
+
+        /* Submit button */
         .btn-submit {
-            background: linear-gradient(to right, var(--primary) 0%, var(--primary-dark) 100%);
-            border: none;
-            border-radius: 12px;
-            padding: 1rem 2rem;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(127, 199, 194, 0.2);
+            display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%;
-            color: white;
+            padding: 1rem 2rem;
+            background: #d4af37;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 1rem;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            margin-top: 0.5rem;
         }
-
         .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(127, 199, 194, 0.3);
-            background: linear-gradient(to right, var(--primary-light) 0%, var(--primary) 100%);
+            background: #f0c14b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212,175,55,0.35);
         }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-        .btn-submit:active {
-            transform: translateY(0);
-        }
-
-        .btn-submit:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
+        /* Spinner */
         .loading-container {
             display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem 0;
-            width: 100%;
-            text-align: center;
+            flex-direction: column; align-items: center;
+            padding: 1rem 0; gap: 0.75rem;
         }
-
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(127, 199, 194, 0.2);
+            width: 36px; height: 36px;
+            border: 3px solid rgba(212,175,55,0.2);
+            border-top-color: #d4af37;
             border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1s ease-in-out infinite;
-            margin: 0 auto 1rem auto;
+            animation: spin 0.9s linear infinite;
         }
-
+        @keyframes spin { to { transform: rotate(360deg); } }
         .loading-text {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 1rem;
-            text-align: center;
+            font-size: 0.8rem; color: #d4af37;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 2rem 0;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        // Update your existing setTimeout function inside Customer.html:
-                setTimeout(function() {
-                    $("#successMessage").show();
-                    $("#loadingContainer").hide();
-                    $("form").hide();
-
-                    // ADD THIS LINE: It tells index.html to close the popup
-                    window.parent.postMessage("closeMe", "*");
-                }, 2000);
-
-        .divider::before, .divider::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: var(--light-gray);
-        }
-
-        .divider span {
-            padding: 0 1rem;
-        }
-
-        .success-message {
-            display: none;
-            background: linear-gradient(135deg, var(--accent) 0%, #CAF0E4 100%);
-            color: var(--dark);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            animation: fadeIn 0.5s ease;
-            border: 1px solid var(--primary-light);
-        }
-
-        .success-message i {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
-            color: var(--primary-dark);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-top: 1.5rem;
-        }
-
-        .checkbox-group input {
-            margin-top: 4px;
-            accent-color: var(--primary);
-        }
-
-        .checkbox-group label {
-            font-size: 0.9rem;
-            color: var(--gray);
-            line-height: 1.5;
-        }
-
-        .checkbox-group a {
-            color: var(--primary-dark);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .checkbox-group a:hover {
-            text-decoration: underline;
-        }
-
+        /* Privacy note */
         .privacy-note {
             text-align: center;
-            font-size: 0.85rem;
-            color: var(--gray);
-            margin-top: 1.5rem;
+            font-size: 0.74rem;
+            color: #bbb;
+            margin-top: 1.2rem;
             padding-top: 1rem;
-            border-top: 1px solid var(--light-gray);
+            border-top: 1px solid #f0f0f0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+        .privacy-note i { color: #d4af37; margin-right: 4px; }
 
-        .bubble {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            z-index: 0;
-        }
+        /* ── MOBILE ── */
+        @media (max-width: 768px) {
+            .customer-page-wrapper { padding-top: 70px; padding-left: 0; padding-right: 0; }
 
-        @media (max-width: 992px) {
-            .container {
+            .newsletter-card {
                 flex-direction: column;
-                max-width: 600px;
+                width: 100%;
+                border-radius: 0;
+                margin: 0;
+                min-height: 100vh;
+                box-shadow: none;
             }
-            
-            .hero-section, .form-section {
-                padding: 2.5rem;
-            }
-            
-            .hero-section {
+
+            /* On mobile: brand panel becomes a compact header banner */
+            .nl-brand-panel {
+                padding: 2rem 1.5rem 1.8rem;
                 border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+                border-bottom: 1px solid #2c2c2c;
             }
-            
-            h1 {
-                font-size: 2.2rem;
+
+            .nl-brand-panel h2   { font-size: 1.5rem; }
+            .nl-brand-panel > p  { display: none; } /* Hide long description on mobile */
+
+            .nl-benefits {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
             }
+            .nl-benefits li { font-size: 0.8rem; margin-bottom: 0; }
+
+            .nl-form-panel { padding: 2rem 1.5rem 3rem; }
+            .nl-form-panel h3 { font-size: 1.45rem; }
+
+            .form-row { flex-direction: column; gap: 0; }
+            .form-row .form-group { margin-bottom: 1.2rem; }
         }
 
-        @media (max-width: 576px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                border-radius: 16px;
-            }
-            
-            .hero-section, .form-section {
-                padding: 2rem 1.5rem;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .form-row {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .form-title {
-                font-size: 1.6rem;
-            }
-        }
-
-        /* Floating animation for the logo */
-        @keyframes gentleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .logo i {
-            animation: gentleFloat 4s ease-in-out infinite;
-        }
-
-        /* Bubble animation */
-        @keyframes floatBubble {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            33% { transform: translateY(-10px) translateX(10px); }
-            66% { transform: translateY(5px) translateX(-5px); }
-        }
-
-        .bubble {
-            animation: floatBubble 8s ease-in-out infinite;
+        @media (max-width: 400px) {
+            .nl-benefits { grid-template-columns: 1fr; }
+            .brand-logo   { font-size: 1.1rem; margin-bottom: 1.2rem; }
         }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 
 <body>
-    <div class="container">
-        <!-- Hero Section with animated bubbles -->
-        <div class="hero-section">
-            <div class="bubble" style="width: 60px; height: 60px; top: 10%; left: 15%;"></div>
-            <div class="bubble" style="width: 40px; height: 40px; top: 70%; left: 80%;"></div>
-            <div class="bubble" style="width: 80px; height: 80px; top: 40%; left: 85%;"></div>
-            <div class="bubble" style="width: 30px; height: 30px; top: 85%; left: 10%;"></div>
-            
-            <div class="hero-content">
-                <div class="logo">
-                    <i class="fas fa-gem"></i>
-                    <span>Enhanced Experience</span>
-                </div>
-                
-                <h1>Join Our Newsletter</h1>
-                <p class="hero-subtitle">Dive into our latest collections, exclusive offers, and refreshing insights delivered gently to your inbox.</p>
-                
-                <ul class="benefits-list">
-                    <li><i class="fas fa-water"></i> Fresh content, no spam</li>
-                    <li><i class="fas fa-sun"></i> Exclusive member offers</li>
-                    <li><i class="fas fa-wind"></i> Breezy style inspiration</li>
-                    <li><i class="fas fa-cloud"></i> Early access to collections</li>
+
+    <!-- HEADER -->
+    <div id="site-header"></div>
+
+    <div class="customer-page-wrapper">
+        <div class="newsletter-card">
+
+            <!-- LEFT: Brand Panel -->
+            <div class="nl-brand-panel">
+                <div class="brand-logo">SALEH <span>JEWELERS</span></div>
+                <h2>Join Our <span>Inner Circle</span></h2>
+                <p>Be the first to discover new collections, receive exclusive offers, and enjoy private event invitations delivered directly to you.</p>
+                <ul class="nl-benefits">
+                    <li><i class="fas fa-gem"></i> Early access to collections</li>
+                    <li><i class="fas fa-tag"></i> Exclusive member offers</li>
+                    <li><i class="fas fa-star"></i> Private event invitations</li>
+                    <li><i class="fas fa-shield-alt"></i> No spam, ever</li>
                 </ul>
             </div>
-        </div>
-        
-        <!-- Form Section -->
-        <div class="form-section">
-            <div class="form-container">
-                <h2 class="form-title">Join Our Community</h2>
-                <p class="form-subtitle">Share your details to receive refreshing updates</p>
-                
-                <!-- Success Message (Hidden by default) -->
+
+            <!-- RIGHT: Form Panel -->
+            <div class="nl-form-panel">
+                <h3>Stay Connected</h3>
+                <p class="form-subheading">Share your details and we'll take care of the rest.</p>
+
                 <div class="success-message" id="successMessage">
                     <i class="fas fa-check-circle"></i>
-                    <h3>Thank You for Joining</h3>
-                    <p>We'll send our first update shortly.</p>
+                    <h4>Welcome to the Circle</h4>
+                    <p>Thank you for joining. We'll be in touch soon.</p>
                 </div>
-                
+
                 <form method="POST" id="CustomerForm" name="CustomerForm"
                     action="https://script.google.com/macros/s/AKfycbwEf3z3GnNZnZdV9oXXqTUZIvdlvE_Aa-6zqzW1R4FqeUdCAr8gvuZei8JGZEC9ZomA/exec">
-                    
-                    <!-- Contact Information -->
+
                     <div class="form-row">
                         <div class="form-group">
                             <label for="FirstName" class="form-label required">First Name</label>
                             <div class="input-with-icon">
                                 <i class="fas fa-user input-icon"></i>
-                                <input type="text" name="First Name" class="form-control" id="FirstName" 
-                                       placeholder="Enter your first name" required>
+                                <input type="text" name="First Name" class="form-control" id="FirstName" placeholder="First name" required>
                             </div>
-                            <div class="field-info">
-                                <i class="fas fa-info-circle"></i>
-                                Required field
-                            </div>
+                            <div class="field-info"><i class="fas fa-info-circle"></i> Required</div>
                         </div>
-                        
                         <div class="form-group">
                             <label for="LastName" class="form-label">Last Name</label>
                             <div class="input-with-icon">
                                 <i class="fas fa-user input-icon"></i>
-                                <input type="text" name="Last Name" class="form-control" id="LastName" 
-                                       placeholder="Enter your last name">
+                                <input type="text" name="Last Name" class="form-control" id="LastName" placeholder="Last name">
                             </div>
-                            <div class="field-info">
-                                <i class="fas fa-info-circle"></i>
-                                Optional field
-                            </div>
+                            <div class="field-info"><i class="fas fa-info-circle"></i> Optional</div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="Email" class="form-label">Email Address</label>
                         <div class="input-with-icon">
                             <i class="fas fa-envelope input-icon"></i>
-                            <input type="email" name="Email" class="form-control" id="Email" 
-                                   placeholder="your.email@example.com">
+                            <input type="email" name="Email" class="form-control" id="Email" placeholder="your.email@example.com">
                         </div>
-                        <div class="field-info">
-                            <i class="fas fa-info-circle"></i>
-                            At least email or phone is required
-                        </div>
+                        <div class="field-info"><i class="fas fa-info-circle"></i> At least email or phone required</div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="Phone" class="form-label">Phone Number</label>
                         <div class="input-with-icon">
                             <i class="fas fa-phone input-icon"></i>
-                            <input type="tel" name="Phone" class="form-control" id="Phone" 
-                                   placeholder="(123) 456-7890">
+                            <input type="tel" name="Phone" class="form-control" id="Phone" placeholder="(123) 456-7890">
                         </div>
-                        <div class="field-info">
-                            <i class="fas fa-info-circle"></i>
-                            At least email or phone is required
-                        </div>
+                        <div class="field-info"><i class="fas fa-info-circle"></i> At least email or phone required</div>
                     </div>
-                    
-                    <!-- Referral Information -->
-                    <div class="divider"><span>Optional Information</span></div>
-                    
+
+                    <div class="form-divider"><span>Optional</span></div>
+
                     <div class="form-group">
                         <label for="FindUs" class="form-label">How did you find us?</label>
                         <div class="input-with-icon">
@@ -603,248 +452,171 @@
                                 <option value="Other">Other</option>
                             </select>
                         </div>
-                        <div class="field-info">
-                            <i class="fas fa-info-circle"></i>
-                            Optional field
-                        </div>
+                        <div class="field-info"><i class="fas fa-info-circle"></i> Optional</div>
                     </div>
-                    
-                    <!-- Other Details Field - Initially Hidden -->
+
                     <div class="form-group" id="OtherDetailsContainer" style="display: none;">
                         <label for="OtherDetails" class="form-label">Please specify</label>
                         <div class="input-with-icon">
                             <i class="fas fa-comment-dots input-icon"></i>
-                            <input type="text" name="Other Details" class="form-control" id="OtherDetails" 
-                                   placeholder="Please specify how you found us">
+                            <input type="text" name="Other Details" class="form-control" id="OtherDetails" placeholder="Please specify how you found us">
                         </div>
                     </div>
-                    
-                    <!-- Consent Checkbox -->
+
                     <div class="checkbox-group">
                         <input type="checkbox" id="consent" name="consent" required>
-                        <label for="consent">I agree to receive refreshing updates via email or SMS. I can unsubscribe anytime. <a href="#" onclick="return false;">Privacy Policy</a></label>
+                        <label for="consent">I agree to receive updates via email or SMS and can unsubscribe anytime. <a href="#" onclick="return false;">Privacy Policy</a></label>
                     </div>
-                    
-                    <!-- Submit Button -->
+
                     <button type="submit" class="btn-submit" id="submitButton">
                         <i class="fas fa-paper-plane"></i>
-                        Subscribe Now
+                        Join the Circle
                     </button>
-                    
+
                     <div class="loading-container" id="loadingContainer">
                         <div class="spinner"></div>
                         <div class="loading-text">Submitting...</div>
                     </div>
-                    
-                    <div class="privacy-note">
-                        <i class="fas fa-lock"></i>
-                        Your information is secure and handled with care
-                    </div>
+
+                    <p class="privacy-note">
+                        <i class="fas fa-lock"></i> Your information is private &amp; secure
+                    </p>
                 </form>
             </div>
+
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
+
+    <!-- FOOTER -->
+    <div id="site-footer"></div>
 
     <script>
+        async function loadComponent(file, targetId, callback) {
+            try {
+                const res = await fetch(file);
+                if (!res.ok) throw new Error('Could not load ' + file);
+                document.getElementById(targetId).innerHTML = await res.text();
+                if (typeof callback === 'function') callback();
+            } catch (err) { console.error(err); }
+        }
+
+        function initMobileMenu() {
+            const menu     = document.querySelector('#mobile-menu');
+            const navLinks = document.querySelector('#nav-list');
+            if (!menu || !navLinks) return;
+            menu.addEventListener('click', () => {
+                menu.classList.toggle('is-active');
+                navLinks.classList.toggle('active');
+            });
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.remove('is-active');
+                    navLinks.classList.remove('active');
+                });
+            });
+        }
+
+        loadComponent('assets/components/header/header.html', 'site-header', initMobileMenu);
+        loadComponent('assets/components/footer/footer.html', 'site-footer');
+
         $(document).ready(function () {
             let isSubmitting = false;
-            
-            // Phone number formatting function
+
             function formatPhoneNumber(value) {
-                // Remove all non-digit characters
-                const phoneNumber = value.replace(/\D/g, '');
-                
-                // Limit to 10 digits (US phone number)
-                const phoneNumberDigits = phoneNumber.substring(0, 10);
-                
-                // Format the phone number
-                const areaCode = phoneNumberDigits.substring(0, 3);
-                const middle = phoneNumberDigits.substring(3, 6);
-                const last = phoneNumberDigits.substring(6, 10);
-                
-                if (phoneNumberDigits.length > 6) {
-                    return `(${areaCode}) ${middle}-${last}`;
-                } else if (phoneNumberDigits.length > 3) {
-                    return `(${areaCode}) ${middle}`;
-                } else if (phoneNumberDigits.length > 0) {
-                    return `(${areaCode}`;
-                }
-                
+                const digits = value.replace(/\D/g, '').substring(0, 10);
+                const a = digits.substring(0, 3);
+                const m = digits.substring(3, 6);
+                const l = digits.substring(6, 10);
+                if (digits.length > 6) return '(' + a + ') ' + m + '-' + l;
+                if (digits.length > 3) return '(' + a + ') ' + m;
+                if (digits.length > 0) return '(' + a;
                 return '';
             }
-            
-            // Phone input event handler for formatting
-            $("#Phone").on('input', function() {
-                const input = $(this);
-                const cursorPosition = input[0].selectionStart;
-                const originalLength = input.val().length;
-                
-                // Format the phone number
-                const formattedPhone = formatPhoneNumber(input.val());
-                input.val(formattedPhone);
-                
-                // Adjust cursor position
-                const newLength = formattedPhone.length;
-                const cursorAdjustment = newLength - originalLength;
-                input[0].setSelectionRange(cursorPosition + cursorAdjustment, cursorPosition + cursorAdjustment);
+
+            $("#Phone").on('input', function () {
+                const input    = $(this);
+                const cursor   = input[0].selectionStart;
+                const origLen  = input.val().length;
+                const formatted = formatPhoneNumber(input.val());
+                input.val(formatted);
+                const adj = formatted.length - origLen;
+                input[0].setSelectionRange(cursor + adj, cursor + adj);
             });
-            
-            // Handle "How did you find us?" dropdown change
-            $("#FindUs").change(function() {
-                const selectedValue = $(this).val();
-                
-                if (selectedValue === "Other") {
-                    // Show the Other Details input field
+
+            $("#FindUs").change(function () {
+                if ($(this).val() === "Other") {
                     $("#OtherDetailsContainer").show();
                     $("#OtherDetails").prop("disabled", false);
                 } else {
-                    // Hide the Other Details input field
                     $("#OtherDetailsContainer").hide();
                     $("#OtherDetails").prop("disabled", true).val("");
                 }
             });
-            
-            // Basic phone number validation
+
             function validatePhone(phone) {
-                // Remove all non-digit characters
-                const digitsOnly = phone.replace(/\D/g, '');
-                // Check if it has exactly 10 digits (US phone number)
-                return digitsOnly.length === 10;
+                return phone.replace(/\D/g, '').length === 10;
             }
-            
-            // Form submission handler
+
             $("form").submit(function (e) {
-                // Prevent double submission
-                if (isSubmitting) {
-                    e.preventDefault();
-                    return false;
-                }
-                
-                // Check consent checkbox
+                if (isSubmitting) { e.preventDefault(); return false; }
+
                 if (!$("#consent").is(":checked")) {
                     alert("Please agree to the terms to continue");
-                    e.preventDefault();
-                    return false;
+                    e.preventDefault(); return false;
                 }
-                
-                // Get email and phone values
-                const email = $("#Email").val().trim();
-                const phone = $("#Phone").val().trim();
+
+                const email      = $("#Email").val().trim();
+                const phone      = $("#Phone").val().trim();
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                
-                // Check if at least one of email or phone is provided
+
                 if (!email && !phone) {
                     alert("Please provide at least an email address or phone number");
-                    e.preventDefault();
-                    return false;
+                    e.preventDefault(); return false;
                 }
-                
-                // Validate email if provided
                 if (email && !emailRegex.test(email)) {
                     alert("Please enter a valid email address");
-                    e.preventDefault();
-                    return false;
+                    e.preventDefault(); return false;
                 }
-                
-                // Validate phone if provided
                 if (phone && !validatePhone(phone)) {
-                    alert("Please enter a valid 10-digit phone number in the format (###) ###-####");
-                    e.preventDefault();
-                    return false;
+                    alert("Please enter a valid 10-digit phone number");
+                    e.preventDefault(); return false;
                 }
-                
-                // Handle "Other" selection logic
-                const findUsDropdown = $("#FindUs");
+
+                const findUs      = $("#FindUs");
                 const otherDetails = $("#OtherDetails");
-                
-                if (findUsDropdown.val() === "Other") {
-                    // If user selected "Other" and provided details
+                if (findUs.val() === "Other") {
                     if (otherDetails.val().trim() !== "") {
-                        // Create a new value that combines "Other: " with the user's input
                         const customValue = "Other: " + otherDetails.val().trim();
-                        
-                        // Create a temporary option element with the custom value
-                        const tempOption = $("<option></option>")
-                            .val(customValue)
-                            .text(customValue)
-                            .prop("selected", true);
-                        
-                        // Replace the "Other" option with our custom option
-                        findUsDropdown.find('option[value="Other"]').replaceWith(tempOption);
-                        
-                        // Also update the select value
-                        findUsDropdown.val(customValue);
+                        findUs.find('option[value="Other"]').replaceWith(
+                            $("<option>").val(customValue).text(customValue).prop("selected", true)
+                        );
+                        findUs.val(customValue);
                     } else {
-                        // If user selected "Other" but didn't provide details, keep it as just "Other"
-                        // Show warning but allow submission
-                        if (!confirm("You selected 'Other' but didn't provide details. Would you like to continue with just 'Other'?")) {
-                            e.preventDefault();
-                            return false;
+                        if (!confirm("You selected 'Other' but didn't provide details. Continue anyway?")) {
+                            e.preventDefault(); return false;
                         }
                     }
                 }
-                
-                // If validation passes, show loading state but DON'T prevent default form submission
+
                 isSubmitting = true;
                 $("#submitButton").hide();
-                $("#loadingContainer").show();
-                
-                // The form will continue with its normal submission and redirect to Google Apps Script
-                // This is what makes the data populate correctly in your spreadsheet
-                
-                // For demo purposes, we'll show success message after 2 seconds
-                // In production, you would rely on the Google Apps Script response
-                setTimeout(function() {
+                $("#loadingContainer").css('display', 'flex');
+
+                setTimeout(function () {
                     $("#successMessage").show();
                     $("#loadingContainer").hide();
                     $("form").hide();
+                    window.parent.postMessage("closeMe", "*");
                 }, 2000);
-                
+
                 return true;
             });
-            
-            // Enable form submission on Enter key press in any input field
+
             $("#CustomerForm input").keypress(function (e) {
-                if (e.which === 13) {
-                    e.preventDefault();
-                    $("#CustomerForm").submit();
-                }
+                if (e.which === 13) { e.preventDefault(); $("#CustomerForm").submit(); }
             });
-            
-            // Create additional floating bubbles
-            function createBubble() {
-                const bubble = document.createElement('div');
-                bubble.className = 'bubble';
-                const size = Math.random() * 40 + 20;
-                bubble.style.width = `${size}px`;
-                bubble.style.height = `${size}px`;
-                bubble.style.top = `${Math.random() * 100}%`;
-                bubble.style.left = `${Math.random() * 100}%`;
-                bubble.style.opacity = Math.random() * 0.3 + 0.1;
-                bubble.style.animationDuration = `${Math.random() * 10 + 10}s`;
-                document.querySelector('.hero-section').appendChild(bubble);
-                
-                // Remove bubble after animation to prevent DOM overload
-                setTimeout(() => {
-                    if (bubble.parentNode) {
-                        bubble.parentNode.removeChild(bubble);
-                    }
-                }, 30000);
-            }
-            
-            // Create initial bubbles
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => createBubble(), i * 500);
-            }
-            
-            // Keep creating bubbles periodically
-            setInterval(createBubble, 3000);
         });
     </script>
+
 </body>
 </html>
-

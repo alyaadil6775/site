@@ -3,470 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Saleh Jewelers</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <title>Contact Us | Saleh Jewelers</title>
 
-        body {
-            font-family: 'Georgia', serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f5f5f5;
-        }
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QDE0ECDJ2E"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-QDE0ECDJ2E');
+    </script>
 
-        header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #fff;
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
+    <link rel="icon" href="https://www.polisheddiamonds.co.nz/wp-content/uploads/2023/02/lab-grown-diamond.png" type="image/x-icon">
 
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
+    <!-- Shared site styles (header, footer, nav) -->
+    <link rel="stylesheet" href="assets/css/styles.css">
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: #d4af37;
-            text-decoration: none;
-        }
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-        }
-
-        nav a:hover {
-            color: #d4af37;
-        }
-
-        .page-header {
-            margin-top: 80px;
-            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
-            color: #fff;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .page-header h1 {
-            font-size: 3rem;
-            color: #d4af37;
-            margin-bottom: 1rem;
-            letter-spacing: 3px;
-        }
-
-        .page-header p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        .contact-container {
-            max-width: 800px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-        }
-
-        .contact-info {
-            background: #fff;
-            padding: 3rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            margin-bottom: 4rem;
-        }
-
-        .contact-info h2 {
-            font-size: 2rem;
-            color: #2d2d2d;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
-        }
-
-        .info-item {
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .info-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .info-label {
-            font-size: 0.9rem;
-            color: #d4af37;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        .info-content {
-            font-size: 1.2rem;
-            color: #2d2d2d;
-        }
-
-        .info-content a {
-            color: #2d2d2d;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .info-content a:hover {
-            color: #d4af37;
-        }
-
-        .social-icon {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .contact-form {
-            background: #fff;
-            padding: 3rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .contact-form h2 {
-            font-size: 2rem;
-            color: #2d2d2d;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.95rem;
-            color: #2d2d2d;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            font-family: 'Georgia', serif;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #d4af37;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: #d4af37;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-family: 'Georgia', serif;
-            font-size: 1.1rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .submit-btn:hover {
-            background: #f0c14b;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-        }
-
-        .contact-form {
-            background: #fff;
-            padding: 3rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .contact-form h2 {
-            font-size: 2rem;
-            color: #2d2d2d;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.95rem;
-            color: #2d2d2d;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            font-family: 'Georgia', serif;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #d4af37;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: #d4af37;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-family: 'Georgia', serif;
-            font-size: 1.1rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .submit-btn:hover {
-            background: #f0c14b;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-        }
-
-        .map-section {
-            background: #fff;
-            padding: 3rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            margin-bottom: 4rem;
-        }
-
-        .map-section h2 {
-            font-size: 2rem;
-            color: #2d2d2d;
-            margin-bottom: 1.5rem;
-            letter-spacing: 2px;
-            text-align: center;
-        }
-
-        .map-placeholder {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 1.2rem;
-        }
-
-        footer {
-            background: #1a1a1a;
-            color: #fff;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
-
-        footer p {
-            margin-bottom: 1rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            color: #d4af37;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: color 0.3s;
-        }
-
-        .social-links a:hover {
-            color: #f0c14b;
-        }
-
-        @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 2rem;
-            }
-
-            nav ul {
-                gap: 1rem;
-                font-size: 0.85rem;
-            }
-
-            .contact-info,
-            .map-section {
-                padding: 2rem;
-            }
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="index.html" class="logo">SALEH JEWELERS</a>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#collections">Collections</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <div class="page-header">
-        <h1>Contact Us</h1>
-        <p>We'd love to hear from you! Whether you have questions about our collections, need assistance with a custom piece, or want to schedule a private consultation, our team is here to help.</p>
+    <!-- HEADER — injected from shared component -->
+    <div id="site-header"></div>
+
+    <div class="contact-page-wrapper">
+
+        <!-- Hero Banner -->
+        <div class="page-header">
+            <h1>Contact Us</h1>
+            <p>Whether you have questions about our collections, need help with a custom piece, or want to schedule a private consultation — we're here for you.</p>
+        </div>
+
+        <div class="contact-container">
+
+            <!-- ── Get In Touch ── -->
+            <div class="contact-card">
+                <h2>Get In Touch</h2>
+                <div class="info-grid">
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-phone"></i></div>
+                        <div class="info-body">
+                            <div class="info-label">Phone</div>
+                            <div class="info-content">
+                                <a href="tel:+16784042048">(678) 404-2048</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="info-body">
+                            <div class="info-label">Email</div>
+                            <div class="info-content">
+                                <a href="mailto:salehjewelersatl@gmail.com">salehjewelersatl@gmail.com</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fab fa-facebook-f"></i></div>
+                        <div class="info-body">
+                            <div class="info-label">Facebook</div>
+                            <div class="info-content">
+                                <a href="https://facebook.com/saleh.ritejewelers" target="_blank" rel="noopener noreferrer">facebook.com/saleh.ritejewelers</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fab fa-instagram"></i></div>
+                        <div class="info-body">
+                            <div class="info-label">Instagram</div>
+                            <div class="info-content">
+                                <a href="https://instagram.com/salehjewelers" target="_blank" rel="noopener noreferrer">@salehjewelers</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-clock"></i></div>
+                        <div class="info-body">
+                            <div class="info-label">Hours</div>
+                            <div class="info-content">
+                                Mon – Sat: 10:00 AM – 6:00 PM<br>
+                                Sun: 11:00 AM – 6:00 PM
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="info-body">
+                            <div class="info-label">Address</div>
+                            <div class="info-content">
+                                3330 Sugarloaf Parkway, Suite OL1B<br>
+                                Lawrenceville, GA 30044
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- FORM SECTION: commented out pending endpoint setup
+            <div class="contact-card">
+                <h2>Send a Message</h2>
+
+                <div class="form-success" id="formSuccess">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>Message Received</h4>
+                    <p>Thank you for reaching out. We will be in touch shortly.</p>
+                </div>
+
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cfName">Full Name</label>
+                            <input type="text" id="cfName" name="name" placeholder="Your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cfEmail">Email Address</label>
+                            <input type="email" id="cfEmail" name="email" placeholder="your.email@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cfPhone">Phone Number</label>
+                            <input type="tel" id="cfPhone" name="phone" placeholder="(123) 456-7890">
+                        </div>
+                        <div class="form-group">
+                            <label for="cfSubject">Subject</label>
+                            <select id="cfSubject" name="subject">
+                                <option value="" disabled selected>Select a topic</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Custom Jewelry">Custom Jewelry</option>
+                                <option value="Repair Service">Repair Service</option>
+                                <option value="Private Consultation">Private Consultation</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cfMessage">Message</label>
+                        <textarea id="cfMessage" name="message" placeholder="Tell us how we can help you..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+            -->
+            <!-- ── Map ── -->
+            <div class="contact-card map-card">
+                <h2>Visit Our Showroom</h2>
+                <div class="map-frame">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.7992221069753!2d-84.01894542402096!3d33.92056667320689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f5beaa98c55555%3A0x6b52fdb7c36aca09!2s3330%20Sugarloaf%20Pkwy%20Suite%20OL1B%2C%20Lawrenceville%2C%20GA%2030044!5e0!3m2!1sen!2sus!4v1765835801137!5m2!1sen!2sus" width="700" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="contact-container">
-        <div class="contact-info">
-            <h2>Get In Touch</h2>
-            
-            <div class="info-item">
-                <div class="info-label">Phone</div>
-                <div class="info-content">
-                    <a href="tel:+16744042048">(678) 404-2048</a>
-                </div>
-            </div>
-
-            <div class="info-item">
-                <div class="info-label">Email</div>
-                <div class="info-content">
-                    <a href="mailto:info@salehjewelers.com">info@salehjewelers.com</a>
-                </div>
-            </div>
-
-            <div class="info-item">
-                <div class="info-label">Facebook</div>
-                <div class="info-content">
-                    <a href="#" class="social-icon">
-                        <span>facebook.com/salehjewelers</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="info-item">
-                <div class="info-label">Instagram</div>
-                <div class="info-content">
-                    <a href="https://instagram.com/salehjewelers" target="_blank" rel="noopener noreferrer" class="social-icon">
-                        <span>@salehjewelers</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="info-item">
-                <div class="info-label">Hours</div>
-                <div class="info-content">
-                    Open Everyday: 10:00 AM - 6:00 PM
-                </div>
-            </div>
-
-            <div class="info-item">
-                <div class="info-label">Address</div>
-                <div class="info-content">
-                    3330 Sugarloaf Parkway OL1B<br>
-                    Lawrenceville, GA 30044
-                </div>
-            </div>
-        </div>
-
-        <div class="map-section">
-            <h2>Visit Our Store</h2>
-            <div class="map-placeholder">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.7992221069753!2d-84.01894542402096!3d33.92056667320689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f5beaa98c55555%3A0x6b52fdb7c36aca09!2s3330%20Sugarloaf%20Pkwy%20Suite%20OL1B%2C%20Lawrenceville%2C%20GA%2030044!5e0!3m2!1sen!2sus!4v1765835801137!5m2!1sen!2sus" width="700" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2025 Saleh Jewelers. All rights reserved.</p>
-        <div class="social-links">
-            <a href="#">Facebook</a>
-            <a href="https://instagram.com/salehjewelers" target="_blank" rel="noopener noreferrer">Instagram</a>
-            <a href="#">Pinterest</a>
-        </div>
-    </footer>
+    <!-- FOOTER — injected from shared component -->
+    <div id="site-footer"></div>
 
     <script>
-        // Smooth scrolling for navigation links
+        /* ── Load shared header & footer ── */
+        async function loadComponent(file, targetId, callback) {
+            try {
+                const res = await fetch(file);
+                if (!res.ok) throw new Error('Could not load ' + file);
+                document.getElementById(targetId).innerHTML = await res.text();
+                if (typeof callback === 'function') callback();
+            } catch (err) { console.error(err); }
+        }
+
+        function initMobileMenu() {
+            const menu     = document.querySelector('#mobile-menu');
+            const navLinks = document.querySelector('#nav-list');
+            if (!menu || !navLinks) return;
+            menu.addEventListener('click', () => {
+                menu.classList.toggle('is-active');
+                navLinks.classList.toggle('active');
+            });
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.remove('is-active');
+                    navLinks.classList.remove('active');
+                });
+            });
+        }
+
+        loadComponent('assets/components/header/header.html', 'site-header', initMobileMenu);
+        loadComponent('assets/components/footer/footer.html', 'site-footer');
+
+        /* ── Contact form ── */
+        /* TODO: Wire up to a real endpoint (Google Apps Script, Formspree, etc.) before going live
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name    = document.getElementById('cfName').value.trim();
+            const email   = document.getElementById('cfEmail').value.trim();
+            const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!name)               { alert('Please enter your name.');    return; }
+            if (!emailRx.test(email)){ alert('Please enter a valid email.'); return; }
+
+            // Submit to endpoint here, then show success:
+            this.style.display = 'none';
+            document.getElementById('formSuccess').style.display = 'block';
+        });
+        */
+
+        /* ── Smooth scroll for anchor links ── */
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
+            anchor.addEventListener('click', function(e) {
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
     </script>
+
 </body>
 </html>

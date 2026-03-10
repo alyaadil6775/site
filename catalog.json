@@ -20,7 +20,7 @@
     "price": "$5,845",
     "reserved": true,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/rfiepsxfmkf9pvs9yejkw0oatwo0",
     "href": "",
     "id": 1
@@ -33,7 +33,7 @@
     "price": "$27,675",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/p2gmx6rulpswc4diqdm9a4k9b3fr",
     "href": "",
     "id": 2
@@ -46,7 +46,7 @@
     "price": "$23,370",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/2n5xfivr1qqpn3h12bq0vuxsvnbc",
     "href": "",
     "id": 3
@@ -59,7 +59,7 @@
     "price": "$14,760",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/hvxs8g6qjy1a9qlv3401bw5qu66c",
     "href": "",
     "id": 4
@@ -72,7 +72,7 @@
     "price": "$10,765",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/qrdda39qc8g5afb4nk6ju4o3zcho",
     "href": "",
     "id": 5
@@ -98,7 +98,7 @@
     "price": "$14,760",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/0ib04vjjqbizdvkcgk5agrt4dlko",
     "href": "",
     "id": 7
@@ -124,7 +124,7 @@
     "price": "$50,430",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/l91xzjgn8f0kxusym24qc4zf1hod",
     "href": "",
     "id": 9
@@ -137,7 +137,7 @@
     "price": "$4,305",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/3xqj3leqwdanmwmters032e169ps",
     "href": "",
     "id": 10
@@ -215,7 +215,7 @@
     "price": "$7,380",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/vcu2megtuw253b9hyebzzoxhaybm",
     "href": "",
     "id": 16
@@ -241,7 +241,7 @@
     "price": "$10,455",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/m6t4yct82x8p513eido267z7lo9n",
     "href": "",
     "id": 18
@@ -306,7 +306,7 @@
     "price": "$16,300",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/pwtsumfctmwpnkc3bj9kurzat7bw",
     "href": "",
     "id": 23
@@ -410,7 +410,7 @@
     "price": "$7,075",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/d1nqj9h1q92zpqpkwpo6ojge3ob5",
     "href": "",
     "id": 31
@@ -423,7 +423,7 @@
     "price": "$22,450",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/s7auqr86jt8sj0mwru5stfc9550f",
     "href": "",
     "id": 32
@@ -436,7 +436,7 @@
     "price": "$27,675",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/4r19qm6ay0rrad0kczqiya7zjydb",
     "href": "",
     "id": 33
@@ -449,7 +449,7 @@
     "price": "$11,070",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/qcuisst5pvqribcwltv9ipgu8q0b",
     "href": "",
     "id": 34
@@ -462,7 +462,7 @@
     "price": "$9,225",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/n1xp4kzoc0oh345u71jgreikxisx",
     "href": "",
     "id": 35
@@ -475,7 +475,7 @@
     "price": "$4,430",
     "reserved": false,
     "condition": "Pre-Owned",
-    "hasCard": true,
+    "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/398efgh263bncrgptp7up4mxarvy",
     "href": "",
     "id": 36

@@ -695,6 +695,15 @@
             return parseFloat((str || '').replace(/[^0-9.]/g, '')) || 0;
         }
 
+        // Adds 10% markup and formats as $X,XXX
+        function markupPrice(str) {
+            if (!str || str === 'Contact for price') return str;
+            const num = parsePrice(str);
+            if (!num) return str;
+            const marked = Math.round(num * 1.10 / 10) * 10;
+            return '$' + marked.toLocaleString('en-US');
+        }
+
         function applyFilters() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const brand  = document.getElementById('brandFilter').value;
@@ -751,7 +760,7 @@
                         <div class="card-name">${p.name}</div>
                         ${p.description ? `<div class="card-desc">${p.description}</div>` : ''}
                         <div class="card-price">
-                            <span>${p.reserved ? '' : p.price}</span>
+                            <span>${p.reserved ? '' : markupPrice(p.price)}</span>
                             ${p.reserved ? '<span class="card-reserved">Reserved</span>' : ''}
                             ${p.hasCard   ? '<span class="card-papers">Papers</span>'   : ''}
                         </div>
@@ -783,7 +792,7 @@
 
             // Price row — show price + reserved badge if applicable
             const priceEl = document.getElementById('popupPrice');
-            priceEl.innerHTML = `${p.price || 'Contact for price'}
+            priceEl.innerHTML = `${markupPrice(p.price) || 'Contact for price'}
                 ${p.reserved ? '<span class="popup-reserved-badge">Reserved</span>' : ''}`;
 
             // Details list

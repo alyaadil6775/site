@@ -605,6 +605,56 @@
             padding: 0 0.5rem;
         }
 
+
+        /* ── Detail gallery thumbnails ── */
+        .popup-thumbs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0.8rem 1rem;
+            background: #111;
+        }
+        .popup-thumb {
+            width: 52px;
+            height: 52px;
+            object-fit: cover;
+            border: 2px solid transparent;
+            border-radius: 2px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.2s;
+        }
+        .popup-thumb:hover, .popup-thumb.active {
+            border-color: #d4af37;
+            opacity: 1;
+        }
+
+        /* ── Specs grid ── */
+        .popup-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.3rem 1rem;
+            margin: 0.8rem 0;
+        }
+        .popup-spec-item {
+            font-size: 0.78rem;
+            color: #555;
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .popup-spec-item span:first-child {
+            display: block;
+            font-size: 0.68rem;
+            color: #bbb;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1px;
+        }
+        .popup-spec-item span:last-child {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
         @media (max-width: 768px) {
             .pagination { gap: 0.25rem; }
             .pagination button { min-width: 32px; height: 32px; font-size: 0.78rem; }
@@ -671,6 +721,7 @@
                     <div class="popup-img-panel" id="popupImgPanel">
                         <i class="fas fa-clock popup-img-placeholder"></i>
                     </div>
+                    <div class="popup-thumbs" id="popupThumbs" style="display:none"></div>
                 </div>
                 <div class="popup-details">
                     <div class="popup-brand" id="popupBrand"></div>
@@ -885,34 +936,70 @@
             const p = allProducts.find(x => x.id === id);
             if (!p) return;
 
-            // Image
-            const imgPanel = document.getElementById('popupImgPanel');
-            imgPanel.innerHTML = p.image
-                ? `<img src="${p.image}" alt="${p.name}">`
-                : `<i class="fas fa-clock popup-img-placeholder"></i>`;
+            // ── Main image + gallery thumbnails ──
+            const imgPanel  = document.getElementById('popupImgPanel');
+            const thumbsEl  = document.getElementById('popupThumbs');
+            const imgs      = (p.images && p.images.length) ? p.images : (p.image ? [p.image] : []);
 
-            // Fields
+            if (imgs.length) {
+                imgPanel.innerHTML = `<img src="${imgs[0]}" alt="${p.name}" id="popupMainImg">`;
+            } else {
+                imgPanel.innerHTML = `<i class="fas fa-clock popup-img-placeholder"></i>`;
+            }
+
+            if (imgs.length > 1) {
+                thumbsEl.style.display = 'flex';
+                thumbsEl.innerHTML = imgs.map((src, i) =>
+                    `<img src="${src}" class="popup-thumb ${i===0?'active':''}" data-src="${src}" alt="View ${i+1}">`
+                ).join('');
+                thumbsEl.querySelectorAll('.popup-thumb').forEach(t => {
+                    t.addEventListener('click', () => {
+                        document.getElementById('popupMainImg').src = t.dataset.src;
+                        thumbsEl.querySelectorAll('.popup-thumb').forEach(x => x.classList.remove('active'));
+                        t.classList.add('active');
+                    });
+                });
+            } else {
+                thumbsEl.style.display = 'none';
+                thumbsEl.innerHTML = '';
+            }
+
+            // ── Text fields ──
             document.getElementById('popupBrand').textContent = p.brand || '';
             document.getElementById('popupName').textContent  = p.name  || '';
             document.getElementById('popupRef').textContent   = p.reference ? 'Ref. ' + p.reference : '';
 
-            // Price row — show price + reserved badge if applicable
             const priceEl = document.getElementById('popupPrice');
             priceEl.innerHTML = `${markupPrice(p.price) || 'Contact for price'}
                 ${p.reserved ? '<span class="popup-reserved-badge">Reserved</span>' : ''}`;
 
-            // Details list
-            const rows = [
-                p.description                  && { icon: 'fa-tag',         label: 'Description', val: p.description },
-                p.reference                    && { icon: 'fa-hashtag',      label: 'Reference',   val: p.reference   },
-                p.condition                    && { icon: 'fa-certificate',  label: 'Condition',   val: p.condition   },
-                p.hasCard                      && { icon: 'fa-file-alt',     label: 'Papers',      val: 'Box & Papers included' },
-                p.reserved                     && { icon: 'fa-lock',         label: 'Status',      val: 'Reserved — contact us to inquire' },
+            // ── Specs grid (new rich data) ──
+            const specFields = [
+                p.condition    && { label: 'Condition',  val: p.condition  },
+                p.dial         && { label: 'Dial',       val: p.dial       },
+                p.bezel        && { label: 'Bezel',      val: p.bezel      },
+                p.bracelet     && { label: 'Bracelet',   val: p.bracelet   },
+                p.material     && { label: 'Material',   val: p.material   },
+                p.size         && { label: 'Size',       val: p.size       },
+                p.year         && { label: 'Year',       val: p.year       },
+                p.series       && { label: 'Series',     val: p.series     },
+                p.gender       && { label: 'Gender',     val: p.gender     },
+                p.hasCard      && { label: 'Papers',     val: 'Included'   },
+                p.serialNumber && { label: 'Serial',     val: p.serialNumber },
+                p.sku          && { label: 'SKU',        val: p.sku        },
+                p.reserved     && { label: 'Status',     val: 'Reserved'   },
             ].filter(Boolean);
 
-            document.getElementById('popupDetailsList').innerHTML = rows.map(r =>
-                `<li><i class="fas ${r.icon}"></i><span><strong>${r.label}:</strong> ${r.val}</span></li>`
-            ).join('') || '<li><i class="fas fa-circle"></i><span>Contact us for full specifications.</span></li>';
+            const listEl = document.getElementById('popupDetailsList');
+            if (specFields.length) {
+                listEl.innerHTML = `<div class="popup-specs">` +
+                    specFields.map(s =>
+                        `<div class="popup-spec-item"><span>${s.label}</span><span>${s.val}</span></div>`
+                    ).join('') +
+                `</div>`;
+            } else {
+                listEl.innerHTML = '<li><i class="fas fa-circle"></i><span>Contact us for full specifications.</span></li>';
+            }
 
             document.getElementById('popupOverlay').classList.add('open');
             document.body.style.overflow = 'hidden';

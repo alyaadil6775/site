@@ -104,19 +104,30 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
     const cardStubs = await page.evaluate((sels) => {
         let cards = [];
+        let usedSel = null;
+
+        // Log counts for all selectors to diagnose which one hits
         for (const sel of sels) {
             const found = [...document.querySelectorAll(sel)];
-            if (found.length > 3 && found.some(el => /\$[\d,]+/.test(el.innerText||''))) {
-                cards = found; break;
+            if (found.length > 0) console.log('[page] sel', sel, '->', found.length);
+            // Accept if it finds cards — with OR without price check (price may lazy-render)
+            if (found.length > 3 && !usedSel) {
+                const withPrice = found.filter(el => /\$[\d,]+/.test(el.innerText||''));
+                if (withPrice.length > 3) { cards = withPrice; usedSel = sel + ' (with price)'; break; }
+                if (found.length > 10)    { cards = found;      usedSel = sel + ' (no price filter)'; break; }
             }
         }
+
+        // Fallback: any element with CDN image
         if (!cards.length) {
+            usedSel = 'fallback';
             cards = [...document.querySelectorAll('*')].filter(el => {
                 if (el.children.length < 1 || el.children.length > 25) return false;
-                return /\$[\d,]+/.test(el.innerText||'') && el.querySelector('img[src*="cloudfront"]');
+                return el.querySelector('img[src*="cloudfront"]');
             });
         }
-        console.log('[page] cards found:', cards.length);
+
+        console.log('[page] used selector:', usedSel, '| cards:', cards.length);
         return cards.map(card => {
             const img  = card.querySelector('img[src*="cloudfront"], img[data-src*="cloudfront"]');
             const src  = img ? (img.src || img.getAttribute('data-src') || '') : '';

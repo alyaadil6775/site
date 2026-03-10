@@ -22,13 +22,6 @@ const BRAND_MAP = {
     'Audemars': 'Audemars Piguet', 'IWC': 'IWC', 'TAG': 'TAG Heuer'
 };
 
-function extractBrand(name) {
-    for (const [key, val] of Object.entries(BRAND_MAP)) {
-        if (name.startsWith(key)) return val;
-    }
-    return '';
-}
-
 (async () => {
     console.log('Launching browser...');
     const browser = await puppeteer.launch({
@@ -48,11 +41,35 @@ function extractBrand(name) {
     console.log('Waiting for initial render...');
     await new Promise(r => setTimeout(r, 8000));
 
-    // ── Scroll until the page stops growing ────────────────────────
-    // Elefta uses infinite scroll — new watch cards are injected into
-    // the DOM as you reach the bottom. We keep scrolling until the
-    // page height hasn't changed for 3 consecutive checks.
-    console.log('Scrolling page to load all watches...');
+    // ── Find the real scroll container ─────────────────────────────
+    // Elefta renders inside an inner div with overflow:scroll, not on
+    // document.body — so we must scroll that element, not the window.
+    const scrollSel = await page.evaluate(() => {
+        const els = [...document.querySelectorAll('*')];
+        let best = null;
+        let bestHeight = window.innerHeight;
+        for (const el of els) {
+            const style = window.getComputedStyle(el);
+            const scrollable = ['auto', 'scroll'].includes(style.overflowY) ||
+                               ['auto', 'scroll'].includes(style.overflow);
+            if (scrollable && el.scrollHeight > bestHeight) {
+                bestHeight = el.scrollHeight;
+                best = el;
+            }
+        }
+        if (!best) return null;
+        if (best.id) return '#' + best.id;
+        // Use first meaningful class
+        const cls = (best.className || '').trim().split(/\s+/)
+            .find(c => c.length > 2 && !c.startsWith('css-'));
+        return cls ? '.' + cls : null;
+    });
+    console.log('Scroll container:', scrollSel || 'window (fallback)');
+
+    // ── Scroll loop ─────────────────────────────────────────────────
+    // Keep scrolling the container to its bottom and waiting for new
+    // items to inject. Stop when scrollHeight stops growing for 5 rounds.
+    console.log('Scrolling to load all watches...');
 
     let lastHeight   = 0;
     let stableRounds = 0;
@@ -61,35 +78,42 @@ function extractBrand(name) {
     while (stableRounds < 5) {
         round++;
 
-        // Scroll to the absolute bottom of the current page
-        const heightBeforeWait = await page.evaluate(() => {
+        const heightBefore = await page.evaluate((sel) => {
+            const el = sel ? document.querySelector(sel) : null;
+            if (el) { el.scrollTop = el.scrollHeight; return el.scrollHeight; }
             window.scrollTo(0, document.body.scrollHeight);
-            return document.body.scrollHeight;
-        });
+            return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        }, scrollSel);
 
-        // Wait for new items to be injected by the infinite scroll handler
         await new Promise(r => setTimeout(r, 2000));
 
-        const heightAfterWait = await page.evaluate(() => document.body.scrollHeight);
-        console.log(`  Scroll ${round}: height ${heightBeforeWait}px → ${heightAfterWait}px`);
+        const heightAfter = await page.evaluate((sel) => {
+            const el = sel ? document.querySelector(sel) : null;
+            if (el) return el.scrollHeight;
+            return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        }, scrollSel);
 
-        if (heightAfterWait > lastHeight) {
-            lastHeight   = heightAfterWait;
-            stableRounds = 0; // page grew — keep going
+        console.log(`  Scroll ${round}: ${heightBefore}px → ${heightAfter}px`);
+
+        if (heightAfter > lastHeight) {
+            lastHeight   = heightAfter;
+            stableRounds = 0;
         } else {
-            stableRounds++; // no change — count toward stopping
+            stableRounds++;
         }
     }
 
-    console.log(`All items loaded after ${round} scrolls. Final page height: ${lastHeight}px`);
+    console.log(`Done scrolling after ${round} rounds. Final height: ${lastHeight}px`);
 
-    // Scroll back to top then to bottom once more so all images are in view
-    await page.evaluate(() => window.scrollTo(0, 0));
-    await new Promise(r => setTimeout(r, 1000));
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await new Promise(r => setTimeout(r, 2000));
+    // One more scroll to bottom to ensure last batch rendered
+    await page.evaluate((sel) => {
+        const el = sel ? document.querySelector(sel) : null;
+        if (el) el.scrollTop = el.scrollHeight;
+        else window.scrollTo(0, document.body.scrollHeight);
+    }, scrollSel);
+    await new Promise(r => setTimeout(r, 3000));
 
-    // ── Scrape ─────────────────────────────────────────────────────
+    // ── Scrape all cards ────────────────────────────────────────────
     const SELECTORS = [
         '.watch-list-item',
         '[class*="watch-list-item flex"]',
@@ -100,34 +124,27 @@ function extractBrand(name) {
         '[class*="storeItem"]',    '[class*="store-item"]'
     ];
 
-    const rawItems = await page.evaluate((selectors) => {
-        const BRAND_MAP = {
-            'Rolex': 'Rolex', 'Omega': 'Omega', 'Cartier': 'Cartier',
-            'Breitling': 'Breitling', 'Patek': 'Patek Philippe',
-            'Audemars': 'Audemars Piguet', 'IWC': 'IWC', 'TAG': 'TAG Heuer'
-        };
+    const rawItems = await page.evaluate((selectors, brandMap) => {
         function extractBrand(name) {
-            for (const [key, val] of Object.entries(BRAND_MAP)) {
+            for (const [key, val] of Object.entries(brandMap)) {
                 if (name.startsWith(key)) return val;
             }
             return '';
         }
 
-        // Find the right selector — must match cards that contain a price
         let cards = [];
-        let usedSelector = null;
+        let usedSel = null;
         for (const sel of selectors) {
             const found = [...document.querySelectorAll(sel)];
             if (found.length > 3 && found.some(el => /\$[\d,]+/.test(el.innerText || ''))) {
                 cards = found;
-                usedSelector = sel;
+                usedSel = sel;
                 break;
             }
         }
 
-        // Fallback: any element containing a CDN image and a price
         if (cards.length === 0) {
-            usedSelector = 'fallback';
+            usedSel = 'fallback';
             cards = [...document.querySelectorAll('*')].filter(el => {
                 if (el.children.length < 1 || el.children.length > 25) return false;
                 return /\$[\d,]+/.test(el.innerText || '') &&
@@ -135,7 +152,7 @@ function extractBrand(name) {
             });
         }
 
-        console.log('[page] selector:', usedSelector, '| cards:', cards.length);
+        console.log('[page] selector:', usedSel, '| cards:', cards.length);
 
         const results = [];
         cards.forEach((card, i) => {
@@ -173,10 +190,10 @@ function extractBrand(name) {
         });
 
         return results;
-    }, SELECTORS);
+    }, SELECTORS, BRAND_MAP);
 
     await browser.close();
-    console.log(`Raw items scraped from page: ${rawItems.length}`);
+    console.log(`Raw items from page: ${rawItems.length}`);
 
     // ── Deduplicate ─────────────────────────────────────────────────
     const seenImg  = new Set();
@@ -184,11 +201,11 @@ function extractBrand(name) {
 
     const products = rawItems
         .filter(item => {
-            if (JUNK.has(item.name)) return false;
-            if (!item.image)         return false;
-            if (seenImg.has(item.image)) return false;
+            if (JUNK.has(item.name))         return false;
+            if (!item.image)                  return false;
+            if (seenImg.has(item.image))      return false;
             const tk = `${item.name}||${item.description}`;
-            if (seenText.has(tk))    return false;
+            if (seenText.has(tk))             return false;
             seenImg.add(item.image);
             seenText.add(tk);
             return true;
@@ -196,7 +213,7 @@ function extractBrand(name) {
         .map((p, i) => ({ ...p, id: i }));
 
     if (products.length === 0) {
-        console.warn('WARNING: 0 products after dedup — writing empty array.');
+        console.warn('WARNING: 0 products after dedup.');
         fs.writeFileSync(OUT_FILE, JSON.stringify([], null, 2));
     } else {
         console.log(`✓ ${products.length} unique products saved.`);

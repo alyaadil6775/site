@@ -697,6 +697,11 @@
                 <option value="15000-30000">$15,000 – $30,000</option>
                 <option value="30000-999999">$30,000+</option>
             </select>
+            <select class="filter-select" id="papersFilter">
+                <option value="">Papers: Any</option>
+                <option value="yes">With Papers</option>
+                <option value="no">Without Papers</option>
+            </select>
             <span class="results-count" id="resultsCount"></span>
         </div>
 
@@ -818,6 +823,7 @@
             const search = document.getElementById('searchInput').value.toLowerCase();
             const brand  = document.getElementById('brandFilter').value;
             const price  = document.getElementById('priceFilter').value;
+            const papers = document.getElementById('papersFilter').value;
 
             filteredList = allProducts.filter(p => !p.reserved).filter(p => {
                 const matchSearch = !search ||
@@ -832,7 +838,10 @@
                     const val = parsePrice(p.price);
                     matchPrice = val >= min && val <= max;
                 }
-                return matchSearch && matchBrand && matchPrice;
+                const matchPapers = !papers ||
+                    (papers === 'yes' && p.hasCard) ||
+                    (papers === 'no'  && !p.hasCard);
+                return matchSearch && matchBrand && matchPrice && matchPapers;
             });
 
             currentPage = 1;
@@ -1009,6 +1018,7 @@
         document.getElementById('searchInput').addEventListener('input', () => { currentPage = 1; applyFilters(); });
         document.getElementById('brandFilter').addEventListener('change', applyFilters);
         document.getElementById('priceFilter').addEventListener('change', applyFilters);
+        document.getElementById('papersFilter').addEventListener('change', applyFilters);
 
         function showNoCatalog() {
             document.getElementById('catalogGrid').innerHTML = `

@@ -250,6 +250,19 @@
             margin-top: 0.2rem;
         }
 
+        
+        .card-reserved {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #fff;
+            background: #b0842a;
+            padding: 3px 10px;
+            border-radius: 2px;
+        }
+
         .card-price {
             font-size: 1rem;
             font-weight: 700;
@@ -705,7 +718,7 @@
                     (p.name      || '').toLowerCase().includes(search) ||
                     (p.brand     || '').toLowerCase().includes(search) ||
                     (p.reference || '').toLowerCase().includes(search) ||
-                    (p.rawText   || '').toLowerCase().includes(search);
+                    (p.description || '').toLowerCase().includes(search);
 
                 const matchBrand = !brand || p.brand === brand;
 
@@ -751,8 +764,10 @@
                     <div class="card-body">
                         ${p.brand    ? `<div class="card-brand">${p.brand}</div>` : ''}
                         <div class="card-name">${p.name}</div>
-                        ${p.reference ? `<div class="card-ref">Ref. ${p.reference}</div>` : ''}
-                        <div class="card-price">${p.price}</div>
+                        ${p.description ? `<div class="card-ref">${p.description}</div>` : ''}
+                        <div class="card-price">
+                            ${p.reserved ? '<span class="card-reserved">Reserved</span>' : p.price}
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -806,11 +821,15 @@
 
             // Detail lines (skip first line which is the name)
             const listEl = document.getElementById('popupDetailsList');
-            const lines  = (p.details || []).slice(1).filter(l =>
-                l && l !== p.price && l !== p.brand && l !== p.reference
-            );
-            listEl.innerHTML = lines.map(l =>
-                `<li><i class="fas fa-circle"></i>${l}</li>`
+            const details = [
+                p.description ? { label: 'Description', val: p.description } : null,
+                p.reference   ? { label: 'Reference',   val: p.reference   } : null,
+                p.condition   ? { label: 'Condition',   val: p.condition   } : null,
+                p.hasCard     ? { label: 'Papers',      val: 'Box & Papers included' } : null,
+                p.reserved    ? { label: 'Status',      val: 'Reserved'    } : null,
+            ].filter(Boolean);
+            listEl.innerHTML = details.map(d =>
+                `<li><i class="fas fa-circle"></i><strong>${d.label}:</strong>&nbsp;${d.val}</li>`
             ).join('') || '<li><i class="fas fa-circle"></i>Contact us for full specifications.</li>';
 
             // Store link

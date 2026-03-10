@@ -18,209 +18,238 @@ const path      = require('path');
 const STORE_URL = 'https://swisstimeusa.elefta.store/store/3f6a81';
 const OUT_FILE  = path.join(__dirname, 'catalog.json');
 
-// Names that are page-level labels, not real products
-const JUNK_NAMES = new Set([
-  'SWISS TIME USA', 'Brand', 'Reference Number',
-  'Series', 'Condition', 'Box & Papers', 'Powered By', 'Contact Us'
+const JUNK = new Set([
+    'SWISS TIME USA', 'Brand', 'Reference Number',
+    'Series', 'Condition', 'Box & Papers', 'Powered By', 'Contact Us'
 ]);
+
+const BRAND_MAP = {
+    'Rolex': 'Rolex', 'Omega': 'Omega', 'Cartier': 'Cartier',
+    'Breitling': 'Breitling', 'Patek': 'Patek Philippe',
+    'Audemars': 'Audemars Piguet', 'IWC': 'IWC', 'TAG': 'TAG Heuer'
+};
+
+function extractBrand(name) {
+    for (const [key, val] of Object.entries(BRAND_MAP)) {
+        if (name.startsWith(key)) return val;
+    }
+    return '';
+}
+
+function scrapeCards(cards) {
+    const results = [];
+    cards.forEach((card, i) => {
+        const img = card.querySelector('img[src*="cloudfront"], img[data-src*="cloudfront"]');
+        const src = img ? (img.src || img.getAttribute('data-src') || '') : '';
+        if (!src || src.includes('logo_footer')) return;
+
+        const txt   = (card.innerText || '').trim();
+        const lines = txt.split('\n').map(l => l.trim()).filter(Boolean);
+
+        const priceMatch = txt.match(/\$[\d,]+(\.\d{2})?/);
+        const price      = priceMatch ? priceMatch[0] : 'Contact for price';
+
+        const refMatch  = txt.match(/[Rr]ef\.?\s*[:#]?\s*([\w\-\/\.]+)/);
+        const reference = refMatch ? refMatch[1].trim().replace(/\.$/, '') : '';
+
+        const name        = lines[0] || `Item ${i}`;
+        const description = lines[1] || '';
+        const reserved    = lines.some(l => l.toLowerCase() === 'reserved');
+        const hasCard     = description.includes('Card') || description.includes('Papers');
+        const link        = card.querySelector('a');
+
+        results.push({
+            name,
+            brand:       extractBrand(name),
+            description,
+            reference,
+            price,
+            reserved,
+            condition:   'Pre-Owned',
+            hasCard,
+            image:       src,
+            href:        link ? link.href : ''
+        });
+    });
+    return results;
+}
 
 (async () => {
     console.log('Launching browser...');
     const browser = await puppeteer.launch({
         headless: 'new',
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-gpu'
-        ]
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu']
     });
 
     const page = await browser.newPage();
     await page.setViewport({ width: 1440, height: 900 });
     await page.setUserAgent(
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' +
-        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+        '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     );
 
-    console.log('Navigating to store...');
+    console.log('Navigating...');
     await page.goto(STORE_URL, { waitUntil: 'networkidle2', timeout: 60000 });
-
-    console.log('Waiting for JS render...');
     await new Promise(r => setTimeout(r, 8000));
 
-    // Scroll incrementally — pause after each pass so lazy-loaded
-    // items have time to render before we scroll further.
-    // Keeps going until the page height stops growing for 3 rounds.
-    console.log('Scrolling to load all lazy items...');
-    let unchangedRounds = 0;
-    let lastHeight = 0;
+    // ── Scroll loop: keep scrolling until item count stops growing ──
+    // This handles infinite-scroll pagination where new items are injected
+    // into the DOM as you scroll, not just lazy-loaded images.
+    console.log('Starting scroll loop...');
 
-    while (unchangedRounds < 3) {
-        const currentHeight = await page.evaluate(() => document.body.scrollHeight);
+    const SELECTORS = [
+        '[class*="InventoryItem"]', '[class*="inventory-item"]',
+        '[class*="listing-item"]', '[class*="product-item"]',
+        '[class*="item-card"]',    '[class*="watch-item"]',
+        '[class*="ProductCard"]',  '[class*="product-card"]',
+        '[class*="storeItem"]',    '[class*="store-item"]'
+    ];
 
-        // Scroll to bottom in small steps
-        await page.evaluate(async () => {
-            await new Promise(resolve => {
-                const step = 300;
-                let pos = window.scrollY;
-                const id = setInterval(() => {
-                    window.scrollBy(0, step);
-                    pos += step;
-                    if (pos >= document.body.scrollHeight) {
-                        clearInterval(id);
-                        resolve();
-                    }
-                }, 100);
-            });
-        });
-
-        // Wait for new items to render
-        await new Promise(r => setTimeout(r, 2500));
-
-        const newHeight = await page.evaluate(() => document.body.scrollHeight);
-        console.log(`  Height: ${currentHeight} → ${newHeight}`);
-
-        if (newHeight === currentHeight) {
-            unchangedRounds++;
-        } else {
-            unchangedRounds = 0; // new content appeared, keep scrolling
-        }
-        lastHeight = newHeight;
+    function getActiveSelector(page) {
+        return page.evaluate((selectors) => {
+            for (const sel of selectors) {
+                const found = document.querySelectorAll(sel);
+                if (found.length > 3) return sel;
+            }
+            return null;
+        }, SELECTORS);
     }
 
-    console.log(`Scroll done. Final page height: ${lastHeight}`);
+    let lastItemCount  = 0;
+    let stableRounds   = 0;
+    const MAX_STABLE   = 4;   // stop after 4 rounds with no new items
+    const MAX_ROUNDS   = 40;  // hard cap — avoid infinite loop
+    let round          = 0;
+
+    while (stableRounds < MAX_STABLE && round < MAX_ROUNDS) {
+        round++;
+
+        // Scroll to the very bottom
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        await new Promise(r => setTimeout(r, 800));
+        // Scroll a bit more to trigger any threshold-based loaders
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        await new Promise(r => setTimeout(r, 2500));
+
+        // Count how many product cards are now in the DOM
+        const activeSelector = await getActiveSelector(page);
+        const itemCount = activeSelector
+            ? await page.evaluate(sel => document.querySelectorAll(sel).length, activeSelector)
+            : await page.evaluate(() =>
+                [...document.querySelectorAll('*')].filter(el => {
+                    const txt = el.innerText || '';
+                    return /\$[\d,]+/.test(txt) && el.querySelector('img[src*="cloudfront"]');
+                }).length
+            );
+
+        console.log(`  Round ${round}: ${itemCount} cards in DOM`);
+
+        if (itemCount > lastItemCount) {
+            lastItemCount = itemCount;
+            stableRounds  = 0;
+        } else {
+            stableRounds++;
+        }
+    }
+
+    console.log(`Scroll complete after ${round} rounds. Total DOM cards: ${lastItemCount}`);
     await new Promise(r => setTimeout(r, 2000));
 
-    // ── Core scrape ───────────────────────────────────────────────
-    const rawItems = await page.evaluate(() => {
-        const results = [];
+    // ── Scrape all cards now that full page is loaded ──
+    const activeSelector = await getActiveSelector(page);
+    console.log('Active selector:', activeSelector);
 
-        // Elefta renders each listing as a small card.
-        // Try specific selectors first, then fall back.
-        const SELECTORS = [
-            '[class*="InventoryItem"]',
-            '[class*="inventory-item"]',
-            '[class*="listing-item"]',
-            '[class*="product-item"]',
-            '[class*="item-card"]',
-            '[class*="watch-item"]',
-            '[class*="ProductCard"]',
-            '[class*="product-card"]',
-            '[class*="storeItem"]',
-            '[class*="store-item"]'
-        ];
+    const rawItems = await page.evaluate((selectors, scrapeCardsStr) => {
+        // Re-instantiate scrapeCards inside page context
+        const BRAND_MAP = {
+            'Rolex': 'Rolex', 'Omega': 'Omega', 'Cartier': 'Cartier',
+            'Breitling': 'Breitling', 'Patek': 'Patek Philippe',
+            'Audemars': 'Audemars Piguet', 'IWC': 'IWC', 'TAG': 'TAG Heuer'
+        };
 
-        let cards = [];
-        for (const sel of SELECTORS) {
-            const found = [...document.querySelectorAll(sel)];
-            if (found.length > 3) {
-                cards = found;
-                console.log('[scraper] selector hit:', sel, found.length);
-                break;
+        function extractBrand(name) {
+            for (const [key, val] of Object.entries(BRAND_MAP)) {
+                if (name.startsWith(key)) return val;
             }
+            return '';
         }
 
-        // Fallback: find all elements that contain exactly one price
-        // and exactly one image from the CDN
+        let cards = [];
+        for (const sel of selectors) {
+            const found = [...document.querySelectorAll(sel)];
+            if (found.length > 3) { cards = found; break; }
+        }
+
+        // Fallback
         if (cards.length === 0) {
             cards = [...document.querySelectorAll('*')].filter(el => {
                 if (el.children.length < 1 || el.children.length > 20) return false;
                 const txt = el.innerText || '';
-                const hasPrice = /\$[\d,]+/.test(txt);
-                const hasImg   = el.querySelector('img[src*="cloudfront"]');
-                return hasPrice && hasImg;
+                return /\$[\d,]+/.test(txt) && el.querySelector('img[src*="cloudfront"]');
             });
-            console.log('[scraper] fallback cards:', cards.length);
         }
 
-        cards.forEach((card, i) => {
-            const img  = card.querySelector('img[src*="cloudfront"], img[data-src*="cloudfront"]');
-            const src  = img ? (img.src || img.getAttribute('data-src') || '') : '';
+        console.log('[page] total cards found:', cards.length);
 
-            // Skip cards with no CDN image (ghost/duplicate elements)
+        const results = [];
+        cards.forEach((card, i) => {
+            const img = card.querySelector('img[src*="cloudfront"], img[data-src*="cloudfront"]');
+            const src = img ? (img.src || img.getAttribute('data-src') || '') : '';
             if (!src || src.includes('logo_footer')) return;
 
             const txt   = (card.innerText || '').trim();
             const lines = txt.split('\n').map(l => l.trim()).filter(Boolean);
 
-            // Price: first $X,XXX match
             const priceMatch = txt.match(/\$[\d,]+(\.\d{2})?/);
             const price      = priceMatch ? priceMatch[0] : 'Contact for price';
 
-            // Reference: full ref number — match patterns like 116520, 126711CHNR,
-            // 210.30.42.20.03.001, 428.17.39.60.01.001, A13317101C1A1, 4016/W4PN0008
-            const refMatch = txt.match(
-                /[Rr]ef\.?\s*[:#]?\s*([\w\-\/\.]+(?:[\w\-\/\.]+)*)/
-            );
+            const refMatch  = txt.match(/[Rr]ef\.?\s*[:#]?\s*([\w\-\/\.]+)/);
             const reference = refMatch ? refMatch[1].trim().replace(/\.$/, '') : '';
 
-            // Name = first non-empty line
-            const name = lines[0] || `Item ${i}`;
-
-            // Description = second line (the dial/bracelet description)
+            const name        = lines[0] || `Item ${i}`;
             const description = lines[1] || '';
-
-            // Brand: derive from the watch name
-            const brandMap = {
-                'Rolex': 'Rolex', 'Omega': 'Omega', 'Cartier': 'Cartier',
-                'Breitling': 'Breitling', 'Patek': 'Patek Philippe',
-                'Audemars': 'Audemars Piguet', 'IWC': 'IWC', 'TAG': 'TAG Heuer'
-            };
-            let brand = '';
-            for (const [key, val] of Object.entries(brandMap)) {
-                if (name.startsWith(key)) { brand = val; break; }
-            }
-
-            // Reserved flag
-            const reserved = lines.some(l => l.toLowerCase() === 'reserved');
-
-            // Condition / box from description text
-            const hasCard   = description.includes('Card') || description.includes('Papers');
-            const condition = 'Pre-Owned';
-
-            const link = card.querySelector('a');
+            const reserved    = lines.some(l => l.toLowerCase() === 'reserved');
+            const hasCard     = description.includes('Card') || description.includes('Papers');
+            const link        = card.querySelector('a');
 
             results.push({
-                id:          i,
                 name,
-                brand,
+                brand:     extractBrand(name),
                 description,
                 reference,
                 price,
                 reserved,
-                condition,
+                condition: 'Pre-Owned',
                 hasCard,
-                image:       src,
-                href:        link ? link.href : ''
+                image:     src,
+                href:      link ? link.href : ''
             });
         });
 
         return results;
-    });
+    }, SELECTORS);
 
     await browser.close();
 
-    // ── Post-process: deduplicate by (name + reference + price) ──
-    // Keep the version with the better image (non-empty image wins)
-    const seen    = new Map();
-    const JUNK    = ['SWISS TIME USA','Brand','Reference Number','Series',
-                     'Condition','Box & Papers','Powered By','Contact Us'];
+    // ── Deduplicate by image URL (guaranteed unique per watch) ──
+    const seenImg  = new Set();
+    const seenText = new Set();
 
-    rawItems.forEach(item => {
-        if (JUNK.includes(item.name)) return;
-        if (!item.image)              return; // always drop no-image duplicates
-
-        const key = `${item.name}|${item.reference}|${item.description}`;
-        if (!seen.has(key)) {
-            seen.set(key, item);
-        }
-    });
-
-    const products = [...seen.values()].map((p, i) => ({ ...p, id: i }));
+    const products = rawItems
+        .filter(item => {
+            if (JUNK.has(item.name))            return false;
+            if (!item.image)                     return false;
+            if (seenImg.has(item.image))         return false;
+            const tk = `${item.name}||${item.description}`;
+            if (seenText.has(tk))                return false;
+            seenImg.add(item.image);
+            seenText.add(tk);
+            return true;
+        })
+        .map((p, i) => ({ ...p, id: i }));
 
     if (products.length === 0) {
-        console.warn('WARNING: 0 products found after dedup. Writing empty array.');
+        console.warn('WARNING: 0 products after dedup.');
         fs.writeFileSync(OUT_FILE, JSON.stringify([], null, 2));
     } else {
         console.log(`✓ ${products.length} unique products scraped.`);

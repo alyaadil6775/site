@@ -708,7 +708,10 @@
             </div>
         </div>
 
-        <div class="pagination" id="pagination"></div>
+        <div class="pagination-wrap">
+            <div class="pagination-count" id="paginationCount"></div>
+            <div class="pagination" id="pagination"></div>
+        </div>
 
     </div>
 
@@ -839,10 +842,15 @@
         function renderPage() {
             const totalPages = Math.ceil(filteredList.length / PAGE_SIZE);
             const start      = (currentPage - 1) * PAGE_SIZE;
-            const pageItems  = filteredList.slice(start, start + PAGE_SIZE);
+            const end        = Math.min(start + PAGE_SIZE, filteredList.length);
+            const pageItems  = filteredList.slice(start, end);
 
             document.getElementById('resultsCount').textContent =
                 filteredList.length + ' item' + (filteredList.length !== 1 ? 's' : '');
+
+            // "Showing X of Y watches"
+            document.getElementById('paginationCount').textContent =
+                `Showing ${start + 1}–${end} of ${filteredList.length} watches`;
 
             renderGrid(pageItems);
             renderPagination(totalPages);
@@ -852,36 +860,18 @@
         }
 
         function renderPagination(totalPages) {
-            const bar = document.getElementById('pagination');
-            if (totalPages <= 1) { bar.innerHTML = ''; return; }
-
-            const prev  = currentPage - 1;
-            const next  = currentPage + 1;
-            const pages = [];
-
-            // Always show first page
-            pages.push(1);
-            if (currentPage > 3) pages.push('...');
-            // Pages around current
-            for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
-                pages.push(i);
-            }
-            if (currentPage < totalPages - 2) pages.push('...');
-            // Always show last page
-            if (totalPages > 1) pages.push(totalPages);
+            const bar   = document.getElementById('pagination');
+            const count = document.getElementById('paginationCount');
+            if (totalPages <= 1) { bar.innerHTML = ''; count.textContent = ''; return; }
 
             bar.innerHTML = `
-                <button ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${prev})">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                ${pages.map(p => p === '...'
-                    ? `<span class="page-info">…</span>`
-                    : `<button class="${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`
-                ).join('')}
-                <button ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${next})">
-                    <i class="fas fa-chevron-right"></i>
+                <button ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">
+                    Previous
                 </button>
                 <span class="page-info">Page ${currentPage} of ${totalPages}</span>
+                <button ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">
+                    Next
+                </button>
             `;
         }
 

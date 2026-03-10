@@ -9,6 +9,7 @@ on:
 
 jobs:
   scrape:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
 
     steps:

@@ -2,36 +2,41 @@
   header.html
   ============================================================
   Reusable site header / navigation component.
-
   HOW TO INCLUDE:
     Native HTML (no build tool) — use a <script> fetch approach
     or a server-side include (SSI / PHP / template engine).
-
     Pure-JS approach (already wired up in main.js):
       fetch('header.html').then(r => r.text())
         .then(html => document.getElementById('site-header').innerHTML = html);
-
   ============================================================
 -->
-
 <header>
     <nav>
         <a href="index.html" class="logo">SALEH <span>JEWELERS</span></a>
-
         <div class="menu-toggle" id="mobile-menu">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </div>
-
         <ul id="nav-list">
             <li><a href="index.html">Home</a></li>
             <li><a href="index.html#materials">Materials</a></li>
             <li><a href="index.html#services">Services</a></li>
-            <li><a href="showcase.html">Catalog</a></li>
+
+            <!-- Catalog dropdown — label is not clickable -->
+            <li class="nav-dropdown">
+                <span class="nav-dropdown-label">
+                    Catalog <i class="nav-chevron">&#9660;</i>
+                </span>
+                <ul class="nav-dropdown-menu">
+                    <li><a href="watches.html">Watches</a></li>
+                    <li><a href="showcase.html">Showcase</a></li>
+                </ul>
+            </li>
+
             <li><a href="Customer.html">Newsletter</a></li>
             <li><a href="contact_page.html">Contact</a></li>
-            <li><a href="promotions.html">Promotions</a></li>
+            <li><a href="index/promotions.html">Promotions</a></li>
         </ul>
     </nav>
 </header>

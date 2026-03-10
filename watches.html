@@ -784,7 +784,7 @@
                 const res = await fetch('catalog.json?v=' + Date.now());
                 if (!res.ok) throw new Error('not found');
                 allProducts  = await res.json();
-                filteredList = allProducts;
+                filteredList = allProducts.filter(p => !p.reserved);
                 buildBrandFilter();
                 renderPage();
             } catch (err) {
@@ -819,7 +819,7 @@
             const brand  = document.getElementById('brandFilter').value;
             const price  = document.getElementById('priceFilter').value;
 
-            filteredList = allProducts.filter(p => {
+            filteredList = allProducts.filter(p => !p.reserved).filter(p => {
                 const matchSearch = !search ||
                     (p.name        || '').toLowerCase().includes(search) ||
                     (p.brand       || '').toLowerCase().includes(search) ||

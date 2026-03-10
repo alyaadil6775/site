@@ -210,7 +210,7 @@ const BRAND_MAP = {
             seenText.add(tk);
             return true;
         })
-        .map((p, i) => ({ ...p, id: i }));
+        .map((p, i) => ({ id: i, name: p.name, brand: p.brand, description: p.description, reference: p.reference, price: p.price, reserved: p.reserved, condition: p.condition, hasCard: p.hasCard, image: p.image }));
 
     if (products.length === 0) {
         console.warn('WARNING: 0 products after dedup.');

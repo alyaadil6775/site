@@ -18,15 +18,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* ── showcase.html page styles ── */
-
         .showcase-wrapper {
             padding-top: 80px;
             min-height: 100vh;
             background: #f5f5f5;
         }
 
-        /* Hero banner */
         .showcase-hero {
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
             padding: 4rem 2rem 3.5rem;
@@ -71,7 +68,6 @@
             margin-top: 1rem;
         }
 
-        /* Toolbar: search + filters */
         .catalog-toolbar {
             max-width: 1200px;
             margin: 0 auto;
@@ -135,7 +131,6 @@
             white-space: nowrap;
         }
 
-        /* Grid */
         .catalog-grid {
             max-width: 1200px;
             margin: 2rem auto 5rem;
@@ -145,7 +140,6 @@
             gap: 1.8rem;
         }
 
-        /* Product card */
         .product-card {
             background: #fff;
             border-radius: 4px;
@@ -164,9 +158,7 @@
             border-color: #d4af37;
         }
 
-        .product-card:hover .card-overlay {
-            opacity: 1;
-        }
+        .product-card:hover .card-overlay { opacity: 1; }
 
         .card-img-wrap {
             position: relative;
@@ -183,9 +175,7 @@
             transition: transform 0.4s ease;
         }
 
-        .product-card:hover .card-img-wrap img {
-            transform: scale(1.05);
-        }
+        .product-card:hover .card-img-wrap img { transform: scale(1.05); }
 
         .card-overlay {
             position: absolute;
@@ -244,16 +234,34 @@
             margin-top: 0.1rem;
         }
 
-        .card-ref {
+        .card-desc {
             font-size: 0.75rem;
-            color: #aaa;
+            color: #888;
             margin-top: 0.2rem;
+            line-height: 1.4;
         }
 
-        
+        .card-ref {
+            font-size: 0.72rem;
+            color: #bbb;
+            margin-top: 0.1rem;
+        }
+
+        .card-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-top: auto;
+            padding-top: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
         .card-reserved {
             display: inline-block;
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -263,12 +271,16 @@
             border-radius: 2px;
         }
 
-        .card-price {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-top: auto;
-            padding-top: 0.8rem;
+        .card-papers {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #d4af37;
+            border: 1px solid #d4af37;
+            padding: 2px 8px;
+            border-radius: 2px;
         }
 
         /* Empty / loading states */
@@ -304,7 +316,7 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ── POPUP MODAL ── */
+        /* ── POPUP ── */
         .popup-overlay {
             display: none;
             position: fixed;
@@ -317,9 +329,7 @@
             padding: 1rem;
         }
 
-        .popup-overlay.open {
-            display: flex;
-        }
+        .popup-overlay.open { display: flex; }
 
         .popup-box {
             background: #fff;
@@ -336,7 +346,7 @@
 
         @keyframes popIn {
             from { opacity: 0; transform: translateY(20px) scale(0.97); }
-            to   { opacity: 1; transform: translateY(0)    scale(1); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .popup-close {
@@ -360,7 +370,6 @@
             grid-template-columns: 1fr 1fr;
         }
 
-        /* Left: image panel */
         .popup-img-panel {
             background: #1a1a1a;
             display: flex;
@@ -368,7 +377,6 @@
             justify-content: center;
             padding: 2rem;
             min-height: 380px;
-            position: relative;
         }
 
         .popup-img-panel img {
@@ -383,31 +391,6 @@
             font-size: 5rem;
         }
 
-        /* Thumbnail strip */
-        .popup-thumbs {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 0.8rem 2rem;
-            background: #111;
-        }
-
-        .popup-thumb {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border: 2px solid transparent;
-            border-radius: 2px;
-            cursor: pointer;
-            opacity: 0.6;
-            transition: all 0.2s;
-        }
-
-        .popup-thumb:hover,
-        .popup-thumb.active { border-color: #d4af37; opacity: 1; }
-
-        /* Right: details panel */
         .popup-details {
             padding: 2.5rem 2.5rem 2rem;
             display: flex;
@@ -445,6 +428,21 @@
             border-top: 1px solid #eee;
             border-bottom: 1px solid #eee;
             margin: 0.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .popup-reserved-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #fff;
+            background: #b0842a;
+            padding: 4px 12px;
+            border-radius: 2px;
         }
 
         .popup-details-list {
@@ -452,23 +450,22 @@
             padding: 0;
             margin: 0;
             flex: 1;
-            overflow-y: auto;
         }
 
         .popup-details-list li {
             font-size: 0.85rem;
             color: #555;
-            padding: 0.4rem 0;
+            padding: 0.5rem 0;
             border-bottom: 1px solid #f5f5f5;
             display: flex;
-            gap: 0.5rem;
+            gap: 0.6rem;
             align-items: flex-start;
         }
 
         .popup-details-list li i {
             color: #d4af37;
-            font-size: 0.7rem;
-            margin-top: 4px;
+            font-size: 0.55rem;
+            margin-top: 5px;
             flex-shrink: 0;
         }
 
@@ -528,7 +525,6 @@
             color: #d4af37;
         }
 
-        /* No catalog.json notice */
         .no-data-banner {
             background: #1a1a1a;
             border: 1px solid #d4af37;
@@ -560,16 +556,15 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            .showcase-hero h1 { font-size: 2rem; }
-            .catalog-toolbar  { padding: 1.5rem 1rem 0; }
-            .catalog-grid     { padding: 0 1rem; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
-            .popup-inner      { grid-template-columns: 1fr; }
-            .popup-img-panel  { min-height: 260px; }
-            .popup-details    { padding: 1.5rem; }
-            .popup-name       { font-size: 1.3rem; }
-            .results-count    { display: none; }
+            .showcase-hero h1  { font-size: 2rem; }
+            .catalog-toolbar   { padding: 1.5rem 1rem 0; }
+            .catalog-grid      { padding: 0 1rem; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+            .popup-inner       { grid-template-columns: 1fr; }
+            .popup-img-panel   { min-height: 260px; }
+            .popup-details     { padding: 1.5rem; }
+            .popup-name        { font-size: 1.3rem; }
+            .results-count     { display: none; }
         }
     </style>
 </head>
@@ -579,13 +574,11 @@
 
     <div class="showcase-wrapper">
 
-        <!-- Hero -->
         <div class="showcase-hero">
             <h1>Watch Catalog</h1>
             <p>Browse our curated selection of luxury timepieces</p>
         </div>
 
-        <!-- Toolbar -->
         <div class="catalog-toolbar">
             <div class="search-box">
                 <i class="fas fa-search"></i>
@@ -604,7 +597,6 @@
             <span class="results-count" id="resultsCount"></span>
         </div>
 
-        <!-- Grid -->
         <div class="catalog-grid" id="catalogGrid">
             <div class="state-message">
                 <div class="spinner-ring"></div>
@@ -617,26 +609,25 @@
 
     <!-- Popup Modal -->
     <div class="popup-overlay" id="popupOverlay">
-        <div class="popup-box" id="popupBox">
+        <div class="popup-box">
             <button class="popup-close" id="popupClose" aria-label="Close">×</button>
             <div class="popup-inner">
                 <div>
                     <div class="popup-img-panel" id="popupImgPanel">
                         <i class="fas fa-clock popup-img-placeholder"></i>
                     </div>
-                    <div class="popup-thumbs" id="popupThumbs"></div>
                 </div>
                 <div class="popup-details">
-                    <div class="popup-brand"  id="popupBrand"></div>
-                    <div class="popup-name"   id="popupName"></div>
-                    <div class="popup-ref"    id="popupRef"></div>
-                    <div class="popup-price"  id="popupPrice"></div>
+                    <div class="popup-brand" id="popupBrand"></div>
+                    <div class="popup-name"  id="popupName"></div>
+                    <div class="popup-ref"   id="popupRef"></div>
+                    <div class="popup-price" id="popupPrice"></div>
                     <ul class="popup-details-list" id="popupDetailsList"></ul>
                     <div class="popup-actions">
                         <a href="tel:+16784042048" class="popup-btn-primary">
                             <i class="fas fa-phone"></i> Call to Inquire
                         </a>
-                        <a id="popupStoreLink" href="https://swisstimeusa.elefta.store/store/3f6a81" target="_blank" class="popup-btn-secondary">
+                        <a href="https://swisstimeusa.elefta.store/store/3f6a81" target="_blank" class="popup-btn-secondary">
                             <i class="fas fa-external-link-alt"></i> View on Swiss Time USA
                         </a>
                     </div>
@@ -648,7 +639,6 @@
     <div id="site-footer"></div>
 
     <script>
-        /* ── Component loader ── */
         async function loadComponent(file, targetId, callback) {
             try {
                 const res = await fetch(file);
@@ -677,14 +667,12 @@
         loadComponent('assets/components/header/header.html', 'site-header', initMobileMenu);
         loadComponent('assets/components/footer/footer.html', 'site-footer');
 
-        /* ── Catalog logic ── */
         let allProducts = [];
-        let filtered    = [];
 
         async function loadCatalog() {
             try {
                 const res = await fetch('catalog.json');
-                if (!res.ok) throw new Error('catalog.json not found');
+                if (!res.ok) throw new Error('not found');
                 allProducts = await res.json();
                 buildBrandFilter();
                 renderGrid(allProducts);
@@ -703,9 +691,8 @@
             });
         }
 
-        function parsePrice(priceStr) {
-            if (!priceStr) return 0;
-            return parseFloat(priceStr.replace(/[^0-9.]/g, '')) || 0;
+        function parsePrice(str) {
+            return parseFloat((str || '').replace(/[^0-9.]/g, '')) || 0;
         }
 
         function applyFilters() {
@@ -713,11 +700,11 @@
             const brand  = document.getElementById('brandFilter').value;
             const price  = document.getElementById('priceFilter').value;
 
-            filtered = allProducts.filter(p => {
+            const filtered = allProducts.filter(p => {
                 const matchSearch = !search ||
-                    (p.name      || '').toLowerCase().includes(search) ||
-                    (p.brand     || '').toLowerCase().includes(search) ||
-                    (p.reference || '').toLowerCase().includes(search) ||
+                    (p.name        || '').toLowerCase().includes(search) ||
+                    (p.brand       || '').toLowerCase().includes(search) ||
+                    (p.reference   || '').toLowerCase().includes(search) ||
                     (p.description || '').toLowerCase().includes(search);
 
                 const matchBrand = !brand || p.brand === brand;
@@ -741,38 +728,37 @@
                 products.length + ' item' + (products.length !== 1 ? 's' : '');
 
             if (products.length === 0) {
-                grid.innerHTML = `
-                    <div class="state-message">
-                        <i class="fas fa-search"></i>
-                        <h3>No Results</h3>
-                        <p>Try adjusting your search or filters.</p>
-                    </div>`;
+                grid.innerHTML = `<div class="state-message">
+                    <i class="fas fa-search"></i>
+                    <h3>No Results</h3>
+                    <p>Try adjusting your search or filters.</p>
+                </div>`;
                 return;
             }
 
             grid.innerHTML = products.map(p => `
-                <div class="product-card" data-id="${p.id}" tabindex="0" role="button" aria-label="View details for ${p.name}">
+                <div class="product-card" data-id="${p.id}" tabindex="0" role="button" aria-label="${p.name}">
                     <div class="card-img-wrap">
-                        ${p.image
-                            ? `<img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-                            : ''}
+                        ${p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` : ''}
                         <div class="card-img-placeholder" style="${p.image ? 'display:none' : ''}">
                             <i class="fas fa-clock"></i>
                         </div>
                         <div class="card-overlay"><span>View Details</span></div>
                     </div>
                     <div class="card-body">
-                        ${p.brand    ? `<div class="card-brand">${p.brand}</div>` : ''}
+                        ${p.brand ? `<div class="card-brand">${p.brand}</div>` : ''}
                         <div class="card-name">${p.name}</div>
-                        ${p.description ? `<div class="card-ref">${p.description}</div>` : ''}
+                        ${p.description ? `<div class="card-desc">${p.description}</div>` : ''}
                         <div class="card-price">
-                            ${p.reserved ? '<span class="card-reserved">Reserved</span>' : p.price}
+                            <span>${p.reserved ? '' : p.price}</span>
+                            ${p.reserved ? '<span class="card-reserved">Reserved</span>' : ''}
+                            ${p.hasCard   ? '<span class="card-papers">Papers</span>'   : ''}
                         </div>
                     </div>
                 </div>
             `).join('');
 
-            // Attach click handlers
             grid.querySelectorAll('.product-card').forEach(card => {
                 const open = () => openPopup(parseInt(card.dataset.id));
                 card.addEventListener('click', open);
@@ -780,60 +766,38 @@
             });
         }
 
-        /* ── Popup ── */
         function openPopup(id) {
             const p = allProducts.find(x => x.id === id);
             if (!p) return;
 
-            // Image panel
+            // Image
             const imgPanel = document.getElementById('popupImgPanel');
-            if (p.image) {
-                imgPanel.innerHTML = `<img src="${p.image}" alt="${p.name}" id="popupMainImg">`;
-            } else {
-                imgPanel.innerHTML = `<i class="fas fa-clock popup-img-placeholder"></i>`;
-            }
+            imgPanel.innerHTML = p.image
+                ? `<img src="${p.image}" alt="${p.name}">`
+                : `<i class="fas fa-clock popup-img-placeholder"></i>`;
 
-            // Thumbnails
-            const thumbsEl = document.getElementById('popupThumbs');
-            if (p.images && p.images.length > 1) {
-                thumbsEl.style.display = 'flex';
-                thumbsEl.innerHTML = p.images.map((src, i) => `
-                    <img src="${src}" class="popup-thumb ${i === 0 ? 'active' : ''}"
-                         data-src="${src}" alt="View ${i+1}">
-                `).join('');
-                thumbsEl.querySelectorAll('.popup-thumb').forEach(t => {
-                    t.addEventListener('click', () => {
-                        document.getElementById('popupMainImg').src = t.dataset.src;
-                        thumbsEl.querySelectorAll('.popup-thumb').forEach(x => x.classList.remove('active'));
-                        t.classList.add('active');
-                    });
-                });
-            } else {
-                thumbsEl.style.display = 'none';
-                thumbsEl.innerHTML = '';
-            }
+            // Fields
+            document.getElementById('popupBrand').textContent = p.brand || '';
+            document.getElementById('popupName').textContent  = p.name  || '';
+            document.getElementById('popupRef').textContent   = p.reference ? 'Ref. ' + p.reference : '';
 
-            // Text fields
-            document.getElementById('popupBrand').textContent  = p.brand || '';
-            document.getElementById('popupName').textContent   = p.name  || '';
-            document.getElementById('popupRef').textContent    = p.reference ? 'Ref. ' + p.reference : '';
-            document.getElementById('popupPrice').textContent  = p.price || 'Contact for price';
+            // Price row — show price + reserved badge if applicable
+            const priceEl = document.getElementById('popupPrice');
+            priceEl.innerHTML = `${p.price || 'Contact for price'}
+                ${p.reserved ? '<span class="popup-reserved-badge">Reserved</span>' : ''}`;
 
-            // Detail lines (skip first line which is the name)
-            const listEl = document.getElementById('popupDetailsList');
-            const details = [
-                p.description ? { label: 'Description', val: p.description } : null,
-                p.reference   ? { label: 'Reference',   val: p.reference   } : null,
-                p.condition   ? { label: 'Condition',   val: p.condition   } : null,
-                p.hasCard     ? { label: 'Papers',      val: 'Box & Papers included' } : null,
-                p.reserved    ? { label: 'Status',      val: 'Reserved'    } : null,
+            // Details list
+            const rows = [
+                p.description                  && { icon: 'fa-tag',         label: 'Description', val: p.description },
+                p.reference                    && { icon: 'fa-hashtag',      label: 'Reference',   val: p.reference   },
+                p.condition                    && { icon: 'fa-certificate',  label: 'Condition',   val: p.condition   },
+                p.hasCard                      && { icon: 'fa-file-alt',     label: 'Papers',      val: 'Box & Papers included' },
+                p.reserved                     && { icon: 'fa-lock',         label: 'Status',      val: 'Reserved — contact us to inquire' },
             ].filter(Boolean);
-            listEl.innerHTML = details.map(d =>
-                `<li><i class="fas fa-circle"></i><strong>${d.label}:</strong>&nbsp;${d.val}</li>`
-            ).join('') || '<li><i class="fas fa-circle"></i>Contact us for full specifications.</li>';
 
-            // Store link
-            if (p.href) document.getElementById('popupStoreLink').href = p.href;
+            document.getElementById('popupDetailsList').innerHTML = rows.map(r =>
+                `<li><i class="fas ${r.icon}"></i><span><strong>${r.label}:</strong> ${r.val}</span></li>`
+            ).join('') || '<li><i class="fas fa-circle"></i><span>Contact us for full specifications.</span></li>';
 
             document.getElementById('popupOverlay').classList.add('open');
             document.body.style.overflow = 'hidden';
@@ -850,12 +814,10 @@
         });
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
 
-        /* ── Filters ── */
         document.getElementById('searchInput').addEventListener('input', applyFilters);
         document.getElementById('brandFilter').addEventListener('change', applyFilters);
         document.getElementById('priceFilter').addEventListener('change', applyFilters);
 
-        /* ── No catalog fallback ── */
         function showNoCatalog() {
             document.getElementById('catalogGrid').innerHTML = `
                 <div class="state-message">
@@ -864,19 +826,14 @@
                         <p>To display watch inventory, run the scraper on your local machine:</p>
                         <ol>
                             <li>Make sure <strong>Node.js</strong> is installed</li>
-                            <li>Place <code>scrape-catalog.js</code> in this folder</li>
                             <li>Run: <code>npm install puppeteer</code></li>
                             <li>Run: <code>node scrape-catalog.js</code></li>
-                            <li>Upload the generated <code>catalog.json</code> to your site alongside this file</li>
+                            <li>Push the generated <code>catalog.json</code> to GitHub</li>
                         </ol>
-                        <p style="margin-top:1rem; color:rgba(255,255,255,0.5); font-size:0.85rem;">
-                            Re-run the scraper any time to refresh inventory.
-                        </p>
                     </div>
                 </div>`;
         }
 
-        /* ── Init ── */
         loadCatalog();
     </script>
 

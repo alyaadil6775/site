@@ -155,6 +155,26 @@ function scrapeCards(cards) {
     console.log(`Scroll complete after ${round} rounds. Total DOM cards: ${lastItemCount}`);
     await new Promise(r => setTimeout(r, 2000));
 
+    // ── Diagnose: dump class names of elements containing CDN images ──
+    const diagnostics = await page.evaluate(() => {
+        const imgs = [...document.querySelectorAll('img[src*="cloudfront"]')];
+        const seen = new Set();
+        imgs.slice(0, 10).forEach(img => {
+            let el = img;
+            for (let i = 0; i < 6; i++) {
+                el = el.parentElement;
+                if (!el) break;
+                if (el.className && typeof el.className === 'string') {
+                    seen.add(`${el.tagName.toLowerCase()}.${el.className.trim().replace(/\s+/g, '.')}`);
+                }
+            }
+        });
+        return [...seen].slice(0, 30);
+    });
+    console.log('=== DOM classes around CDN images ===');
+    diagnostics.forEach(c => console.log(' ', c));
+    console.log('=====================================');
+
     // ── Scrape all cards now that full page is loaded ──
     const activeSelector = await getActiveSelector(page);
     console.log('Active selector:', activeSelector);

@@ -49,23 +49,48 @@ const JUNK_NAMES = new Set([
     console.log('Waiting for JS render...');
     await new Promise(r => setTimeout(r, 8000));
 
-    // Scroll to force all lazy-loaded images to resolve
-    console.log('Scrolling to load all images...');
-    await page.evaluate(async () => {
-        await new Promise(resolve => {
-            const step = 400;
-            let pos   = 0;
-            const id  = setInterval(() => {
-                window.scrollBy(0, step);
-                pos += step;
-                if (pos >= document.body.scrollHeight) {
-                    clearInterval(id);
-                    resolve();
-                }
-            }, 120);
+    // Scroll incrementally — pause after each pass so lazy-loaded
+    // items have time to render before we scroll further.
+    // Keeps going until the page height stops growing for 3 rounds.
+    console.log('Scrolling to load all lazy items...');
+    let unchangedRounds = 0;
+    let lastHeight = 0;
+
+    while (unchangedRounds < 3) {
+        const currentHeight = await page.evaluate(() => document.body.scrollHeight);
+
+        // Scroll to bottom in small steps
+        await page.evaluate(async () => {
+            await new Promise(resolve => {
+                const step = 300;
+                let pos = window.scrollY;
+                const id = setInterval(() => {
+                    window.scrollBy(0, step);
+                    pos += step;
+                    if (pos >= document.body.scrollHeight) {
+                        clearInterval(id);
+                        resolve();
+                    }
+                }, 100);
+            });
         });
-    });
-    await new Promise(r => setTimeout(r, 3000));
+
+        // Wait for new items to render
+        await new Promise(r => setTimeout(r, 2500));
+
+        const newHeight = await page.evaluate(() => document.body.scrollHeight);
+        console.log(`  Height: ${currentHeight} → ${newHeight}`);
+
+        if (newHeight === currentHeight) {
+            unchangedRounds++;
+        } else {
+            unchangedRounds = 0; // new content appeared, keep scrolling
+        }
+        lastHeight = newHeight;
+    }
+
+    console.log(`Scroll done. Final page height: ${lastHeight}`);
+    await new Promise(r => setTimeout(r, 2000));
 
     // ── Core scrape ───────────────────────────────────────────────
     const rawItems = await page.evaluate(() => {

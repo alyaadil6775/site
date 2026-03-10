@@ -1,0 +1,10 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Puppeteer cache (large, no need to commit)
+.cache/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,12 @@
+{
+  "name": "salehjewelers-scraper",
+  "version": "1.0.0",
+  "description": "Scraper for Swiss Time USA catalog",
+  "main": "scrape-catalog.js",
+  "scripts": {
+    "scrape": "node scrape-catalog.js"
+  },
+  "dependencies": {
+    "puppeteer": "^22.0.0"
+  }
+}

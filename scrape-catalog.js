@@ -98,6 +98,8 @@ function scrapeCards(cards) {
     console.log('Starting scroll loop...');
 
     const SELECTORS = [
+        '.watch-list-item',            // Elefta exact class (confirmed from DOM)
+        '[class*="watch-list-item flex"]', // fallback with partial match
         '[class*="InventoryItem"]', '[class*="inventory-item"]',
         '[class*="listing-item"]', '[class*="product-item"]',
         '[class*="item-card"]',    '[class*="watch-item"]',
@@ -108,8 +110,11 @@ function scrapeCards(cards) {
     function getActiveSelector(page) {
         return page.evaluate((selectors) => {
             for (const sel of selectors) {
-                const found = document.querySelectorAll(sel);
-                if (found.length > 3) return sel;
+                const found = [...document.querySelectorAll(sel)];
+                // Must have multiple results AND contain a price (real product cards)
+                if (found.length > 3 && found.some(el => /\$[\d,]+/.test(el.innerText || ''))) {
+                    return sel;
+                }
             }
             return null;
         }, SELECTORS);

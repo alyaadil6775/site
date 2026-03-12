@@ -810,7 +810,7 @@
     "description": "Blue Dial on Leather Strap Ref A17318101C1X1 with Card 2024",
     "reference": "A17318101C1X1",
     "price": "$3,200",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/amzs650swcb53ytlhih9ac4w5aey"
@@ -1182,7 +1182,7 @@
     "description": "Silver Linen Dial on Oyster Ref 6694",
     "reference": "6694",
     "price": "$3,690",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/zb7tonlb788hh6lhqmln59xwzzhl"
@@ -1830,7 +1830,7 @@
     "description": "Matt White Dial on Oyster Ref 116680 with New Style Card Green 2021",
     "reference": "116680",
     "price": "$22,140",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/8ryxkggelii4evktvkafk79aujax"
@@ -2598,7 +2598,7 @@
     "description": "Silver Linen Dial on Folded Jubilee Ref 6917/4",
     "reference": "6917/4",
     "price": "$3,075",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/heba6f01mof2e5zwin818mc89voa"
@@ -7014,7 +7014,7 @@
     "description": "Silver / Gold Stick Dial on Oyster Ref 15000",
     "reference": "15000",
     "price": "$5,230",
-    "reserved": true,
+    "reserved": false,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/euzzdxmr2vjf0typ3jd8d1opmsxx"

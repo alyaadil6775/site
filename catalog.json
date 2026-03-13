@@ -318,7 +318,7 @@
     "description": "Black Dial on Oyster Ref 16570 with Papers 2000",
     "reference": "16570",
     "price": "$9,225",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": true,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/m5w626rqgmybi4xg0f8dr0zaau7t"
@@ -678,7 +678,7 @@
     "description": "Green Dial on Leather Strap Ref AB01762A1L1X1 with Card 2025",
     "reference": "AB01762A1L1X1",
     "price": "$5,845",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/8g2201gaijefsedlad7m9u65a6g1"
@@ -750,7 +750,7 @@
     "description": "Beige Dial on Bracelet Ref AB0147101A1A1 with Card 2026",
     "reference": "AB0147101A1A1",
     "price": "$6,030",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/i51gr3f2tjw1oyc69c9bpontub89"

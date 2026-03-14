@@ -5334,7 +5334,7 @@
     "description": "Silver Roman Dial Ref 2302",
     "reference": "2302",
     "price": "$5,230",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d28hdf4cre2vcu.cloudfront.net/9agkkzeu3ht6mreu76ishfb0cngv"

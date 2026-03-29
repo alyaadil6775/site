@@ -258,7 +258,7 @@
     "description": "White Dial on Stainless Steel Bracelet Ref AB011511 with Papers 2018",
     "reference": "AB011511",
     "price": "$4,000",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": true,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/4eetyz2gmw1b5piwd8htk7ej1cb4?variant=small"
@@ -1962,7 +1962,7 @@
     "description": "Black Dial Ref WAR211A.BA0782 with Card 2017",
     "reference": "WAR211A.BA0782",
     "price": "$2,155",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/ma4y27ht3wtto8y93wfybpef8tca?variant=small"
@@ -3126,7 +3126,7 @@
     "description": "Black Dial on Leather Ref AB0118 with Card 2023",
     "reference": "AB0118",
     "price": "$6,150",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/j8cg8jkcj2q3291dpw3jncjxoeo2?variant=small"
@@ -3306,7 +3306,7 @@
     "description": "Black Dial Ref 3556.50 with Card 2004",
     "reference": "3556.50",
     "price": "$4,615",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/okdvsscipubn7vffyx74p1wv7feu?variant=small"
@@ -6594,7 +6594,7 @@
     "description": "Black Dial Ref HH1.210 with Papers 2018",
     "reference": "HH1.210",
     "price": "$1,050",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": true,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/fdy3hsyciup4x1rm4zoy6l3ydpvo?variant=small"

@@ -30,7 +30,7 @@
     "description": "Black Dial With Mega Tapisserie Waffle Pattern Dial on Leather Strap Ref 26133ST.OO.A101CR.01",
     "reference": "26133ST.OO.A101CR.01",
     "price": "$24,600",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/ma1r3lt9dll79rwe3ppiw2u62uii?variant=small"
@@ -102,7 +102,7 @@
     "description": "Ivory Dial on Leather Strap Ref 2649/W2006851",
     "reference": "2649/W2006851",
     "price": "$11,685",
-    "reserved": true,
+    "reserved": false,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/o3dg8boglbqtv3r4if1t5gg0ysat?variant=small"
@@ -114,7 +114,7 @@
     "description": "Silver Roman Numerals Dial on Stainless Steel Bracelet Ref 2618",
     "reference": "2618",
     "price": "$5,230",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/stogh1ziguqu6h22bgtpgxzze1sj?variant=small"
@@ -126,7 +126,7 @@
     "description": "White Roman Dial on Stainless Steel Bracelet Ref 2384",
     "reference": "2384",
     "price": "$3,075",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/661vbt2832brkz2dud6okvcgm0jj?variant=small"
@@ -138,7 +138,7 @@
     "description": "White Roman Dial on 2 Tone Bracelet Ref 2961",
     "reference": "2961",
     "price": "$5,535",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/rlfsa205yikexhxh2f4oaeqyqwz9?variant=small"
@@ -270,7 +270,7 @@
     "description": "Silver Dial on D Link Jubilee Ref 16014",
     "reference": "16014",
     "price": "$6,150",
-    "reserved": true,
+    "reserved": false,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/48bsj05r4ess26zyeug9hx9grnyn?variant=small"
@@ -6317,7 +6317,7 @@
     "brand": "Rolex",
     "description": "Black Dial on Oyster Ref 116520 with New Style Card White 2016",
     "reference": "116520",
-    "price": "$27,675",
+    "price": "$28,905",
     "reserved": false,
     "condition": "Pre-Owned",
     "hasCard": false,
@@ -6810,7 +6810,7 @@
     "description": "White Roman Dial on 2 Tone Bracelet Ref 110000R",
     "reference": "110000R",
     "price": "$5,845",
-    "reserved": true,
+    "reserved": false,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/pazlu8fe016yj7od7by8qnqt09rt?variant=small"
@@ -7122,7 +7122,7 @@
     "description": "Blue Mop Dial Ref 2420",
     "reference": "2420",
     "price": "$2,460",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/n9s61rb0527sdr09d33a8i8kg6y9?variant=small"

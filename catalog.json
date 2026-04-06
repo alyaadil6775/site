@@ -234,7 +234,7 @@
     "description": "Silver Roman Dial on Leather Strap Ref 2656/W20076X8",
     "reference": "2656/W20076X8",
     "price": "$4,920",
-    "reserved": true,
+    "reserved": false,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/3eeb10mpytmu27cee65xa6s5pi41?variant=small"
@@ -618,7 +618,7 @@
     "description": "Silver Roman Dial on Leather Ref 2599/W6300255",
     "reference": "2599/W6300255",
     "price": "$2,460",
-    "reserved": true,
+    "reserved": false,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/pwbf0lv16743p73shmocr76dv19m?variant=small"
@@ -2646,7 +2646,7 @@
     "description": "Silver Roman Numerals Dial Ref 2618 with Papers 2004",
     "reference": "2618",
     "price": "$6,150",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": true,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/3mj7z69r79axs7dwux6k4hrbntwn?variant=small"

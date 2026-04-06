@@ -246,7 +246,7 @@
     "description": "Silver Roman Chrono Dial on Leather Strap Ref 2740",
     "reference": "2740",
     "price": "$6,765",
-    "reserved": true,
+    "reserved": false,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/68s7u6bbzp587xv0tt5svn928a6e?variant=small"
@@ -5022,7 +5022,7 @@
     "description": "Black Dial on Oyster Ref 76030",
     "reference": "76030",
     "price": "$3,690",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/kmj4d60medayjk37tzx0j2rwrcvr?variant=small"
@@ -5310,7 +5310,7 @@
     "description": "Gold Dial on Oyster Ref 67193",
     "reference": "67193",
     "price": "$4,920",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/spx2dclr4h4aee29kmuet2zuc2lj?variant=small"
@@ -5802,7 +5802,7 @@
     "description": "Silver Stick Dial on Oyster Ref 76030",
     "reference": "76030",
     "price": "$3,690",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/8cdlzq9xt4iq4y8moru4s5s4r08k?variant=small"
@@ -7314,7 +7314,7 @@
     "description": "Gold Dial on Jubilee Ref 16263 with Papers 1991",
     "reference": "16263",
     "price": "$8,610",
-    "reserved": false,
+    "reserved": true,
     "condition": "Pre-Owned",
     "hasCard": true,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/hk96ceq606x0ypw2wexh3yvvoj88?variant=small"

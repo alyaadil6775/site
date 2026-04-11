@@ -222,7 +222,7 @@
     "description": "Silver Dial on Leather Strap Ref IW371605 with Card 2020",
     "reference": "IW371605",
     "price": "$7,380",
-    "reserved": true,
+    "reserved": false,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/8ao9mjhsswci7cu55xhs5yiubynl?variant=small"
@@ -618,7 +618,7 @@
     "description": "Champagne Diamond Factory Dial on D Link Jubilee Ref 69173",
     "reference": "69173",
     "price": "$6,150",
-    "reserved": true,
+    "reserved": false,
     "condition": "Pre-Owned",
     "hasCard": false,
     "image": "https://d1iz2ekeg1nr2d.cloudfront.net/412krenb7vajzhdecslypdpctglb?variant=small"

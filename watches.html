@@ -830,7 +830,11 @@
                     (p.name        || '').toLowerCase().includes(search) ||
                     (p.brand       || '').toLowerCase().includes(search) ||
                     (p.reference   || '').toLowerCase().includes(search) ||
-                    (p.description || '').toLowerCase().includes(search);
+                    (p.description || '').toLowerCase().includes(search) ||
+                    (p.series      || '').toLowerCase().includes(search) ||
+                    (p.model       || '').toLowerCase().includes(search) ||
+                    (p.dial        || '').toLowerCase().includes(search) ||
+                    (p.material    || '').toLowerCase().includes(search);
                 const matchBrand = !brand || p.brand === brand;
                 let matchPrice = true;
                 if (price) {
@@ -914,7 +918,7 @@
                     <div class="card-body">
                         ${p.brand ? `<div class="card-brand">${p.brand}</div>` : ''}
                         <div class="card-name">${p.name}</div>
-                        ${p.description ? `<div class="card-desc">${p.description}</div>` : ''}
+                        ${(p.description || p.series || p.model) ? `<div class="card-desc">${p.description || p.series || p.model}</div>` : ''}
                         <div class="card-price">
                             <span>${p.reserved ? '' : markupPrice(p.price)}</span>
                             ${p.reserved ? '<span class="card-reserved">Reserved</span>' : ''}

@@ -23,15 +23,13 @@ const BRAND_MAP = {
     'Audemars': 'Audemars Piguet', 'IWC': 'IWC', 'TAG': 'TAG Heuer'
 };
 
-// ── Popup field label → product key mapping ──────────────────────────────────
-// Adjust these keys to match whatever labels the popup actually renders.
 const POPUP_LABEL_MAP = {
     'brand':            'brand',
     'reference number': 'reference',
     'ref':              'reference',
     'series':           'series',
     'condition':        'condition',
-    'box & papers':     'hasCard',   // will be converted to boolean
+    'box & papers':     'hasCard',
     'box and papers':   'hasCard',
     'papers':           'hasCard',
     'dial':             'dial',
@@ -57,7 +55,6 @@ const POPUP_LABEL_MAP = {
     'description':      'popupDescription',
 };
 
-// Selectors tried in order to find the clickable card elements
 const CARD_SELECTORS = [
     '.watch-list-item',
     '[class*="watch-list-item flex"]',
@@ -68,7 +65,6 @@ const CARD_SELECTORS = [
     '[class*="storeItem"]',    '[class*="store-item"]'
 ];
 
-// Selectors tried in order to detect that a popup/modal is open
 const POPUP_SELECTORS = [
     '[class*="modal"]',
     '[class*="popup"]',
@@ -79,8 +75,6 @@ const POPUP_SELECTORS = [
     '[aria-modal="true"]',
 ];
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
 function extractBrand(name) {
     for (const [key, val] of Object.entries(BRAND_MAP)) {
         if (name.startsWith(key)) return val;
@@ -90,8 +84,38 @@ function extractBrand(name) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// ── Main ─────────────────────────────────────────────────────────────────────
+// ── Close any open popup and wait for it to actually disappear ───────────────
+async function closeAnyPopup(page, popupSel) {
+    try {
+        await page.evaluate(() => {
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+            const closeSelectors = [
+                '[aria-label*="close" i]', '[aria-label*="dismiss" i]',
+                '[class*="close"]', '[class*="dismiss"]',
+                'button[class*="modal"]', '[data-dismiss]',
+            ];
+            for (const sel of closeSelectors) {
+                const btn = document.querySelector(sel);
+                if (btn) { btn.click(); return; }
+            }
+        });
 
+        // Wait for the popup to actually be gone rather than sleeping
+        if (popupSel) {
+            await page.waitForFunction((sel) => {
+                const el = document.querySelector(sel);
+                if (!el) return true;
+                const rect  = el.getBoundingClientRect();
+                const style = window.getComputedStyle(el);
+                return rect.width === 0 || rect.height === 0 ||
+                       style.display === 'none' || style.visibility === 'hidden' ||
+                       style.opacity === '0';
+            }, { timeout: 3000 }, popupSel).catch(() => {});
+        }
+    } catch (_) { /* ignore */ }
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
 (async () => {
     console.log('Launching browser...');
     const browser = await puppeteer.launch({
@@ -208,7 +232,6 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
             const hasCard    = txt.toLowerCase().includes('box') || txt.toLowerCase().includes('papers');
             const link       = card.querySelector('a');
 
-            // Store a data attribute so we can re-find this card after evaluate()
             card.setAttribute('data-scrape-index', String(i));
 
             return {
@@ -229,47 +252,33 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
     console.log(`Raw items from page: ${rawItems.length}`);
 
-    // ── 5. Determine which card selector actually worked ──────────────────────
-    const activeCardSel = await page.evaluate((selectors) => {
-        for (const sel of selectors) {
-            const found = [...document.querySelectorAll(sel)];
-            if (found.length > 3 && found.some(el => /\$[\d,]+/.test(el.innerText || ''))) {
-                return sel;
-            }
-        }
-        return null;
-    }, CARD_SELECTORS);
-
-    console.log('Active card selector:', activeCardSel || '(fallback — will use data-scrape-index)');
-
-    // ── 6. Click each card, scrape the popup, merge data ─────────────────────
+    // ── 5. Click each card, scrape the popup, merge data ─────────────────────
     console.log('\nScraping popup details for each item…');
 
     for (let i = 0; i < rawItems.length; i++) {
         const item = rawItems[i];
+        let popupSel = null;
         process.stdout.write(`  [${i + 1}/${rawItems.length}] ${item.name.slice(0, 50)}… `);
 
         try {
-            // Scroll the card into view and click it
-            const clicked = await page.evaluate((idx, cardSel) => {
+            // Scroll card into view and click
+            const clicked = await page.evaluate((idx) => {
                 const card = document.querySelector(`[data-scrape-index="${idx}"]`);
                 if (!card) return false;
                 card.scrollIntoView({ block: 'center' });
                 card.click();
                 return true;
-            }, item.scrapeIndex, activeCardSel);
+            }, item.scrapeIndex);
 
             if (!clicked) {
                 console.log('⚠ card not found, skipping popup');
                 continue;
             }
 
-            // Wait for popup to appear (try each known selector)
-            let popupSel = null;
+            // Wait for popup to appear and be visible — no fixed sleep
             for (const sel of POPUP_SELECTORS) {
                 try {
-                    await page.waitForSelector(sel, { timeout: 4000 });
-                    // Confirm it's actually visible and has content
+                    await page.waitForSelector(sel, { visible: true, timeout: 5000 });
                     const visible = await page.evaluate((s) => {
                         const el = document.querySelector(s);
                         if (!el) return false;
@@ -277,32 +286,24 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
                         return rect.width > 100 && rect.height > 100;
                     }, sel);
                     if (visible) { popupSel = sel; break; }
-                } catch (_) { /* not this selector */ }
-            }
-
-            if (!popupSel) {
-                // Fallback: just wait 1 s and see if anything new appeared
-                await sleep(1000);
-                popupSel = await page.evaluate((popupSelectors) => {
-                    for (const s of popupSelectors) {
-                        const el = document.querySelector(s);
-                        if (el) {
-                            const rect = el.getBoundingClientRect();
-                            if (rect.width > 100 && rect.height > 100) return s;
-                        }
-                    }
-                    return null;
-                }, POPUP_SELECTORS);
+                } catch (_) { /* try next selector */ }
             }
 
             if (!popupSel) {
                 console.log('⚠ popup not detected');
-                await closeAnyPopup(page);
+                await closeAnyPopup(page, null);
                 continue;
             }
 
-            // Give the popup a moment to fully render images / lazy-load content
-            await sleep(1200);
+            // Wait for at least one cloudfront image inside the popup to finish loading
+            try {
+                await page.waitForFunction((sel) => {
+                    const popup = document.querySelector(sel);
+                    if (!popup) return false;
+                    const img = popup.querySelector('img[src*="cloudfront"]');
+                    return img ? img.complete : true;
+                }, { timeout: 4000 }, popupSel);
+            } catch (_) { /* image didn't load in time, proceed anyway */ }
 
             // ── Scrape the popup ──────────────────────────────────────────────
             const popupData = await page.evaluate((sel, labelMap) => {
@@ -311,58 +312,50 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
                 const result = {};
 
-                // ── All images ───────────────────────────────────────────────
+                // All images
                 const imgs = [...popup.querySelectorAll('img')]
                     .map(img => img.src || img.getAttribute('data-src') || '')
                     .filter(src => src && src.includes('cloudfront') && !src.includes('logo'));
                 if (imgs.length) result.images = [...new Set(imgs)];
 
-                // ── Key-value spec rows ───────────────────────────────────────
-                // Try common patterns: <dt>/<dd>, table rows, label+value divs
-                const extractPairs = () => {
-                    const pairs = {};
+                // Key-value extraction — 4 patterns
+                const pairs = {};
 
-                    // Pattern A: <dt> / <dd>
-                    popup.querySelectorAll('dt').forEach(dt => {
-                        const dd = dt.nextElementSibling;
-                        if (dd && dd.tagName === 'DD') {
-                            pairs[dt.innerText.trim().toLowerCase()] = dd.innerText.trim();
-                        }
-                    });
+                // Pattern A: <dt> / <dd>
+                popup.querySelectorAll('dt').forEach(dt => {
+                    const dd = dt.nextElementSibling;
+                    if (dd && dd.tagName === 'DD') {
+                        pairs[dt.innerText.trim().toLowerCase()] = dd.innerText.trim();
+                    }
+                });
 
-                    // Pattern B: table <th> / <td>
-                    popup.querySelectorAll('tr').forEach(row => {
-                        const cells = [...row.querySelectorAll('th, td')];
-                        if (cells.length >= 2) {
-                            pairs[cells[0].innerText.trim().toLowerCase()] = cells[1].innerText.trim();
-                        }
-                    });
+                // Pattern B: table <th> / <td>
+                popup.querySelectorAll('tr').forEach(row => {
+                    const cells = [...row.querySelectorAll('th, td')];
+                    if (cells.length >= 2) {
+                        pairs[cells[0].innerText.trim().toLowerCase()] = cells[1].innerText.trim();
+                    }
+                });
 
-                    // Pattern C: divs/spans where first child looks like a label
-                    // (short text, colon-terminated, or ALL CAPS)
-                    popup.querySelectorAll('li, [class*="spec"], [class*="detail"], [class*="row"], [class*="field"]').forEach(el => {
-                        const children = [...el.children];
-                        if (children.length >= 2) {
-                            const label = children[0].innerText.trim().toLowerCase().replace(/:$/, '');
-                            const value = children[1].innerText.trim();
-                            if (label && value && label.length < 30) pairs[label] = value;
-                        }
-                    });
+                // Pattern C: labelled child elements
+                popup.querySelectorAll('li, [class*="spec"], [class*="detail"], [class*="row"], [class*="field"]').forEach(el => {
+                    const children = [...el.children];
+                    if (children.length >= 2) {
+                        const label = children[0].innerText.trim().toLowerCase().replace(/:$/, '');
+                        const value = children[1].innerText.trim();
+                        if (label && value && label.length < 30) pairs[label] = value;
+                    }
+                });
 
-                    // Pattern D: elements that contain a colon — "Brand: Rolex"
-                    [...popup.querySelectorAll('p, span, div')].forEach(el => {
-                        if (el.children.length > 2) return; // skip containers
-                        const text = (el.innerText || '').trim();
-                        const m = text.match(/^([^:]{2,30}):\s*(.+)$/);
-                        if (m) pairs[m[1].toLowerCase()] = m[2].trim();
-                    });
+                // Pattern D: inline "Label: Value" text
+                [...popup.querySelectorAll('p, span, div')].forEach(el => {
+                    if (el.children.length > 2) return;
+                    const text = (el.innerText || '').trim();
+                    const m = text.match(/^([^:]{2,30}):\s*(.+)$/);
+                    if (m) pairs[m[1].toLowerCase()] = m[2].trim();
+                });
 
-                    return pairs;
-                };
-
-                const pairs = extractPairs();
-
-                // Map label → our field name
+                // Map labels → field names
                 for (const [rawLabel, value] of Object.entries(pairs)) {
                     const key = labelMap[rawLabel];
                     if (key) {
@@ -374,7 +367,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
                     }
                 }
 
-                // ── Description / long text ───────────────────────────────────
+                // Description / long text block
                 const descEl = popup.querySelector(
                     '[class*="description"], [class*="desc"], [class*="notes"], [class*="detail-text"]'
                 );
@@ -382,14 +375,14 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
                     result.popupDescription = descEl.innerText.trim();
                 }
 
-                // ── Price (in case popup has a cleaner version) ───────────────
+                // Price (cleaner version from popup)
                 const priceEl = popup.querySelector('[class*="price"], [class*="Price"]');
                 if (priceEl) {
                     const m = (priceEl.innerText || '').match(/\$[\d,]+(\.\d{2})?/);
                     if (m) result.popupPrice = m[0];
                 }
 
-                // ── Reference number fallback ─────────────────────────────────
+                // Reference fallback
                 if (!result.reference) {
                     const refMatch = popup.innerText.match(/[Rr]ef\.?\s*[:#]?\s*([\w\-\/\.]{4,20})/);
                     if (refMatch) result.reference = refMatch[1].trim().replace(/\.$/, '');
@@ -400,12 +393,10 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
             // Merge popup data into card item
             Object.assign(item, popupData);
-            // Use popup price if it looks more accurate
             if (popupData.popupPrice) {
                 item.price = popupData.popupPrice;
                 delete item.popupPrice;
             }
-            // Keep images array; ensure single image is still set
             if (!item.images || !item.images.length) {
                 item.images = item.image ? [item.image] : [];
             }
@@ -416,14 +407,13 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
             process.stdout.write(`✗ (${err.message.slice(0, 60)})\n`);
         }
 
-        // Close the popup before moving to the next card
-        await closeAnyPopup(page);
-        await sleep(400);
+        // Close popup and wait for it to actually disappear before moving to next card
+        await closeAnyPopup(page, popupSel);
     }
 
     await browser.close();
 
-    // ── 7. Deduplicate & normalise ────────────────────────────────────────────
+    // ── 6. Deduplicate & normalise ────────────────────────────────────────────
     const seenImg  = new Set();
     const seenText = new Set();
 
@@ -453,7 +443,6 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
                 images:      p.images && p.images.length > 1 ? p.images : undefined,
             };
 
-            // Copy any extra popup fields if they exist
             const extras = [
                 'series','dial','bezel','bracelet','material','size',
                 'year','gender','serialNumber','sku','model',
@@ -461,7 +450,6 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
             ];
             extras.forEach(k => { if (p[k]) out[k] = p[k]; });
 
-            // Remove undefined keys to keep JSON clean
             Object.keys(out).forEach(k => { if (out[k] === undefined) delete out[k]; });
 
             return out;
@@ -475,26 +463,3 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
         fs.writeFileSync(OUT_FILE, JSON.stringify(products, null, 2));
     }
 })();
-
-
-// ── Helper: close any open popup / modal ─────────────────────────────────────
-async function closeAnyPopup(page) {
-    try {
-        await page.evaluate(() => {
-            // Try pressing Escape
-            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-
-            // Try clicking common close buttons
-            const closeSelectors = [
-                '[aria-label*="close" i]', '[aria-label*="dismiss" i]',
-                '[class*="close"]', '[class*="dismiss"]',
-                'button[class*="modal"]', '[data-dismiss]',
-            ];
-            for (const sel of closeSelectors) {
-                const btn = document.querySelector(sel);
-                if (btn) { btn.click(); return; }
-            }
-        });
-        await new Promise(r => setTimeout(r, 500));
-    } catch (_) { /* ignore */ }
-}

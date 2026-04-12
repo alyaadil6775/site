@@ -11,39 +11,57 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        body { overflow: hidden; }
-
-        .iframe-wrapper {
-            margin-top: 70px;
-            width: 100%;
-            height: calc(100vh - 70px);
-            background: #fff;
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
             overflow: hidden;
+        }
+
+        /* Header sits on top, z-index above iframe */
+        #site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Iframe fills everything below the header, never overlaps it */
+        .iframe-wrapper {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            bottom: 0;
+            /* top is set dynamically by JS after header loads */
+            top: 70px;
+            overflow: hidden;
+            background: #fff;
         }
 
         iframe.main-content {
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
         }
+
+        #site-footer { display: none; } /* Footer doesn't make sense inside a fixed iframe layout */
     </style>
 </head>
 <body>
 
     <div id="site-header"></div>
 
-    <main class="iframe-wrapper">
+    <div class="iframe-wrapper" id="iframeWrapper">
         <iframe
             class="main-content"
-            style="width: 1px; min-width: 100%;"
             scrolling="yes"
             frameborder="0"
-            sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-modals"
+            sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-modals allow-top-navigation"
             src="https://salehjewelery-frame-categoryembed.jewelershowcase.com/">
         </iframe>
-    </main>
-
-    <div id="site-footer"></div>
+    </div>
 
     <script>
         async function loadComponent(file, targetId, callback) {
@@ -69,10 +87,29 @@
                     navLinks.classList.remove('active');
                 });
             });
+
+            // Re-measure header on menu open/close in case height changes
+            adjustIframe();
         }
 
-        loadComponent('assets/components/header/header.html', 'site-header', initMobileMenu);
-        loadComponent('assets/components/footer/footer.html', 'site-footer');
+        function adjustIframe() {
+            const header  = document.querySelector('#site-header header') ||
+                            document.querySelector('#site-header > *');
+            const wrapper = document.getElementById('iframeWrapper');
+            if (header && wrapper) {
+                const h = header.getBoundingClientRect().height;
+                wrapper.style.top = h + 'px';
+            }
+        }
+
+        // Load header, then measure and pin iframe below it
+        loadComponent('assets/components/header/header.html', 'site-header', () => {
+            initMobileMenu();
+            adjustIframe();
+
+            // Re-adjust on window resize (e.g. mobile rotation)
+            window.addEventListener('resize', adjustIframe);
+        });
     </script>
 
 </body>

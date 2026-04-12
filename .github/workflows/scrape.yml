@@ -3,7 +3,7 @@ name: Scrape Swiss Time Catalog
 on:
   # Run every 2 hours
   schedule:
-    - cron: '0 */2 * * *'
+    - cron: '0 */12 * * *'
   # Allow manual trigger from the Actions tab
   workflow_dispatch:
 

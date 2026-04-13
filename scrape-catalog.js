@@ -1,7 +1,7 @@
 /**
  * scrape-catalog.js
  * Scrapes Swiss Time USA Elefta store and writes catalog.json
- * Clicks each item to open its popup and scrapes full details + all images.
+ * Incremental mode: only clicks popups for items not already in catalog.json
  * Run: npm install puppeteer && node scrape-catalog.js
  */
 
@@ -84,6 +84,58 @@ function extractBrand(name) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+// ── Load existing catalog so we can skip already-scraped items ───────────────
+function loadExistingCatalog() {
+    try {
+        if (fs.existsSync(OUT_FILE)) {
+            const data = JSON.parse(fs.readFileSync(OUT_FILE, 'utf8'));
+            console.log(`Loaded ${data.length} existing items from catalog.json`);
+            return data;
+        }
+    } catch (err) {
+        console.warn('Could not load existing catalog, starting fresh:', err.message);
+    }
+    return [];
+}
+
+// ── Build a lookup key for deduplication ─────────────────────────────────────
+// Uses image URL as primary key (most reliable), falls back to name+reference
+function itemKey(item) {
+    return item.image || `${item.name}||${item.reference || ''}`;
+}
+
+// ── Save catalog to disk (called after every new item so progress is never lost)
+function saveCatalog(products) {
+    const reassigned = products.map((p, i) => ({ ...p, id: i }));
+    fs.writeFileSync(OUT_FILE, JSON.stringify(reassigned, null, 2));
+    return reassigned;
+}
+
+// ── Normalise a raw scraped item into the final product shape ─────────────────
+function normalise(p) {
+    const out = {
+        id:          0, // reassigned on save
+        name:        p.name,
+        brand:       p.brand,
+        description: p.popupDescription || p.description,
+        reference:   p.reference,
+        price:       p.price,
+        reserved:    p.reserved,
+        condition:   p.condition,
+        hasCard:     p.hasCard,
+        image:       p.image,
+        images:      p.images && p.images.length > 1 ? p.images : undefined,
+    };
+    const extras = [
+        'series','dial','bezel','bracelet','material','size',
+        'year','gender','serialNumber','sku','model',
+        'movement','waterResistance','powerReserve','functions'
+    ];
+    extras.forEach(k => { if (p[k]) out[k] = p[k]; });
+    Object.keys(out).forEach(k => { if (out[k] === undefined) delete out[k]; });
+    return out;
+}
+
 // ── Close any open popup and wait for it to actually disappear ───────────────
 async function closeAnyPopup(page, popupSel) {
     try {
@@ -100,7 +152,6 @@ async function closeAnyPopup(page, popupSel) {
             }
         });
 
-        // Wait for the popup to actually be gone rather than sleeping
         if (popupSel) {
             await page.waitForFunction((sel) => {
                 const el = document.querySelector(sel);
@@ -117,6 +168,17 @@ async function closeAnyPopup(page, popupSel) {
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 (async () => {
+
+    // ── 0. Load existing catalog ─────────────────────────────────────────────
+    const existingCatalog = loadExistingCatalog();
+
+    // Build a Set of known keys for O(1) lookup
+    const existingKeys = new Set(existingCatalog.map(itemKey));
+
+    // Also track which existing items are still live on the site
+    // (we'll use this to remove items that have sold / been delisted)
+    const stillLive = new Set();
+
     console.log('Launching browser...');
     const browser = await puppeteer.launch({
         headless: 'new',
@@ -183,7 +245,6 @@ async function closeAnyPopup(page, popupSel) {
 
     console.log(`Done scrolling after ${round} rounds. Final height: ${lastHeight}px`);
 
-    // Scroll back to top so the first card is clickable
     await page.evaluate(() => window.scrollTo(0, 0));
     await sleep(1500);
 
@@ -252,16 +313,50 @@ async function closeAnyPopup(page, popupSel) {
 
     console.log(`Raw items from page: ${rawItems.length}`);
 
-    // ── 5. Click each card, scrape the popup, merge data ─────────────────────
-    console.log('\nScraping popup details for each item…');
+    // ── 5. Determine which items are new vs already known ────────────────────
+    const newItems      = [];
+    const skippedItems  = [];
 
-    for (let i = 0; i < rawItems.length; i++) {
-        const item = rawItems[i];
+    for (const item of rawItems) {
+        if (JUNK.has(item.name) || !item.image) continue;
+        const key = itemKey(item);
+        stillLive.add(key);
+        if (existingKeys.has(key)) {
+            skippedItems.push(item);
+        } else {
+            newItems.push(item);
+        }
+    }
+
+    console.log(`\n${newItems.length} new items to scrape, ${skippedItems.length} already in catalog — skipping their popups`);
+
+    // ── 6. Remove items from existing catalog that are no longer on the site ─
+    const survivingExisting = existingCatalog.filter(p => stillLive.has(itemKey(p)));
+    const removedCount = existingCatalog.length - survivingExisting.length;
+    if (removedCount > 0) {
+        console.log(`Removed ${removedCount} item(s) no longer listed on the site`);
+    }
+
+    // Working catalog starts as the surviving existing items
+    // New items will be appended as they are scraped
+    let workingCatalog = [...survivingExisting];
+
+    // ── 7. Click popups only for new items ───────────────────────────────────
+    if (newItems.length === 0) {
+        console.log('Nothing new to scrape — catalog is up to date.');
+    } else {
+        console.log('\nScraping popup details for new items…');
+    }
+
+    // Dedup guard for new items within this run
+    const seenThisRun = new Set(workingCatalog.map(itemKey));
+
+    for (let i = 0; i < newItems.length; i++) {
+        const item = newItems[i];
         let popupSel = null;
-        process.stdout.write(`  [${i + 1}/${rawItems.length}] ${item.name.slice(0, 50)}… `);
+        process.stdout.write(`  [${i + 1}/${newItems.length}] ${item.name.slice(0, 50)}… `);
 
         try {
-            // Scroll card into view and click
             const clicked = await page.evaluate((idx) => {
                 const card = document.querySelector(`[data-scrape-index="${idx}"]`);
                 if (!card) return false;
@@ -275,7 +370,7 @@ async function closeAnyPopup(page, popupSel) {
                 continue;
             }
 
-            // Wait for popup to appear and be visible — no fixed sleep
+            // Wait for popup to appear and be visible
             for (const sel of POPUP_SELECTORS) {
                 try {
                     await page.waitForSelector(sel, { visible: true, timeout: 5000 });
@@ -286,7 +381,7 @@ async function closeAnyPopup(page, popupSel) {
                         return rect.width > 100 && rect.height > 100;
                     }, sel);
                     if (visible) { popupSel = sel; break; }
-                } catch (_) { /* try next selector */ }
+                } catch (_) { /* try next */ }
             }
 
             if (!popupSel) {
@@ -295,7 +390,7 @@ async function closeAnyPopup(page, popupSel) {
                 continue;
             }
 
-            // Wait for at least one cloudfront image inside the popup to finish loading
+            // Wait for popup image to finish loading
             try {
                 await page.waitForFunction((sel) => {
                     const popup = document.querySelector(sel);
@@ -303,25 +398,22 @@ async function closeAnyPopup(page, popupSel) {
                     const img = popup.querySelector('img[src*="cloudfront"]');
                     return img ? img.complete : true;
                 }, { timeout: 4000 }, popupSel);
-            } catch (_) { /* image didn't load in time, proceed anyway */ }
+            } catch (_) { /* proceed anyway */ }
 
-            // ── Scrape the popup ──────────────────────────────────────────────
+            // Scrape the popup
             const popupData = await page.evaluate((sel, labelMap) => {
                 const popup = document.querySelector(sel);
                 if (!popup) return {};
 
                 const result = {};
 
-                // All images
                 const imgs = [...popup.querySelectorAll('img')]
                     .map(img => img.src || img.getAttribute('data-src') || '')
                     .filter(src => src && src.includes('cloudfront') && !src.includes('logo'));
                 if (imgs.length) result.images = [...new Set(imgs)];
 
-                // Key-value extraction — 4 patterns
                 const pairs = {};
 
-                // Pattern A: <dt> / <dd>
                 popup.querySelectorAll('dt').forEach(dt => {
                     const dd = dt.nextElementSibling;
                     if (dd && dd.tagName === 'DD') {
@@ -329,7 +421,6 @@ async function closeAnyPopup(page, popupSel) {
                     }
                 });
 
-                // Pattern B: table <th> / <td>
                 popup.querySelectorAll('tr').forEach(row => {
                     const cells = [...row.querySelectorAll('th, td')];
                     if (cells.length >= 2) {
@@ -337,7 +428,6 @@ async function closeAnyPopup(page, popupSel) {
                     }
                 });
 
-                // Pattern C: labelled child elements
                 popup.querySelectorAll('li, [class*="spec"], [class*="detail"], [class*="row"], [class*="field"]').forEach(el => {
                     const children = [...el.children];
                     if (children.length >= 2) {
@@ -347,7 +437,6 @@ async function closeAnyPopup(page, popupSel) {
                     }
                 });
 
-                // Pattern D: inline "Label: Value" text
                 [...popup.querySelectorAll('p, span, div')].forEach(el => {
                     if (el.children.length > 2) return;
                     const text = (el.innerText || '').trim();
@@ -355,19 +444,15 @@ async function closeAnyPopup(page, popupSel) {
                     if (m) pairs[m[1].toLowerCase()] = m[2].trim();
                 });
 
-                // Map labels → field names
                 for (const [rawLabel, value] of Object.entries(pairs)) {
                     const key = labelMap[rawLabel];
                     if (key) {
-                        if (key === 'hasCard') {
-                            result[key] = /yes|include|✓|with/i.test(value);
-                        } else {
-                            result[key] = value;
-                        }
+                        result[key] = key === 'hasCard'
+                            ? /yes|include|✓|with/i.test(value)
+                            : value;
                     }
                 }
 
-                // Description / long text block
                 const descEl = popup.querySelector(
                     '[class*="description"], [class*="desc"], [class*="notes"], [class*="detail-text"]'
                 );
@@ -375,14 +460,12 @@ async function closeAnyPopup(page, popupSel) {
                     result.popupDescription = descEl.innerText.trim();
                 }
 
-                // Price (cleaner version from popup)
                 const priceEl = popup.querySelector('[class*="price"], [class*="Price"]');
                 if (priceEl) {
                     const m = (priceEl.innerText || '').match(/\$[\d,]+(\.\d{2})?/);
                     if (m) result.popupPrice = m[0];
                 }
 
-                // Reference fallback
                 if (!result.reference) {
                     const refMatch = popup.innerText.match(/[Rr]ef\.?\s*[:#]?\s*([\w\-\/\.]{4,20})/);
                     if (refMatch) result.reference = refMatch[1].trim().replace(/\.$/, '');
@@ -391,7 +474,6 @@ async function closeAnyPopup(page, popupSel) {
                 return result;
             }, popupSel, POPUP_LABEL_MAP);
 
-            // Merge popup data into card item
             Object.assign(item, popupData);
             if (popupData.popupPrice) {
                 item.price = popupData.popupPrice;
@@ -401,65 +483,37 @@ async function closeAnyPopup(page, popupSel) {
                 item.images = item.image ? [item.image] : [];
             }
 
+            // Only add if not a duplicate within this run
+            const key = itemKey(item);
+            if (!seenThisRun.has(key)) {
+                seenThisRun.add(key);
+                workingCatalog.push(normalise(item));
+
+                // ── Save after every single new item so progress is never lost ──
+                workingCatalog = saveCatalog(workingCatalog);
+            }
+
             process.stdout.write('✓\n');
 
         } catch (err) {
             process.stdout.write(`✗ (${err.message.slice(0, 60)})\n`);
         }
 
-        // Close popup and wait for it to actually disappear before moving to next card
         await closeAnyPopup(page, popupSel);
     }
 
     await browser.close();
 
-    // ── 6. Deduplicate & normalise ────────────────────────────────────────────
-    const seenImg  = new Set();
-    const seenText = new Set();
+    // ── 8. Final save with clean IDs ─────────────────────────────────────────
+    workingCatalog = saveCatalog(workingCatalog);
 
-    const products = rawItems
-        .filter(item => {
-            if (JUNK.has(item.name))    return false;
-            if (!item.image)             return false;
-            if (seenImg.has(item.image)) return false;
-            const tk = `${item.name}||${item.description}`;
-            if (seenText.has(tk))        return false;
-            seenImg.add(item.image);
-            seenText.add(tk);
-            return true;
-        })
-        .map((p, i) => {
-            const out = {
-                id:          i,
-                name:        p.name,
-                brand:       p.brand,
-                description: p.popupDescription || p.description,
-                reference:   p.reference,
-                price:       p.price,
-                reserved:    p.reserved,
-                condition:   p.condition,
-                hasCard:     p.hasCard,
-                image:       p.image,
-                images:      p.images && p.images.length > 1 ? p.images : undefined,
-            };
-
-            const extras = [
-                'series','dial','bezel','bracelet','material','size',
-                'year','gender','serialNumber','sku','model',
-                'movement','waterResistance','powerReserve','functions'
-            ];
-            extras.forEach(k => { if (p[k]) out[k] = p[k]; });
-
-            Object.keys(out).forEach(k => { if (out[k] === undefined) delete out[k]; });
-
-            return out;
-        });
-
-    if (products.length === 0) {
-        console.warn('\nWARNING: 0 products after dedup.');
-        fs.writeFileSync(OUT_FILE, JSON.stringify([], null, 2));
-    } else {
-        console.log(`\n✓ ${products.length} unique products saved to ${OUT_FILE}`);
-        fs.writeFileSync(OUT_FILE, JSON.stringify(products, null, 2));
+    console.log(`\n✓ Done. catalog.json has ${workingCatalog.length} items.`);
+    if (newItems.length > 0) {
+        console.log(`  Added:   ${newItems.length} new`);
     }
+    if (removedCount > 0) {
+        console.log(`  Removed: ${removedCount} no longer listed`);
+    }
+    console.log(`  Kept:    ${survivingExisting.length} existing`);
+
 })();

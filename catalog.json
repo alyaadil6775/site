@@ -28021,5 +28021,21 @@
       "https://d1iz2ekeg1nr2d.cloudfront.net/9uj8ikucq5h8rqd1peo830u8sdzb?variant=thumb"
     ],
     "sku": "IT382347958"
+  },
+  {
+    "id": 1068,
+    "name": "Panerai Panerai Luminor Marina",
+    "brand": "",
+    "description": "Black Dial on Stainless Steel Ref. PAM00328",
+    "reference": "PAM00328",
+    "price": "$5,170",
+    "reserved": true,
+    "condition": "Pre-Owned",
+    "hasCard": false,
+    "image": "https://d1iz2ekeg1nr2d.cloudfront.net/tlw9mfmbk6csbosp55vdbjybg9d4?variant=small",
+    "images": [
+      "https://d1iz2ekeg1nr2d.cloudfront.net/tlw9mfmbk6csbosp55vdbjybg9d4?variant=preview",
+      "https://d1iz2ekeg1nr2d.cloudfront.net/tlw9mfmbk6csbosp55vdbjybg9d4?variant=thumb"
+    ]
   }
 ]
